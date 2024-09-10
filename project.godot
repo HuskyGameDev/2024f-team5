@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Shorty Shooters"
-run/main_scene="res://Assets/scenes/sky_level.tscn"
+run/main_scene="res://Scenes/Demo/sky_level.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://Assets/Sprites/lilguy3.png"
+config/icon="res://Demo/Sprites/lilguy3.png"
 
 [debug]
 
@@ -22,8 +22,12 @@ gdscript/warnings/untyped_declaration=1
 [display]
 
 window/stretch/mode="canvas_items"
-mouse_cursor/custom_image="res://Assets/Sprites/crosshair1hires.png"
+mouse_cursor/custom_image="res://Demo/Sprites/crosshair1hires.png"
 mouse_cursor/custom_image_hotspot=Vector2(16, 16)
+
+[dotnet]
+
+project/assembly_name="Shorty Shooters"
 
 [editor]
 
