@@ -1,5 +1,3 @@
-# Commit test
-
 extends Area2D
 class_name CompleteTrigger
 ## This probably shouldn't be used in the final game.

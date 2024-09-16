@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://d1mwn6yfojyu8"]
+[gd_scene load_steps=19 format=4 uid="uid://d1mwn6yfojyu8"]
 
 [ext_resource type="Texture2D" uid="uid://2niefi3ot4tm" path="res://Demo/Sprites/dev_tile_1.png" id="1_ge328"]
 [ext_resource type="Texture2D" uid="uid://bf1lhm2wjl5c7" path="res://Demo/Sprites/Borrowed Assets/B1013-5.png" id="1_v5uiq"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="11_vb1t2"]
 [ext_resource type="PackedScene" uid="uid://8fxygf81du2b" path="res://Demo/scenes/complete_trigger.tscn" id="12_820gm"]
 [ext_resource type="Script" path="res://Demo/scripts/hazard.gd" id="13_xljsv"]
+[ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="14_5oiri"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lsnjq"]
 texture = ExtResource("1_ge328")
@@ -116,6 +117,9 @@ collision_mask = 3
 [node name="Gun Pickup" parent="." instance=ExtResource("10_ynwbb")]
 position = Vector2(717, 366)
 
+[node name="Spike" parent="." instance=ExtResource("14_5oiri")]
+position = Vector2(590, 377)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(577, 323)
 zoom = Vector2(1.135, 1.135)
@@ -125,7 +129,7 @@ position = Vector2(586, 175)
 text = NodePath("../CanvasLayer/Label")
 
 [node name="World Borders" type="Area2D" parent="."]
-position = Vector2(580, 318)
+position = Vector2(577, 318)
 script = ExtResource("13_xljsv")
 
 [node name="North Border" type="CollisionShape2D" parent="World Borders"]
@@ -144,7 +148,7 @@ rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_jiftw")
 
 [node name="South Border" type="CollisionShape2D" parent="World Borders"]
-position = Vector2(0, 304)
+position = Vector2(0, 295)
 shape = SubResource("WorldBoundaryShape2D_jiftw")
 
 [connection signal="body_entered" from="World Borders" to="World Borders" method="_on_body_entered"]

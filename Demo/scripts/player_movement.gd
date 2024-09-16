@@ -10,6 +10,8 @@ const X_ACCELERATION = 30
 const X_DECELERATION = 10
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var death_parts: GPUParticles2D = $DeathParticles
+@onready var collision: CollisionShape2D = $CollisionShape2D
 var equipped_item: Node = null
 
 var cursors: Array = [
@@ -59,6 +61,11 @@ func _physics_process(delta: float) -> void:
 
 func die() -> void:
 	unequip()
+	anim.visible = false
+	set_deferred("collision.disabled", true)
+	death_parts.emitting = true
+	
+	await get_tree().create_timer(3).timeout
 	# Godot doesn't like reloading scenes on collision enter.
 	get_tree().call_deferred("reload_current_scene")
 
