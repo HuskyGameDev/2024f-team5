@@ -1,10 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbsrwca0u43j4"]
+[gd_scene load_steps=7 format=3 uid="uid://dbsrwca0u43j4"]
 
 [ext_resource type="Script" path="res://Demo/scripts/item_pickup.gd" id="1_jewok"]
 [ext_resource type="PackedScene" uid="uid://c6ca0t1feo4q2" path="res://Demo/scenes/gun.tscn" id="2_qgt2h"]
-[ext_resource type="Texture2D" uid="uid://jd5q2jjqxoa4" path="res://Demo/Sprites/dev_tile_2.png" id="2_tp4jx"]
+[ext_resource type="Texture2D" uid="uid://cndlolvxbrb8h" path="res://Demo/Sprites/MonitorSpawnerSheet.png" id="3_3qkjg"]
+[ext_resource type="Texture2D" uid="uid://12goi6amxmwm" path="res://Demo/Sprites/TinyGlock.png" id="4_b7mb2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai3ny"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or0p5"]
+atlas = ExtResource("3_3qkjg")
+region = Rect2(0, 0, 16, 16)
 
 [node name="Gun Pickup" type="Area2D"]
 z_index = -2
@@ -14,7 +19,10 @@ gun = ExtResource("2_qgt2h")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ai3ny")
 
-[node name="DevTile2" type="Sprite2D" parent="."]
-texture = ExtResource("2_tp4jx")
+[node name="Monitor" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_or0p5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_b7mb2")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

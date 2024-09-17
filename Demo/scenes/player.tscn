@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjj5hw1d1pbl"]
+[gd_scene load_steps=11 format=3 uid="uid://bjj5hw1d1pbl"]
 
 [ext_resource type="Texture2D" uid="uid://b1r7mi4naobj0" path="res://Demo/Sprites/lilguy3.png" id="1_8eo66"]
 [ext_resource type="Script" path="res://Demo/scripts/player_movement.gd" id="1_ym8ee"]
@@ -66,8 +66,11 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ah4ty"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssjyn"]
 size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7coln"]
+size = Vector2(14, 11)
 
 [node name="Player" type="CharacterBody2D"]
 input_pickable = true
@@ -78,9 +81,19 @@ sprite_frames = SubResource("SpriteFrames_molac")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ah4ty")
+shape = SubResource("RectangleShape2D_ssjyn")
 
 [node name="DeathParticles" parent="." instance=ExtResource("7_tlm4h")]
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_7coln")
+debug_color = Color(1, 0, 0, 0.419608)
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmiirhmagr5iq"
-path="res://.godot/imported/glock_comparison.png-aede503b07e50b29647a90027fe4e1da.ctex"
+uid="uid://12goi6amxmwm"
+path="res://.godot/imported/TinyGlock.png-f7ba868e2c83690a1eed6190abb16fe2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/glock_comparison.png"
-dest_files=["res://.godot/imported/glock_comparison.png-aede503b07e50b29647a90027fe4e1da.ctex"]
+source_file="res://Demo/Sprites/TinyGlock.png"
+dest_files=["res://.godot/imported/TinyGlock.png-f7ba868e2c83690a1eed6190abb16fe2.ctex"]
 
 [params]
 

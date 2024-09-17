@@ -87,3 +87,8 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if(equipped_item != null):
 		Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if(body.get_collision_layer() == 2):
+		die()

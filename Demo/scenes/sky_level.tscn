@@ -104,29 +104,15 @@ texture = ExtResource("4_n2wmm")
 region_enabled = true
 region_rect = Rect2(0, 0, 1024, 256)
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(577, 323)
+zoom = Vector2(1.11, 1.11)
+
 [node name="Map" type="TileMapLayer" parent="."]
 use_parent_material = true
 position = Vector2(566, 385)
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD7/wMAAAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD8/wIAAAAAAAAAAAD8/wMAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAAAAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wIAAAAAAAAAAAD9/wMAAAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAHAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAMAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAAKAAIAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAALAAEAAAAAAAAAAAALAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAIAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAKAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAACAPT/AAAAAAAAAAABAPT/AAAAAAAAAAAAAPT/AAAAAAAAAAD///T/AAAAAAAAAAD+//T/AAAAAAAAAAADAPT/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_ctarv")
-
-[node name="Player" parent="." instance=ExtResource("3_jlhf7")]
-position = Vector2(540, 377)
-collision_mask = 3
-
-[node name="Gun Pickup" parent="." instance=ExtResource("10_ynwbb")]
-position = Vector2(717, 366)
-
-[node name="Spike" parent="." instance=ExtResource("14_5oiri")]
-position = Vector2(590, 377)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(577, 323)
-zoom = Vector2(1.135, 1.135)
-
-[node name="Complete Trigger" parent="." node_paths=PackedStringArray("text") instance=ExtResource("12_820gm")]
-position = Vector2(586, 175)
-text = NodePath("../CanvasLayer/Label")
 
 [node name="World Borders" type="Area2D" parent="."]
 position = Vector2(577, 318)
@@ -150,5 +136,18 @@ shape = SubResource("WorldBoundaryShape2D_jiftw")
 [node name="South Border" type="CollisionShape2D" parent="World Borders"]
 position = Vector2(0, 295)
 shape = SubResource("WorldBoundaryShape2D_jiftw")
+
+[node name="Spike" parent="." instance=ExtResource("14_5oiri")]
+position = Vector2(590, 377)
+
+[node name="Player" parent="." instance=ExtResource("3_jlhf7")]
+position = Vector2(540, 377)
+
+[node name="Gun Pickup" parent="." instance=ExtResource("10_ynwbb")]
+position = Vector2(717, 366)
+
+[node name="Complete Trigger" parent="." node_paths=PackedStringArray("text") instance=ExtResource("12_820gm")]
+position = Vector2(586, 175)
+text = NodePath("../CanvasLayer/Label")
 
 [connection signal="body_entered" from="World Borders" to="World Borders" method="_on_body_entered"]

@@ -56,6 +56,7 @@ shoot={
 
 2d_physics/layer_1="Default"
 2d_physics/layer_2="Hazards"
+2d_physics/layer_3="Hurtboxes"
 
 [physics]
 
