@@ -1,0 +1,100 @@
+[gd_scene load_steps=7 format=4 uid="uid://hccjwm3hunth"]
+
+[ext_resource type="Texture2D" uid="uid://ddecloxpq08uc" path="res://Demo/Sprites/HoughtonPixel.png" id="1_4vp2v"]
+[ext_resource type="PackedScene" uid="uid://bjj5hw1d1pbl" path="res://Demo/scenes/player.tscn" id="2_lwygx"]
+[ext_resource type="Texture2D" uid="uid://dh8xoqndsykss" path="res://Demo/Sprites/Environment1.png" id="3_m7rpx"]
+[ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Demo/scenes/gun_pickup.tscn" id="4_nf66b"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
+texture = ExtResource("3_m7rpx")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, -8, 8, 8, -8, 8)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, -8, 8, 8, -8, 8)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, -8, 8, 8, -8, 8)
+6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, -8, 8, 8, -8, 8)
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -0.668175, 8, 8, -8, 8)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.222725, 8, 8, -8, 8)
+5:4/0 = 0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -0.668175, 8, 8, -8, 8)
+6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.222725, 8, 8, -8, 8)
+0:5/0 = 0
+1:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ejak1"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_lungt")
+
+[node name="Houghton" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2(2.305, 2.305)
+texture = ExtResource("1_4vp2v")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(-224, 0)
+tile_map_data = PackedByteArray("AAD//wEAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAEAAAD+/wEAAAABAAAAAAD9/wEAAAAAAAAAAAACAAEAAAABAAEAAAD9/wIAAAAAAAEAAAD9/wMAAAAAAAIAAAD+/wIAAAABAAEAAAD+/wMAAAABAAIAAAD//wIAAAABAAEAAAD//wMAAAABAAIAAAAAAAIAAAABAAEAAAAAAAMAAAABAAIAAAABAAIAAAABAAEAAAABAAMAAAABAAIAAAACAAIAAAABAAEAAAACAAMAAAABAAIAAAABAAAAAAAAAAQAAAACAAAAAAABAAQAAAADAAEAAAABAAAAAAADAAIAAAABAAEAAAADAAMAAAABAAIAAAAEAAEAAAABAAAAAAAEAAIAAAABAAEAAAAEAAMAAAABAAIAAAAFAAEAAAABAAAAAAAFAAIAAAABAAEAAAAFAAMAAAABAAIAAAAGAAAAAAAAAAMAAAAHAAAAAAABAAMAAAAGAAIAAAABAAEAAAAGAAMAAAABAAIAAAAHAAIAAAABAAEAAAAHAAMAAAABAAIAAAAGAAEAAAABAAEAAAAHAAEAAAABAAEAAAAIAAEAAAACAAAAAAAIAAIAAAACAAEAAAAIAAMAAAACAAIAAAAJAAEAAAAFAAAAAAAJAAIAAAAFAAEAAAAJAAMAAAAFAAEAAAAJAAQAAAAFAAIAAAAKAAIAAAAGAAEAAAAKAAMAAAAGAAEAAAAKAAEAAAAGAAMAAAALAAIAAAAGAAMAAAALAAMAAAAGAAEAAAAMAAMAAAAGAAMAAAANAAQAAAAGAAMAAAALAAQAAAAGAAIAAAAMAAQAAAAGAAIAAAAKAAQAAAAGAAIAAAAOAAUAAAABAAAAAAAOAAYAAAABAAEAAAAOAAcAAAABAAIAAAAPAAUAAAABAAAAAAAPAAYAAAABAAEAAAAPAAcAAAABAAIAAAAQAAUAAAACAAAAAAAQAAYAAAACAAEAAAAQAAcAAAACAAIAAAANAAUAAAABAAAAAAANAAYAAAABAAEAAAANAAcAAAABAAIAAAAMAAUAAAABAAAAAAAMAAYAAAABAAEAAAAMAAcAAAABAAIAAAALAAUAAAABAAAAAAALAAYAAAABAAEAAAALAAcAAAABAAIAAAAKAAUAAAABAAAAAAAKAAYAAAABAAEAAAAKAAcAAAABAAIAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAEAAAAJAAcAAAAAAAIAAAD9//7/AAAAAAUAAAD9////AAAAAAYAAAD9/wAAAAAAAAcAAAD+//7/AAABAAUAAAD+////AAABAAYAAAD+/wAAAAABAAcAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAOAAQAAAADAAAAAAAPAAQAAAADAAIAAAAQAAQAAAADAAEAAAAAAAAAAAADAAEAAAD//wAAAAADAAEAAAA=")
+tile_set = SubResource("TileSet_ejak1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.365, 1.365)
+
+[node name="Player" parent="." instance=ExtResource("2_lwygx")]
+position = Vector2(-232, 8)
+
+[node name="Gun Pickup" parent="." instance=ExtResource("4_nf66b")]
+position = Vector2(16, 56)

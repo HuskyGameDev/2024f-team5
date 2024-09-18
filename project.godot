@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Shorty Shooters"
-run/main_scene="res://Demo/scenes/sky_level.tscn"
+run/main_scene="res://Scenes/Maps/houghton.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Demo/Sprites/lilguy3.png"
 

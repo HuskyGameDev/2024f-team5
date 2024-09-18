@@ -25,6 +25,7 @@ func _process(_delta: float) -> void:
 	var mousepos: Vector2 = get_global_mouse_position()
 	look_at(mousepos)
 	if(mousepos.x < global_position.x):
+		# Not sure why, but the gun get's very shaky when pointed left.
 		spi.offset.x = REVERSE_OFFSET
 		spi.flip_h = true
 		rotation += 135 # i dont know why its 135 and not 180 but whatever
