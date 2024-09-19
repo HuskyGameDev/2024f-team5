@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://d1mwn6yfojyu8"]
+[gd_scene load_steps=18 format=4 uid="uid://d1mwn6yfojyu8"]
 
 [ext_resource type="Texture2D" uid="uid://2niefi3ot4tm" path="res://Demo/Sprites/dev_tile_1.png" id="1_ge328"]
 [ext_resource type="Texture2D" uid="uid://bf1lhm2wjl5c7" path="res://Demo/Sprites/Borrowed Assets/B1013-5.png" id="1_v5uiq"]
@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://bjj5hw1d1pbl" path="res://Demo/scenes/player.tscn" id="3_jlhf7"]
 [ext_resource type="Texture2D" uid="uid://d18otvutwtn1n" path="res://Demo/Sprites/Borrowed Assets/C2013.png" id="4_gurjx"]
 [ext_resource type="Texture2D" uid="uid://dp4as0a1uofeg" path="res://Demo/Sprites/Borrowed Assets/C2010.png" id="4_n2wmm"]
+[ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="10_ivq5u"]
 [ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Demo/scenes/gun_pickup.tscn" id="10_ynwbb"]
 [ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="11_vb1t2"]
 [ext_resource type="PackedScene" uid="uid://8fxygf81du2b" path="res://Demo/scenes/complete_trigger.tscn" id="12_820gm"]
-[ext_resource type="Script" path="res://Demo/scripts/hazard.gd" id="13_xljsv"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="14_5oiri"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lsnjq"]
@@ -28,8 +28,6 @@ texture = ExtResource("2_qq1rj")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_lsnjq")
 sources/1 = SubResource("TileSetAtlasSource_4bbf6")
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jiftw"]
 
 [node name="Sky Level" type="Node2D"]
 
@@ -114,28 +112,7 @@ position = Vector2(566, 385)
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD7/wMAAAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD8/wIAAAAAAAAAAAD8/wMAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAAAAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wIAAAAAAAAAAAD9/wMAAAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAHAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAMAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAAKAAIAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAALAAEAAAAAAAAAAAALAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAIAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAKAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAACAPT/AAAAAAAAAAABAPT/AAAAAAAAAAAAAPT/AAAAAAAAAAD///T/AAAAAAAAAAD+//T/AAAAAAAAAAADAPT/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_ctarv")
 
-[node name="World Borders" type="Area2D" parent="."]
-position = Vector2(577, 318)
-script = ExtResource("13_xljsv")
-
-[node name="North Border" type="CollisionShape2D" parent="World Borders"]
-position = Vector2(0, -460)
-rotation = 3.14159
-shape = SubResource("WorldBoundaryShape2D_jiftw")
-
-[node name="West Border" type="CollisionShape2D" parent="World Borders"]
-position = Vector2(-526, 64)
-rotation = 1.5708
-shape = SubResource("WorldBoundaryShape2D_jiftw")
-
-[node name="East Border" type="CollisionShape2D" parent="World Borders"]
-position = Vector2(520, 64)
-rotation = -1.5708
-shape = SubResource("WorldBoundaryShape2D_jiftw")
-
-[node name="South Border" type="CollisionShape2D" parent="World Borders"]
-position = Vector2(0, 295)
-shape = SubResource("WorldBoundaryShape2D_jiftw")
+[node name="World Borders" parent="." instance=ExtResource("10_ivq5u")]
 
 [node name="Spike" parent="." instance=ExtResource("14_5oiri")]
 position = Vector2(590, 377)
@@ -149,5 +126,3 @@ position = Vector2(717, 366)
 [node name="Complete Trigger" parent="." node_paths=PackedStringArray("text") instance=ExtResource("12_820gm")]
 position = Vector2(586, 175)
 text = NodePath("../CanvasLayer/Label")
-
-[connection signal="body_entered" from="World Borders" to="World Borders" method="_on_body_entered"]

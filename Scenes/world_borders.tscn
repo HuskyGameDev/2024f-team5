@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://ramqgxs80twi"]
+
+[ext_resource type="Script" path="res://Demo/scripts/oob_trigger.gd" id="1_hg3br"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jiftw"]
+
+[node name="World Borders" type="Area2D"]
+position = Vector2(577, 318)
+script = ExtResource("1_hg3br")
+
+[node name="North Border" type="CollisionShape2D" parent="."]
+position = Vector2(0, -460)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_jiftw")
+
+[node name="West Border" type="CollisionShape2D" parent="."]
+position = Vector2(-526, 64)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_jiftw")
+
+[node name="East Border" type="CollisionShape2D" parent="."]
+position = Vector2(520, 64)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_jiftw")
+
+[node name="South Border" type="CollisionShape2D" parent="."]
+position = Vector2(0, 295)
+shape = SubResource("WorldBoundaryShape2D_jiftw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

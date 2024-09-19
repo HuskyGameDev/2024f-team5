@@ -3,15 +3,20 @@ extends CharacterBody2D
 ## HANDLES PLAYER CONTROLS AND SHIT
 ## Jay Hawkins
 
-const SPEED = 55.0
-const JUMP_VELOCITY = -200.0
+const SPEED = 75.0
+const JUMP_VELOCITY = -225.0
 const Y_VEL_ANIM_THRESH = 60 # The threshold where the neutral jump animation is played
-const X_ACCELERATION = 30
-const X_DECELERATION = 10
+# Player controls and DI on ground
+const GROUND_ACCELERATION = 30
+const GROUND_DECELERATION = 20
+# Player controls and DI in air
+const AIR_ACCELERATION = 17
+const AIR_DECELERATION = 8
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var death_parts: GPUParticles2D = $DeathParticles
 @onready var collision: CollisionShape2D = $CollisionShape2D
+@export var oob_death: PackedScene
 var equipped_item: Node = null
 
 var cursors: Array = [
@@ -47,23 +52,31 @@ func _physics_process(delta: float) -> void:
 			anim.flip_h = false
 		if is_on_floor():
 			anim.play("run")
-		# doesn't immediately set
-		# using move_toward allows for the player to use movement keys to
-		# decelerate faster or slower from recoil.
-		velocity.x = move_toward(velocity.x, direction * SPEED, X_ACCELERATION)
+			velocity.x = move_toward(velocity.x, direction * SPEED, GROUND_ACCELERATION)
+		else:
+			velocity.x = move_toward(velocity.x, direction * SPEED, AIR_ACCELERATION)
 	else:
 		if(is_on_floor()):
 			anim.play("idle")
-		velocity.x = move_toward(velocity.x, 0, X_DECELERATION)
-		
+			velocity.x = move_toward(velocity.x, 0, GROUND_DECELERATION)
+		else:
+			velocity.x = move_toward(velocity.x, 0, AIR_DECELERATION)
 
 	move_and_slide()
 
-func die() -> void:
+func die(oob: bool = false, theta: float = 0) -> void:
+	# Out of bounds death animation
+	if(oob):
+		var od: Node2D = oob_death.instantiate()
+		get_parent().add_child(od)
+		od.position = position
+		od.rotation = theta
+	else: # Other death animation
+		death_parts.emitting = true
 	unequip()
 	anim.visible = false
 	set_deferred("collision.disabled", true)
-	death_parts.emitting = true
+	
 	
 	await get_tree().create_timer(3).timeout
 	# Godot doesn't like reloading scenes on collision enter.
@@ -87,7 +100,6 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if(equipped_item != null):
 		Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
-
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if(body.get_collision_layer() == 2):

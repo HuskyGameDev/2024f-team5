@@ -4,4 +4,6 @@ class_name Hazard
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		body.die()
+		# The rotation aspect of the oob death doesn't currently work
+		# It will always face up
+		body.die(true, rotation)
