@@ -12,6 +12,8 @@ const GROUND_DECELERATION = 20
 # Player controls and DI in air
 const AIR_ACCELERATION = 17
 const AIR_DECELERATION = 8
+# Factor that friction increases by when crouched
+const CROUCH_FACTOR: float = 2.2
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var death_parts: GPUParticles2D = $DeathParticles
@@ -25,12 +27,36 @@ var cursors: Array = [
 	preload("res://Demo/Sprites/crosshair3hires.png")
 ]
 
+var crouching: bool = false
+var dead: bool = false
+
+## Crouching increases "friction" of recoil. Can also be used to drop
+## Through platforms in the future.
+func crouch() -> void:
+	anim.animation = "crouch"
+	crouching = true
+
+func uncrouch() -> void:
+	crouching = false
+	if(is_on_floor() && velocity.x == 0):
+		anim.animation = "idle"
+
 func _ready() -> void:
 	anim.play("idle")
 
 func _physics_process(delta: float) -> void:
+	if(dead): return
+	# Get the input direction and handle the movement/deceleration.
+	var direction := Input.get_axis("move_left", "move_right")
+	
+	# Reset animations
+	if(crouching && Input.is_action_just_released("crouch")):
+		uncrouch()
+	if(anim.animation == "look_up" && Input.is_action_just_released("look_up")):
+		anim.animation = "idle"
 	# Add the gravity and handle jumping animation.
 	if not is_on_floor():
+		uncrouch() # Can't crouch while airbourne
 		if(velocity.y > Y_VEL_ANIM_THRESH):
 			anim.play("jump_down")
 		elif(velocity.y < -Y_VEL_ANIM_THRESH):
@@ -38,14 +64,19 @@ func _physics_process(delta: float) -> void:
 		else:
 			anim.play("jump_neutral")
 		velocity += get_gravity() * delta
+	else:
+		if(Input.is_action_pressed("crouch") && !direction):
+			crouch()
+		elif(Input.is_action_just_pressed("look_up")):
+			anim.animation = "look_up"
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	var direction := Input.get_axis("move_left", "move_right")
+	
 	if direction:
+		uncrouch() # Can't crouch while moving
 		if(direction < 0):
 			anim.flip_h = true
 		else:
@@ -57,24 +88,33 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, direction * SPEED, AIR_ACCELERATION)
 	else:
 		if(is_on_floor()):
-			anim.play("idle")
-			velocity.x = move_toward(velocity.x, 0, GROUND_DECELERATION)
+			if(anim.animation != "crouch" && anim.animation != "look_up"):
+				anim.animation = "idle"
+			var dec: float = GROUND_DECELERATION
+			if(crouching):
+				dec *= CROUCH_FACTOR
+			velocity.x = move_toward(velocity.x, 0, dec)
 		else:
 			velocity.x = move_toward(velocity.x, 0, AIR_DECELERATION)
 
+	var hit_ground: bool = is_on_floor()
 	move_and_slide()
+	if(hit_ground != is_on_floor()):
+		anim.animation = "idle"
 
 func die(oob: bool = false, theta: float = 0) -> void:
+	dead = true
 	# Out of bounds death animation
 	if(oob):
 		var od: Node2D = oob_death.instantiate()
 		get_parent().add_child(od)
 		od.position = position
 		od.rotation = theta
+		anim.visible = false
 	else: # Other death animation
 		death_parts.emitting = true
+		anim.animation = "die"
 	unequip()
-	anim.visible = false
 	set_deferred("collision.disabled", true)
 	
 	
