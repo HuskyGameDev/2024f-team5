@@ -17,8 +17,16 @@ const SHOOT_VELOCITY = 400
 ## Barrel is where smoke effects and bullets spawn
 # We could keep track of a Vector2 to make it more "optimal" because we're only
 # Using the node for it's position, but this method makes it easier to edit.
-@export var barrel: Node2D
+@onready var barrel: Node2D = $Sprite2D/Barrel
 @export var barrel_pos: Array[Vector2]
+
+# For ADS Line
+@onready var line: Line2D = $Sprite2D/Barrel/Line2D
+var ads: bool = false
+## If true, aiming and shooting will be straight from barrel, but less
+## accurate to mouse position.
+@export var realistic_aiming: bool = false
+
 ## Gun is pointing left if true
 var flipped: bool = false
 ## True if cooldown is complete
@@ -66,6 +74,19 @@ func _process(_delta: float) -> void:
 		unflip()
 	if(flipped):
 		rotation += 135
+	
+	if(ads):
+		if(realistic_aiming):
+			line.points[1] = Vector2(1000, 0)
+		else:
+			line.global_rotation = 0
+			line.points[1] = mousepos - line.global_position
 		
 	if(Input.is_action_just_pressed("shoot")):
 		shoot(mousepos)
+	if(Input.is_action_just_pressed("ADS")):
+		ads = true
+		line.visible = true
+	if(Input.is_action_just_released("ADS")):
+		ads = false
+		line.visible = false
