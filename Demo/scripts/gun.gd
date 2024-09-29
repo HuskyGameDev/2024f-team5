@@ -6,8 +6,8 @@ class_name Gun
 ## Jay Hawkins
 
 # This value is needed to correct the gun's position when pointing left
-const REVERSE_OFFSET = -48
-const SHOOT_VELOCITY = 400 
+const REVERSE_OFFSET: float = -48
+const SHOOT_VELOCITY: float = 400 
 
 @onready var spi: Sprite2D = $Sprite2D
 @onready var snd: AudioStreamPlayer2D = $AudioStreamPlayer2D
@@ -73,7 +73,8 @@ func _process(_delta: float) -> void:
 	elif(flipped):
 		unflip()
 	if(flipped):
-		rotation += 135
+		rotation += PI
+		#rotation += 135
 	
 	if(ads):
 		if(realistic_aiming):

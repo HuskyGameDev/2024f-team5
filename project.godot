@@ -17,7 +17,8 @@ config/icon="res://Demo/Sprites/lilguy3.png"
 
 [debug]
 
-gdscript/warnings/untyped_declaration=1
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=2
 
 [display]
 

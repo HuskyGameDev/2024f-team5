@@ -3,21 +3,20 @@ extends CharacterBody2D
 ## HANDLES PLAYER CONTROLS AND SHIT
 ## Jay Hawkins
 
-const SPEED = 75.0
-const JUMP_VELOCITY = -225.0
-const Y_VEL_ANIM_THRESH = 60 # The threshold where the neutral jump animation is played
+const SPEED: float = 75.0
+const JUMP_VELOCITY: float = -225.0
+const Y_VEL_ANIM_THRESH: float = 60 # The threshold where the neutral jump animation is played
 # Player controls and DI on ground
-const GROUND_ACCELERATION = 30
-const GROUND_DECELERATION = 20
+const GROUND_ACCELERATION: float = 30
+const GROUND_DECELERATION: float = 20
 # Player controls and DI in air
-const AIR_ACCELERATION = 17
-const AIR_DECELERATION = 8
+const AIR_ACCELERATION: float = 17
+const AIR_DECELERATION: float = 8
 # Factor that friction increases by when crouched
 const CROUCH_FACTOR: float = 2.2
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var death_parts: GPUParticles2D = $DeathParticles
-@onready var collision: CollisionShape2D = $CollisionShape2D
 @export var oob_death: PackedScene
 var equipped_item: Node = null
 
@@ -47,7 +46,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if(dead): return
 	# Get the input direction and handle the movement/deceleration.
-	var direction := Input.get_axis("move_left", "move_right")
+	var direction: float = Input.get_axis("move_left", "move_right")
 	
 	# Reset animations
 	if(crouching && Input.is_action_just_released("crouch")):

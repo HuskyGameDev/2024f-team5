@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b8c2ascpmxw4i"]
+[gd_scene load_steps=2 format=3 uid="uid://b8c2ascpmxw4i"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/MainMenu.gd" id="1_tmlow"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -7,8 +9,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tmlow")
 
 [node name="Main" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,81 +32,127 @@ bbcode_enabled = true
 text = "[center][b]Shorty Shooters[/b][/center]"
 metadata/_edit_use_anchors_ = true
 
-[node name="Host" type="Button" parent="Main"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -15.5
-offset_right = 22.0
-offset_bottom = 15.5
+offset_left = -35.0
+offset_top = -68.0
+offset_right = 35.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Host" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
 text = "Host"
 metadata/_edit_use_anchors_ = true
 
-[node name="Join" type="Button" parent="Main"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = 23.0
-offset_right = 22.0
-offset_bottom = 54.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Join" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
 text = "Join"
 metadata/_edit_use_anchors_ = true
 
-[node name="Settings" type="Button" parent="Main"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = 63.0
-offset_right = 35.0
-offset_bottom = 94.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Settings" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
 text = "Settings"
 metadata/_edit_use_anchors_ = true
 
-[node name="Settings2" type="Button" parent="Main"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = 104.0
-offset_right = 35.0
-offset_bottom = 135.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Settings2" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
 text = "Quit"
 metadata/_edit_use_anchors_ = true
 
 [node name="Host" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Host"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -157.0
+offset_top = 14.0
+offset_right = 157.0
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]Host Server[/center]"
+
+[node name="ColorRect" type="ColorRect" parent="Host"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 265.0
+offset_top = 76.0
+offset_right = -265.0
+offset_bottom = 81.0
+grow_horizontal = 2
+
+[node name="GridContainer" type="GridContainer" parent="Host"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="PortLabel" type="RichTextLabel" parent="Host/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Port Number"
+
+[node name="SpinBox" type="SpinBox" parent="Host/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Host/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Password"
+
+[node name="LineEdit" type="LineEdit" parent="Host/GridContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="Host/GridContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="Create" type="Button" parent="Host/GridContainer"]
+layout_mode = 2
+text = "Create Server"
 
 [node name="Join" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Settings" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

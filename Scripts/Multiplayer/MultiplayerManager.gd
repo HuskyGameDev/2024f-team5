@@ -9,14 +9,15 @@ var peer: ENetMultiplayerPeer
 var hosting: bool = false
 var password: String
 var authenticationAttempts: int = 5
-var authentication: Dictionary
+var hostData: PlayerData
+var data: PlayerData
 
-func hostServer(port: int, upnp: bool, username: String, color: Color, password: String = "") -> Error:
+func hostServer(port: int, upnp: bool) -> Error:
 	peer = ENetMultiplayerPeer.new()
 	var error: Error = peer.create_server(port)
 	if (error == Error.OK):
 		hosting = true
-		password = $/root/Root/Menu/HostMenu/Password.text
+		password = $/root/Root/Menu/HostMenu/PasswordEntry.text
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(addPlayer)
 		multiplayer.peer_disconnected.connect(removePlayer)
@@ -26,39 +27,49 @@ func hostServer(port: int, upnp: bool, username: String, color: Color, password:
 
 func upnpSetup(port: int) -> String:
 	var upnp: UPNP = UPNP.new()
-	var result: int = upnp.discover()
-	var map: int = upnp.add_port_mapping(port)
+	var _result: int = upnp.discover()
+	var _map: int = upnp.add_port_mapping(port)
 	return upnp.query_external_address()
 
-func joinServer(ip: String, port: int, password: String = "") -> Error:
+func joinServer(ip: String, port: int) -> Error:
 	peer = ENetMultiplayerPeer.new()
 	var error: Error = peer.create_client(ip, port)
 	multiplayer.multiplayer_peer = peer
+	multiplayer.server_disconnected.connect(serverClosed)
 	return error
 
 func addPlayer(id: int) -> void:
-	authentication[id] = false
 	var player: PlayerData = playerData.instantiate()
 	player.uuid = id
 	player.name = str(id)
 	add_child(player)
-	playerAdded.emit(player)
 	if (id == 1):
-		authentication[id] = true
+		hostData = $'1'
+		player.isAdmin = true
+		player.password = password
+		playerAdded.emit(player)
 		return
+	player.isAdmin = false
 	await get_tree().create_timer(0.1).timeout
-	for i: int in range(authenticationAttempts):
-		if (player.password == password):
-			authentication[id] = true
-			print("User Authenticated: %s" % player.username)
-			return
-		await get_tree().create_timer(1).timeout
-	if (!authentication[id]):
-		player.rpc("password")
 
 func removePlayer(id: int) -> void:
-	authentication.erase(id)
 	for player: PlayerData in get_children():
 		if (player.uuid == id): 
 			playerLost.emit(player.uuid)
 			player.queue_free()
+
+func serverClosed() -> void:
+	leaveServer()
+	$/root/Root/Menu.message("connection")
+
+func kick(reason: String) -> void:
+	leaveServer()
+	$/root/Root/Menu.message(reason)
+
+func leaveServer() -> void:
+	data.rpc("chatAnnouncement", "%s left the game!" % data.username)
+	multiplayer.multiplayer_peer = null
+	$/root/Root.name = "OldRoot"
+	var root: Node = load("res://Scenes/Misc/root.tscn").instantiate()
+	$/root.add_child(root)
+	$/root/OldRoot.queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bjj5hw1d1pbl"]
+[gd_scene load_steps=22 format=3 uid="uid://bjj5hw1d1pbl"]
 
 [ext_resource type="Script" path="res://Demo/scripts/player_movement.gd" id="1_ym8ee"]
 [ext_resource type="PackedScene" uid="uid://bnowe750hxon4" path="res://Demo/scenes/oob_death.tscn" id="2_o8rcn"]
@@ -150,8 +150,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssjyn"]
-size = Vector2(16, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w166n"]
+size = Vector2(4, 6)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vd28u"]
+radius = 6.5
+height = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7coln"]
 size = Vector2(14, 11)
@@ -167,8 +171,15 @@ animation = &"bump"
 frame = 1
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ssjyn")
+[node name="Legs" type="CollisionShape2D" parent="."]
+position = Vector2(-2.38419e-07, 6)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_w166n")
+
+[node name="Goop" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.48816)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_vd28u")
 
 [node name="DeathParticles" parent="." instance=ExtResource("7_tlm4h")]
 position = Vector2(0, -2)
