@@ -23,9 +23,6 @@ const SHOOT_VELOCITY: float = 400
 # For ADS Line
 @onready var line: Line2D = $Sprite2D/Barrel/Line2D
 var ads: bool = false
-## If true, aiming and shooting will be straight from barrel, but less
-## accurate to mouse position.
-@export var realistic_aiming: bool = false
 
 ## Gun is pointing left if true
 var flipped: bool = false
@@ -65,23 +62,31 @@ func unflip() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	var mousepos: Vector2 = get_global_mouse_position()
-	look_at(mousepos)
-	if(mousepos.x < global_position.x):
+	
+	if(get_global_mouse_position().x < global_position.x):
 		if(!flipped):
 			flip()
 	elif(flipped):
 		unflip()
+	var crosshairAngle: float = global_position.angle_to_point(get_global_mouse_position())
+	# The total y offset of barrel from origin. Needed to correct aim
+	var offsetY: float = -barrel.position.y - spi.position.y
+	# corrects y offset when flipped
+	if(flipped):
+		offsetY *= -1
+	var mousepos: Vector2 = (
+		get_global_mouse_position() + 
+		Vector2(offsetY * sin(crosshairAngle + PI), offsetY * cos(crosshairAngle))
+		# NO clue why the x value nees PI added to the angle,
+		# But it helps correct the angle when it's close to +-90 degrees
+	)
+	look_at(mousepos)
+	
 	if(flipped):
 		rotation += PI
-		#rotation += 135
 	
 	if(ads):
-		if(realistic_aiming):
-			line.points[1] = Vector2(1000, 0)
-		else:
-			line.global_rotation = 0
-			line.points[1] = mousepos - line.global_position
+		line.points[1] = Vector2(1000, 0)
 		
 	if(Input.is_action_just_pressed("shoot")):
 		shoot(mousepos)

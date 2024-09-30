@@ -89,8 +89,8 @@ tile_map_data = PackedByteArray("AAD//wEAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAE
 tile_set = SubResource("TileSet_ejak1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-107, 0)
-zoom = Vector2(2.4, 2.4)
+position = Vector2(-13, 2)
+zoom = Vector2(1.425, 1.425)
 
 [node name="Player" parent="." instance=ExtResource("2_lwygx")]
 position = Vector2(-232, 8)

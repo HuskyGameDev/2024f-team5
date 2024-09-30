@@ -25,8 +25,8 @@ curve = SubResource("Curve_co6f3")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_imdxc"]
 particle_flag_disable_z = true
 spread = 17.027
-initial_velocity_min = 1.0
-initial_velocity_max = 107.69
+initial_velocity_min = 77.93
+initial_velocity_max = 230.77
 gravity = Vector3(0, -20, 0)
 radial_accel_min = -2.23517e-06
 radial_accel_max = -2.23517e-06
@@ -67,7 +67,7 @@ emitting = false
 amount = 64
 process_material = SubResource("ParticleProcessMaterial_imdxc")
 one_shot = true
-explosiveness = 1.0
+explosiveness = 0.82
 script = ExtResource("1_ubofj")
 
 [node name="LongSmoke" type="GPUParticles2D" parent="."]

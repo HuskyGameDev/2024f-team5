@@ -4,6 +4,6 @@ class_name Hazard
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		# The rotation aspect of the oob death doesn't currently work
-		# It will always face up
-		body.die(true, rotation)
+		# Goop chunks will always shoot toward the center of world borders
+		var theta: float = get_angle_to(body.global_position) - PI/2
+		body.die(true, theta)
