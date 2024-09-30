@@ -12,7 +12,6 @@ grow_vertical = 2
 script = ExtResource("1_tmlow")
 
 [node name="Main" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,12 +60,13 @@ layout_mode = 2
 text = "Settings"
 metadata/_edit_use_anchors_ = true
 
-[node name="Settings2" type="Button" parent="Main/VBoxContainer"]
+[node name="Quit" type="Button" parent="Main/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 metadata/_edit_use_anchors_ = true
 
 [node name="Host" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -119,23 +119,23 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Port Number"
 
-[node name="SpinBox" type="SpinBox" parent="Host/GridContainer"]
+[node name="PortEntry" type="SpinBox" parent="Host/GridContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Host/GridContainer"]
+[node name="PasswordLabel" type="RichTextLabel" parent="Host/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Password"
 
-[node name="LineEdit" type="LineEdit" parent="Host/GridContainer"]
+[node name="PasswordEntry" type="LineEdit" parent="Host/GridContainer"]
 layout_mode = 2
 
 [node name="Back" type="Button" parent="Host/GridContainer"]
 layout_mode = 2
 text = "Back"
 
-[node name="Create" type="Button" parent="Host/GridContainer"]
+[node name="Host" type="Button" parent="Host/GridContainer"]
 layout_mode = 2
 text = "Create Server"
 
@@ -148,6 +148,78 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="RichTextLabel" type="RichTextLabel" parent="Join"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -157.0
+offset_top = 14.0
+offset_right = 157.0
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]Join Server[/center]"
+
+[node name="ColorRect" type="ColorRect" parent="Join"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 265.0
+offset_top = 76.0
+offset_right = -265.0
+offset_bottom = 81.0
+grow_horizontal = 2
+
+[node name="GridContainer" type="GridContainer" parent="Join"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="IPLabel" type="RichTextLabel" parent="Join/GridContainer"]
+layout_mode = 2
+text = "IP Address"
+
+[node name="IPEntry" type="LineEdit" parent="Join/GridContainer"]
+layout_mode = 2
+
+[node name="PortLabel" type="RichTextLabel" parent="Join/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Port Number"
+
+[node name="PortEntry" type="SpinBox" parent="Join/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="PasswordLabel" type="RichTextLabel" parent="Join/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Password"
+
+[node name="PasswordEntry" type="LineEdit" parent="Join/GridContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="Join/GridContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="Join" type="Button" parent="Join/GridContainer"]
+layout_mode = 2
+text = "Join Server"
+
 [node name="Settings" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -156,3 +228,83 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Notification" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Notification"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -308.0
+offset_top = -186.0
+offset_right = 308.0
+offset_bottom = 186.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Notification" type="RichTextLabel" parent="Notification/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "[center]Notification[/center]"
+
+[node name="ColorRect" type="ColorRect" parent="Notification/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 113.0
+offset_top = 46.0
+offset_right = -113.0
+offset_bottom = 49.0
+grow_horizontal = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Notification/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 65.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][/center]"
+
+[node name="Close" type="Button" parent="Notification/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -65.0
+offset_right = 67.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Close"
+
+[connection signal="pressed" from="Main/VBoxContainer/Host" to="." method="_on_host_menu_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/Join" to="." method="_on_join_menu_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Host/GridContainer/Back" to="." method="backPressed"]
+[connection signal="pressed" from="Host/GridContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Join/GridContainer/Back" to="." method="backPressed"]
+[connection signal="pressed" from="Join/GridContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Notification/Panel/Close" to="." method="_on_close_pressed"]
