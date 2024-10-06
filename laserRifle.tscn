@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8ohtuvxvnjbp"]
+
+[ext_resource type="Script" path="res://Demo/scripts/gun.gd" id="1_6tfo7"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="2_i7pbe"]
+[ext_resource type="Texture2D" uid="uid://bpua2om8qsf1m" path="res://Sprites/Weapons/LaserRifle.png" id="3_lpd6g"]
+[ext_resource type="Texture2D" uid="uid://b112vd0jxqdgo" path="res://Sprites/UI/ADS_Line.png" id="4_y7ios"]
+[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://Demo/Sounds/temp_shoot.wav" id="5_iahmm"]
+
+[node name="LaserRifle" type="Node2D"]
+z_index = -1
+script = ExtResource("1_6tfo7")
+rev_offset = -29.0
+smoke = ExtResource("2_i7pbe")
+barrel_pos = Array[Vector2]([Vector2(63, -5), Vector2(-92, -5)])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(14, -8)
+texture = ExtResource("3_lpd6g")
+
+[node name="Barrel" type="Node2D" parent="Sprite2D"]
+position = Vector2(63, -5)
+
+[node name="Line2D" type="Line2D" parent="Sprite2D/Barrel"]
+texture_repeat = 3
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.0
+texture = ExtResource("4_y7ios")
+texture_mode = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_iahmm")

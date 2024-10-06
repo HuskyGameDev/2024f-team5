@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://12goi6amxmwm"
-path="res://.godot/imported/TinyGlock.png-f7ba868e2c83690a1eed6190abb16fe2.ctex"
+uid="uid://chtydt2hvna0o"
+path="res://.godot/imported/skin_grey.png-46f1ce6e7e2623a7406b02a5261cb152.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/TinyGlock.png"
-dest_files=["res://.godot/imported/TinyGlock.png-f7ba868e2c83690a1eed6190abb16fe2.ctex"]
+source_file="res://Sprites/Player/skin_grey.png"
+dest_files=["res://.godot/imported/skin_grey.png-46f1ce6e7e2623a7406b02a5261cb152.ctex"]
 
 [params]
 

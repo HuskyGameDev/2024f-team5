@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyvxgllp7cwej"
-path="res://.godot/imported/goldeneagle.png-72a60030d084a9b593d277868ddae594.ctex"
+uid="uid://wc6bbq01x7ms"
+path="res://.godot/imported/glock2.png-e8f523c67b96868abee99dd609aff7a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/goldeneagle.png"
-dest_files=["res://.godot/imported/goldeneagle.png-72a60030d084a9b593d277868ddae594.ctex"]
+source_file="res://Sprites/Weapons/glock2.png"
+dest_files=["res://.godot/imported/glock2.png-e8f523c67b96868abee99dd609aff7a5.ctex"]
 
 [params]
 

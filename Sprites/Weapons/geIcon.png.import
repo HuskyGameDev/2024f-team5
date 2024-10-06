@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh8xoqndsykss"
-path="res://.godot/imported/Environment1.png-072f2640a0ca182e7845902bb74052cf.ctex"
+uid="uid://b3gjh2glox6sj"
+path="res://.godot/imported/geIcon.png-0edc2450cc95f73799ce1bfd3cb44b53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/Environment1.png"
-dest_files=["res://.godot/imported/Environment1.png-072f2640a0ca182e7845902bb74052cf.ctex"]
+source_file="res://Sprites/Weapons/geIcon.png"
+dest_files=["res://.godot/imported/geIcon.png-0edc2450cc95f73799ce1bfd3cb44b53.ctex"]
 
 [params]
 

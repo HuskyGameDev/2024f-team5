@@ -5,9 +5,10 @@ class_name Gun
 ## Basically this determines basic gun behaviour
 ## Jay Hawkins
 
-# This value is needed to correct the gun's position when pointing left
-const REVERSE_OFFSET: float = -48
 const SHOOT_VELOCITY: float = 400 
+
+# This value is needed to correct the gun's position when pointing left
+@export var rev_offset: float = -48
 
 @onready var spi: Sprite2D = $Sprite2D
 @onready var snd: AudioStreamPlayer2D = $AudioStreamPlayer2D
@@ -47,7 +48,7 @@ func shoot(mousepos: Vector2) -> void:
 	cooldown = true
 
 func flip() -> void:
-	spi.offset.x = REVERSE_OFFSET
+	spi.offset.x = rev_offset
 	spi.flip_h = true
 	flipped = true
 	barrel.position = barrel_pos[1]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjih42xf2dtfu"
-path="res://.godot/imported/crosshair2hires.png-8cab5918524d34f3168f1a41d1ba0752.ctex"
+uid="uid://bpua2om8qsf1m"
+path="res://.godot/imported/LaserRifle.png-77cf25547dc189a0c3ef5a4702be33fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/crosshair2hires.png"
-dest_files=["res://.godot/imported/crosshair2hires.png-8cab5918524d34f3168f1a41d1ba0752.ctex"]
+source_file="res://Sprites/Weapons/LaserRifle.png"
+dest_files=["res://.godot/imported/LaserRifle.png-77cf25547dc189a0c3ef5a4702be33fa.ctex"]
 
 [params]
 

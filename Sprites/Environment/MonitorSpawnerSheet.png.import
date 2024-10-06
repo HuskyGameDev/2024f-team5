@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wc6bbq01x7ms"
-path="res://.godot/imported/glock2.png-f4e93715c24c98e1536eb3fa279bd3bb.ctex"
+uid="uid://cndlolvxbrb8h"
+path="res://.godot/imported/MonitorSpawnerSheet.png-58f4b59b778a225a43fc4e225caff758.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/glock2.png"
-dest_files=["res://.godot/imported/glock2.png-f4e93715c24c98e1536eb3fa279bd3bb.ctex"]
+source_file="res://Sprites/Environment/MonitorSpawnerSheet.png"
+dest_files=["res://.godot/imported/MonitorSpawnerSheet.png-58f4b59b778a225a43fc4e225caff758.ctex"]
 
 [params]
 

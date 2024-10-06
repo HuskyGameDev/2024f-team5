@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cndlolvxbrb8h"
-path="res://.godot/imported/MonitorSpawnerSheet.png-dd37bab736b31fbb86b80a71b3992535.ctex"
+uid="uid://b112vd0jxqdgo"
+path="res://.godot/imported/ADS_Line.png-199bfcc077595f2ec51591e632b55d0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/MonitorSpawnerSheet.png"
-dest_files=["res://.godot/imported/MonitorSpawnerSheet.png-dd37bab736b31fbb86b80a71b3992535.ctex"]
+source_file="res://Sprites/UI/ADS_Line.png"
+dest_files=["res://.godot/imported/ADS_Line.png-199bfcc077595f2ec51591e632b55d0f.ctex"]
 
 [params]
 

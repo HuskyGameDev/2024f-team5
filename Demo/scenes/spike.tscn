@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://5go066ip627a"]
 
-[ext_resource type="Texture2D" uid="uid://cehymdqq3n5y1" path="res://Demo/Sprites/Spike.png" id="1_it2ot"]
+[ext_resource type="Texture2D" uid="uid://cehymdqq3n5y1" path="res://Sprites/Environment/Spike.png" id="1_it2ot"]
 
 [node name="Spike" type="StaticBody2D"]
 collision_layer = 2

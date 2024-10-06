@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brtiftwoxf6ju"
-path="res://.godot/imported/OOBDeath.png-d26fb7b248aae1a3ac91743f6030ac2d.ctex"
+uid="uid://byq6ojabl53ah"
+path="res://.godot/imported/crosshair1.png-0586320dab1d33fc3e59aced3939688d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/OOBDeath.png"
-dest_files=["res://.godot/imported/OOBDeath.png-d26fb7b248aae1a3ac91743f6030ac2d.ctex"]
+source_file="res://Sprites/UI/crosshair1.png"
+dest_files=["res://.godot/imported/crosshair1.png-0586320dab1d33fc3e59aced3939688d.ctex"]
 
 [params]
 

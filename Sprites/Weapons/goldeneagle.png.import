@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cws8yr0pdxj3k"
-path="res://.godot/imported/crosshair3hires.png-79563b8727a33ff76b4542e085a07ea5.ctex"
+uid="uid://dyvxgllp7cwej"
+path="res://.godot/imported/goldeneagle.png-40b646598170531873b99c8003698c7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demo/Sprites/crosshair3hires.png"
-dest_files=["res://.godot/imported/crosshair3hires.png-79563b8727a33ff76b4542e085a07ea5.ctex"]
+source_file="res://Sprites/Weapons/goldeneagle.png"
+dest_files=["res://.godot/imported/goldeneagle.png-40b646598170531873b99c8003698c7d.ctex"]
 
 [params]
 

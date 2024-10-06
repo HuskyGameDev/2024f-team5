@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b112vd0jxqdgo"
-path="res://.godot/imported/ADS_Line.png-24b2c3d6168c7eeaceeca3471d9d1fc4.ctex"
+uid="uid://cws8yr0pdxj3k"
+path="res://.godot/imported/crosshair3.png-58c5339d8bcf9ead7437510e249f5792.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/ADS_Line.png"
-dest_files=["res://.godot/imported/ADS_Line.png-24b2c3d6168c7eeaceeca3471d9d1fc4.ctex"]
+source_file="res://Sprites/UI/crosshair3.png"
+dest_files=["res://.godot/imported/crosshair3.png-58c5339d8bcf9ead7437510e249f5792.ctex"]
 
 [params]
 
