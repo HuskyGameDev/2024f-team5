@@ -86,6 +86,9 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, direction * SPEED, GROUND_ACCELERATION)
 		else:
 			velocity.x = move_toward(velocity.x, direction * SPEED, AIR_ACCELERATION)
+			
+		if is_on_wall_only() and Input.is_action_pressed("jump"): #Thomas's maddness
+			velocity.y = move_toward(velocity.y, direction * (SPEED/2), GROUND_ACCELERATION)
 	else:
 		if(is_on_floor()):
 			if(anim.current_animation != "crouch" && anim.current_animation != "look_up"):
