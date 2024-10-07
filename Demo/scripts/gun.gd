@@ -4,8 +4,12 @@ class_name Gun
 ## But idk how to do allat
 ## Basically this determines basic gun behaviour
 ## Jay Hawkins
+##Minor edits by Thomas Wilkins
 
 const SHOOT_VELOCITY: float = 400 
+
+#Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
+const GUN_WEIGHT: float = 30.16
 
 # This value is needed to correct the gun's position when pointing left
 @export var rev_offset: float = -48
