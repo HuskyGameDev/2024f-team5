@@ -15,6 +15,12 @@ const AIR_ACCELERATION: float = 17
 const AIR_DECELERATION: float = 8
 # Factor that friction increases by when crouched
 const CROUCH_FACTOR: float = 2.2
+#Thomas: Factor that friction increases by for wall cling
+const CLING_FACTOR: float = 2.0
+#Thomas: Factor that walljump strength decreases by, this is a divisor for the normal jump velocity
+const WALLJUMP_FACTOR: float = 1.0
+#Thomas: number of times the player can consecutivley wall jump before needing to touch the ground
+const MAX_WALLJUMPS: int = 3
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
@@ -31,8 +37,12 @@ var cursors: Array = [
 var crouching: bool = false
 var dead: bool = false
 
-#A bool to determine if the player has recently jumped and if they can now wall jump (Thomas)
+#Thoams: A bool to determine if the player has recently jumped and if they can now wall cling
+var can_wall_cling: bool = false
+
+#Thomas: If the player is already wall clinging this determines if they can jump off the wall
 var can_wall_jump: bool = false
+var consecutive_wall_jumps: int = 0
 
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
@@ -77,9 +87,16 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-		#Thomas: start a timer here for the wall jump
+		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
 		$"Walljump Timer".start()
-
+		consecutive_wall_jumps = 0
+		
+	#Thomas: handle jump off walls
+	if Input.is_action_just_pressed("jump") and is_on_wall_only() and can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS:
+		can_wall_cling = false
+		$"Walljump Timer".start()
+		velocity.y = JUMP_VELOCITY/WALLJUMP_FACTOR
+		consecutive_wall_jumps += 1
 	
 	if direction:
 		uncrouch() # Can't crouch while moving
@@ -94,12 +111,12 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, direction * SPEED, AIR_ACCELERATION)
 			
 		#Thomas: Only let the player wall jump/cling if they're on a wall and haven't just jumped (adjust timer in the walljump timer node)
-		if is_on_wall_only() and can_wall_jump and Input.is_action_pressed("jump"):
-			velocity.y = move_toward(velocity.y, (SPEED/2), GROUND_ACCELERATION)
+		if is_on_wall_only() and can_wall_cling and velocity.abs().x > 0:
+			velocity.y = move_toward(velocity.y, (SPEED/CLING_FACTOR), GROUND_ACCELERATION)
 		
 		#Thomas: if the player rleases their wall jump they now have to hit the ground again
-		if Input.is_action_just_released("jump"):
-			can_wall_jump = false
+		if velocity.abs().x == 0 or is_on_floor():
+			can_wall_cling = false
 	else:
 		if(is_on_floor()):
 			if(anim.current_animation != "crouch" && anim.current_animation != "look_up"):
@@ -161,4 +178,4 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 #Thomas: this is for signaling when the player is allowed to wall jump (to prevent them from clipping their normal jump)
 func _on_walljump_timer_timeout() -> void:
-	can_wall_jump = true
+	can_wall_cling = true
