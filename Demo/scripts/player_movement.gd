@@ -25,6 +25,7 @@ const MAX_WALLJUMPS: int = 3
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var death_parts: GPUParticles2D = $DeathParticles
+@onready var walljumpTimer: Timer = $"Walljump Timer"
 @export var oob_death: PackedScene
 var equipped_item: Node = null
 
@@ -71,12 +72,15 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity and handle jumping animation.
 	if not is_on_floor():
 		uncrouch() # Can't crouch while airbourne
-		if(velocity.y > Y_VEL_ANIM_THRESH):
-			anim.play("jump_down")
-		elif(velocity.y < -Y_VEL_ANIM_THRESH):
-			anim.play("jump_up")
-		else:
-			anim.play("jump_neutral")
+		if(!(can_wall_cling and is_on_wall_only())):
+			if(velocity.y > Y_VEL_ANIM_THRESH):
+				anim.play("jump_down")
+			elif(velocity.y < -Y_VEL_ANIM_THRESH):
+				anim.play("jump_up")
+			else:
+				anim.play("jump_neutral")
+		elif(anim.current_animation != "bump"):
+			anim.current_animation = "bump"
 		velocity += get_gravity() * delta
 	else:
 		if(Input.is_action_pressed("crouch") && !direction):
@@ -89,15 +93,15 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
 		if equipped_item == null:
-			$"Walljump Timer".start()
+			walljumpTimer.start()
 			consecutive_wall_jumps = 0
-		
 	#Thomas: handle jump off walls
-	if Input.is_action_just_pressed("jump") and is_on_wall_only() and can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS:
+	if (Input.is_action_just_pressed("jump") and is_on_wall_only() and 
+	  can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS):
 		can_wall_cling = false
 		if equipped_item == null: #Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
-			$"Walljump Timer".start()
-			velocity.y = JUMP_VELOCITY/WALLJUMP_FACTOR
+			walljumpTimer.start()
+			velocity.y = JUMP_VELOCITY / WALLJUMP_FACTOR
 			consecutive_wall_jumps += 1
 	
 	if direction:
@@ -131,6 +135,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, AIR_DECELERATION)
 
 	var hit_ground: bool = is_on_floor()
+	var hit_wall: bool = is_on_wall()
 	move_and_slide()
 	if(hit_ground != is_on_floor()):
 		anim.current_animation = "idle"
@@ -180,4 +185,4 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 #Thomas: this is for signaling when the player is allowed to wall jump (to prevent them from clipping their normal jump)
 func _on_walljump_timer_timeout() -> void:
-		can_wall_cling = true
+	can_wall_cling = true
