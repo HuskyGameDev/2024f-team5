@@ -88,15 +88,17 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
-		$"Walljump Timer".start()
-		consecutive_wall_jumps = 0
+		if equipped_item == null:
+			$"Walljump Timer".start()
+			consecutive_wall_jumps = 0
 		
 	#Thomas: handle jump off walls
 	if Input.is_action_just_pressed("jump") and is_on_wall_only() and can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS:
 		can_wall_cling = false
-		$"Walljump Timer".start()
-		velocity.y = JUMP_VELOCITY/WALLJUMP_FACTOR
-		consecutive_wall_jumps += 1
+		if equipped_item == null: #Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
+			$"Walljump Timer".start()
+			velocity.y = JUMP_VELOCITY/WALLJUMP_FACTOR
+			consecutive_wall_jumps += 1
 	
 	if direction:
 		uncrouch() # Can't crouch while moving
@@ -178,4 +180,4 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 #Thomas: this is for signaling when the player is allowed to wall jump (to prevent them from clipping their normal jump)
 func _on_walljump_timer_timeout() -> void:
-	can_wall_cling = true
+		can_wall_cling = true
