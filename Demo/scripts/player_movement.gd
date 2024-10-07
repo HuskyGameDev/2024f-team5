@@ -21,6 +21,8 @@ const CLING_FACTOR: float = 2.0
 const WALLJUMP_FACTOR: float = 1.0
 #Thomas: number of times the player can consecutivley wall jump before needing to touch the ground
 const MAX_WALLJUMPS: int = 3
+#Thomas: this is the factor we'll use to divide the equipped items weight into a move speed penalty
+const WEIGHT_TO_SPEED_FACTOR: float = 1 #going to default to a quarter of weapon weight becomes move penalty
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
@@ -44,6 +46,10 @@ var can_wall_cling: bool = false
 var can_wall_jump: bool = false
 var consecutive_wall_jumps: int = 0
 
+#Thomas: this will become a move penalty for the player when they equip something
+var equipped_item_weight: float = 0
+var item_weight_penalty: float = 0
+
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
 func crouch() -> void:
@@ -62,6 +68,8 @@ func _physics_process(delta: float) -> void:
 	if(dead): return
 	# Get the input direction and handle the movement/deceleration.
 	var direction: float = Input.get_axis("move_left", "move_right")
+	
+	item_weight_penalty = equipped_item_weight/WEIGHT_TO_SPEED_FACTOR
 	
 	# Reset animations
 	if(crouching && Input.is_action_just_released("crouch")):
@@ -86,7 +94,7 @@ func _physics_process(delta: float) -> void:
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY + abs(item_weight_penalty)
 		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
 		if equipped_item == null:
 			$"Walljump Timer".start()
@@ -108,9 +116,9 @@ func _physics_process(delta: float) -> void:
 			sprite.flip_h = false
 		if is_on_floor():
 			anim.play("run")
-			velocity.x = move_toward(velocity.x, direction * SPEED, GROUND_ACCELERATION)
+			velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), GROUND_ACCELERATION)
 		else:
-			velocity.x = move_toward(velocity.x, direction * SPEED, AIR_ACCELERATION)
+			velocity.x = move_toward(velocity.x, (direction * SPEED)  - (item_weight_penalty * direction), AIR_ACCELERATION)
 			
 		#Thomas: Only let the player wall jump/cling if they're on a wall and haven't just jumped (adjust timer in the walljump timer node)
 		if is_on_wall_only() and can_wall_cling and velocity.abs().x > 0:
@@ -160,11 +168,18 @@ func equip(item: Node) -> void:
 	add_child(item)
 	equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
+	
+	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
+	if $Gun != null:
+		equipped_item_weight = $Gun.GUN_WEIGHT
 
 # Unequips item
 func unequip() -> void:
 	if (is_instance_valid(equipped_item)): equipped_item.queue_free()
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
+	
+	#Thomas: when uneqipping an item set the weight back to nothing
+	equipped_item_weight = 0 
 
 func _on_mouse_entered() -> void:
 	if(equipped_item != null):
