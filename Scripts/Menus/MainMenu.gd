@@ -8,16 +8,23 @@ func _ready() -> void:
 
 func _on_host_pressed() -> void:
 	var loading: LoadingScreen = loadingScreen.instantiate()
-	loading.setAdmin()
-	#multiplayerManager.child_entered_tree.connect(lobby.playerConnected)
-	#multiplayerManager.child_exiting_tree.connect(lobby.playerDisconnected)
+	loading.isAdmin = true
 	$/root/Root.add_child(loading)
-	print(multiplayerManager.hostServer($Host/GridContainer/PortEntry.value, false))
-	#setPlayerData()
+	print(multiplayerManager.hostServer($Host/GridContainer/PortEntry.value, false, $Host/GridContainer/PasswordEntry.text))
+	var data: PlayerData = $'/root/Root/MultiplayerManager/1'
+	data.username = "Placeholder Name"
 	queue_free()
 
 func _on_join_pressed() -> void:
-	pass # Replace with function body.
+	var data: PlayerData = PlayerData.new()
+	data.username = "Placeholder Joiner"
+	data.name = "PlayerData"
+	data.password = $Join/GridContainer/PasswordEntry.text
+	$/root.add_child(data)
+	var loading: LoadingScreen = loadingScreen.instantiate()
+	$/root/Root.add_child(loading)
+	print(multiplayerManager.joinServer($Join/GridContainer/IPEntry.text, $Join/GridContainer/PortEntry.value))
+	queue_free()
 
 func _on_host_menu_pressed() -> void:
 	$Main.hide()

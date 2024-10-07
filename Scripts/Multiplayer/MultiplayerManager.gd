@@ -12,12 +12,12 @@ var authenticationAttempts: int = 5
 var hostData: PlayerData
 var data: PlayerData
 
-func hostServer(port: int, upnp: bool) -> Error:
+func hostServer(port: int, upnp: bool, pswd: String) -> Error:
 	peer = ENetMultiplayerPeer.new()
 	var error: Error = peer.create_server(port)
 	if (error == Error.OK):
 		hosting = true
-		password = $/root/Root/Menu/HostMenu/PasswordEntry.text
+		password = pswd
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(addPlayer)
 		multiplayer.peer_disconnected.connect(removePlayer)
@@ -50,7 +50,7 @@ func addPlayer(id: int) -> void:
 		playerAdded.emit(player)
 		return
 	player.isAdmin = false
-	await get_tree().create_timer(0.1).timeout
+	#await get_tree().create_timer(0.1).timeout
 
 func removePlayer(id: int) -> void:
 	for player: PlayerData in get_children():

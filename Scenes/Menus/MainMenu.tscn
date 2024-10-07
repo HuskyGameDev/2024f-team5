@@ -122,6 +122,8 @@ text = "Port Number"
 [node name="PortEntry" type="SpinBox" parent="Host/GridContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+max_value = 65535.0
+value = 3360.0
 
 [node name="PasswordLabel" type="RichTextLabel" parent="Host/GridContainer"]
 layout_mode = 2
@@ -203,6 +205,8 @@ text = "Port Number"
 [node name="PortEntry" type="SpinBox" parent="Join/GridContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+max_value = 65535.0
+value = 3360.0
 
 [node name="PasswordLabel" type="RichTextLabel" parent="Join/GridContainer"]
 layout_mode = 2

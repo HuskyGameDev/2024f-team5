@@ -1,5 +1,7 @@
 class_name PlayerData extends Node
 
+signal playerAuthenticated()
+
 @export var username: String
 @export var color: Color
 @export var uuid: int
@@ -30,12 +32,21 @@ func getAuth(result: bool) -> void:
 
 @rpc("any_peer")
 func authPassword(playerID: int, passwd: String) -> void:
-	get_node("/root/Root/MultiplayerManager/" + str(playerID)).rpc_id(playerID, "getAuth", (passwd == password || password == ""))
+	var result: bool = (passwd == password || password == "")
+	get_node("/root/Root/MultiplayerManager/" + str(playerID)).rpc_id(playerID, "getAuth", result)
+	await get_tree().create_timer(1).timeout
+	if (result): playerAuthenticated.emit()
 
-#@rpc("any_peer", "call_local")
-#func chatMessage(playerID: int, msg: String) -> void:
-	#$/root/Root/Lobby/VBoxContainer/Content/Configuration/Chat/Control/Panel/Chat.append_text("\n<%s> %s" % [get_node("/root/Root/MultiplayerManager/%s" % str(playerID)).username, msg])
+# This method is not currently used, but since I had the infrastructure for it already, I left it
+@rpc("any_peer", "call_local")
+func chatMessage(playerID: int, msg: String) -> void:
+	pass
+	#Example code of how this is used in a different game using the same multiplayer system:
+	#Chat.append_text("\n<%s> %s" % [get_node("/root/Root/MultiplayerManager/%s" % str(playerID)).username, msg])
 
-#@rpc("any_peer", "call_local")
-#func chatAnnouncement(msg: String) -> void:
-	#$/root/Root/Lobby/VBoxContainer/Content/Configuration/Chat/Control/Panel/Chat.append_text("\n[color=YELLOW]%s[/color]" % msg)
+# This method is not currently used, but since I had the infrastructure for it already, I left it
+@rpc("any_peer", "call_local")
+func chatAnnouncement(msg: String) -> void:
+	pass
+	#Example code of how this is used in a different game using the same multiplayer system:
+	#Chat.append_text("\n[color=YELLOW]%s[/color]" % msg)

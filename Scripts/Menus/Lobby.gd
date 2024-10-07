@@ -1,6 +1,8 @@
 class_name Lobby extends Control
 
 @onready var multiplayerManager: MultiplayerManager = $/root/Root/MultiplayerManager
+@onready var playerList: VBoxContainer = $PlayerList
+@onready var nameplateScene: PackedScene = preload("res://Scenes/Menus/MenuNameplate.tscn")
 
 @export var bufferTime: float = 0.1
 @export var timeoutLength: float = 10
@@ -12,16 +14,20 @@ var password: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	await get_tree().create_timer(bufferTime).timeout
-	while (!is_instance_valid(data)):
-		for player: PlayerData in multiplayerManager.get_children():
-			if (player.is_multiplayer_authority()):
-				data = player
-				multiplayerManager.data = player
-				break
-		await get_tree().create_timer(0.5).timeout
-	hostData = $'/root/Root/MultiplayerManager/1'
+	if (isAdmin):
+		#multiplayerManager.child_entered_tree.connect(playerConnected)
+		hostData.playerAuthenticated.connect(playerConnected)
+		multiplayerManager.child_exiting_tree.connect(playerDisconnected)
+		playerConnected(data)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func playerConnected(player: PlayerData) -> void:
+	print("Creating %s" % player.username)
+	var nameplate: MenuNameplate = nameplateScene.instantiate()
+	playerList.add_child(nameplate)
+	nameplate.setPlayer(player)
+
+func playerDisconnected(player: PlayerData) -> void:
+	for nameplate: MenuNameplate in playerList.get_children():
+		if (str(player.uuid) == nameplate.name):
+			nameplate.queue_free()
+			break
