@@ -19,6 +19,8 @@ const CROUCH_FACTOR: float = 2.2
 const CLING_FACTOR: float = 2.0
 #Thomas: Factor that walljump strength decreases by, this is a divisor for the normal jump velocity
 const WALLJUMP_FACTOR: float = 1.0
+#Jay: The horizontal impulse recieved from walljumping to differentiate it from climbing
+const WALLJUMP_IMPULSE: float = 150.0
 #Thomas: number of times the player can consecutivley wall jump before needing to touch the ground
 const MAX_WALLJUMPS: int = 3
 #Thomas: this is the factor we'll use to divide the equipped items weight into a move speed penalty
@@ -40,7 +42,7 @@ var cursors: Array = [
 var crouching: bool = false
 var dead: bool = false
 
-#Thoams: A bool to determine if the player has recently jumped and if they can now wall cling
+#Thomas: A bool to determine if the player has recently jumped and if they can now wall cling
 var can_wall_cling: bool = false
 
 #Thomas: If the player is already wall clinging this determines if they can jump off the wall
@@ -50,6 +52,9 @@ var consecutive_wall_jumps: int = 0
 #Thomas: this will become a move penalty for the player when they equip something
 var equipped_item_weight: float = 0
 var item_weight_penalty: float = 0
+
+# EXPERIMENTAL VARIABLES. USE TO TEST FOR NEW CHANGES
+@export var impulsive_walljumps: bool = false
 
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
@@ -64,6 +69,28 @@ func uncrouch() -> void:
 
 func _ready() -> void:
 	anim.play("idle")
+
+func _jump() -> void:
+	# Determines if player can wall jump
+	var walljump: bool = (is_on_wall_only() 
+	  and can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS)
+	if walljump:
+		can_wall_cling = false
+		if equipped_item == null: #Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
+			walljumpTimer.start()
+			velocity.y = JUMP_VELOCITY / WALLJUMP_FACTOR
+			consecutive_wall_jumps += 1
+			if(!impulsive_walljumps): return
+			if(sprite.flip_h):
+				velocity.x += WALLJUMP_IMPULSE
+			else:
+				velocity.x -= WALLJUMP_IMPULSE
+	elif is_on_floor():
+		velocity.y = JUMP_VELOCITY + abs(item_weight_penalty)
+		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
+		if equipped_item == null:
+			walljumpTimer.start()
+			consecutive_wall_jumps = 0
 
 func _physics_process(delta: float) -> void:
 	if(dead): return
@@ -97,20 +124,9 @@ func _physics_process(delta: float) -> void:
 			anim.current_animation = "look_up"
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY + abs(item_weight_penalty)
-		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
-		if equipped_item == null:
-			walljumpTimer.start()
-			consecutive_wall_jumps = 0
-	#Thomas: handle jump off walls
-	if (Input.is_action_just_pressed("jump") and is_on_wall_only() and 
-	  can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS):
-		can_wall_cling = false
-		if equipped_item == null: #Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
-			walljumpTimer.start()
-			velocity.y = JUMP_VELOCITY / WALLJUMP_FACTOR
-			consecutive_wall_jumps += 1
+	if Input.is_action_just_pressed("jump"):
+		_jump()
+		
 	
 	if direction:
 		uncrouch() # Can't crouch while moving

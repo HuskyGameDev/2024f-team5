@@ -6,10 +6,9 @@ class_name Gun
 ## Jay Hawkins
 ##Minor edits by Thomas Wilkins
 
-const SHOOT_VELOCITY: float = 400 
+const SHOOT_VELOCITY: float = 400
 
-#Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
-const GUN_WEIGHT: float = 30.16
+
 
 # This value is needed to correct the gun's position when pointing left
 @export var rev_offset: float = -48
@@ -35,8 +34,18 @@ var flipped: bool = false
 var cooldown: bool = true
 ## Fire rate (inverse of cooldown) in rounds per second
 @export var firerate: float = 18
+#Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
+#Jay: changed from constant to variable because it should vary between guns
+@export var GUN_WEIGHT: float = 15
+## Count of rounds in a magazine
+# Fun fact: 15 is the number of rounds in a standard glock 19 magazine
+@export var max_ammo: int = 15
+var ammo: int = max_ammo
+@export var counter: RichTextLabel
 
 func shoot(mousepos: Vector2) -> void:
+	if(ammo < 1):
+		return
 	if(!cooldown):
 		return
 	var par: Node = get_parent()
@@ -46,10 +55,16 @@ func shoot(mousepos: Vector2) -> void:
 	par.velocity += recoil
 	barrel.add_child(smoke.instantiate())
 	snd.play()
+	#TODO: I can't figure out how to naturally connect the script to the
+	# ammo counter node.
+	# Godot doesn't support ++/-- incrementing. Fuck that.
+	#ammo -= 1
+	#counter.text = "%d/%d" % [ammo, max_ammo]
 	# Cooldown handling
 	cooldown = false
 	await get_tree().create_timer(1 / firerate).timeout
 	cooldown = true
+	
 
 func flip() -> void:
 	spi.offset.x = rev_offset
@@ -80,7 +95,7 @@ func _process(_delta: float) -> void:
 	if(flipped):
 		offsetY *= -1
 	var mousepos: Vector2 = (
-		get_global_mouse_position() + 
+		get_global_mouse_position() +
 		Vector2(offsetY * sin(crosshairAngle + PI), offsetY * cos(crosshairAngle))
 		# NO clue why the x value nees PI added to the angle,
 		# But it helps correct the angle when it's close to +-90 degrees
