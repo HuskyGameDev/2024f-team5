@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 ## HANDLES PLAYER CONTROLS AND SHIT
 ## Jay Hawkins
+## Some minor additions by Thomas Wilkins
 
 const SPEED: float = 75.0
 const JUMP_VELOCITY: float = -225.0
@@ -29,6 +30,9 @@ var cursors: Array = [
 
 var crouching: bool = false
 var dead: bool = false
+
+#A bool to determine if the player has recently jumped and if they can now wall jump (Thomas)
+var can_wall_jump: bool = false
 
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
@@ -73,6 +77,8 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		#Thomas: start a timer here for the wall jump
+		$"Walljump Timer".start()
 
 	
 	if direction:
@@ -87,8 +93,13 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, direction * SPEED, AIR_ACCELERATION)
 			
-		if is_on_wall_only() and Input.is_action_pressed("jump"): #Thomas's maddness
-			velocity.y = move_toward(velocity.y, direction * (SPEED/2), GROUND_ACCELERATION)
+		#Thomas: Only let the player wall jump/cling if they're on a wall and haven't just jumped (adjust timer in the walljump timer node)
+		if is_on_wall_only() and can_wall_jump and Input.is_action_pressed("jump"):
+			velocity.y = move_toward(velocity.y, (SPEED/2), GROUND_ACCELERATION)
+		
+		#Thomas: if the player rleases their wall jump they now have to hit the ground again
+		if Input.is_action_just_released("jump"):
+			can_wall_jump = false
 	else:
 		if(is_on_floor()):
 			if(anim.current_animation != "crouch" && anim.current_animation != "look_up"):
@@ -147,3 +158,7 @@ func _on_mouse_exited() -> void:
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if(body.get_collision_layer() == 2):
 		die()
+
+#Thomas: this is for signaling when the player is allowed to wall jump (to prevent them from clipping their normal jump)
+func _on_walljump_timer_timeout() -> void:
+	can_wall_jump = true
