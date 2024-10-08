@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://jd5q2jjqxoa4" path="res://Demo/Sprites/dev_tile_2.png" id="2_qq1rj"]
 [ext_resource type="Texture2D" uid="uid://cbepcmt0p240h" path="res://Demo/Sprites/Borrowed Assets/M1010.png" id="3_7f680"]
 [ext_resource type="Texture2D" uid="uid://csv0igdbog8vx" path="res://Demo/Sprites/Borrowed Assets/C2012.png" id="3_f7s7j"]
-[ext_resource type="PackedScene" uid="uid://bjj5hw1d1pbl" path="res://Demo/scenes/player.tscn" id="3_jlhf7"]
+[ext_resource type="PackedScene" uid="uid://bjj5hw1d1pbl" path="res://Scenes/Objects/player.tscn" id="3_jlhf7"]
 [ext_resource type="Texture2D" uid="uid://d18otvutwtn1n" path="res://Demo/Sprites/Borrowed Assets/C2013.png" id="4_gurjx"]
 [ext_resource type="Texture2D" uid="uid://dp4as0a1uofeg" path="res://Demo/Sprites/Borrowed Assets/C2010.png" id="4_n2wmm"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="10_ivq5u"]

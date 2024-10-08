@@ -36,7 +36,7 @@ var cooldown: bool = true
 @export var firerate: float = 18
 #Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
 #Jay: changed from constant to variable because it should vary between guns
-@export var GUN_WEIGHT: float = 15
+@export var weight: float = 15
 ## Count of rounds in a magazine
 # Fun fact: 15 is the number of rounds in a standard glock 19 magazine
 @export var max_ammo: int = 15
@@ -44,22 +44,22 @@ var ammo: int = max_ammo
 @export var counter: RichTextLabel
 
 func shoot(mousepos: Vector2) -> void:
-	if(ammo < 1):
-		return
+	
 	if(!cooldown):
 		return
 	var par: Node = get_parent()
+	if(ammo <= 0):
+		par.unequip()
+		return
 	var diff: Vector2 = mousepos - self.global_position
 	var angle: float = diff.angle() + PI
 	var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * SHOOT_VELOCITY
 	par.velocity += recoil
 	barrel.add_child(smoke.instantiate())
 	snd.play()
-	#TODO: I can't figure out how to naturally connect the script to the
-	# ammo counter node.
 	# Godot doesn't support ++/-- incrementing. Fuck that.
-	#ammo -= 1
-	#counter.text = "%d/%d" % [ammo, max_ammo]
+	ammo -= 1
+	Hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 	# Cooldown handling
 	cooldown = false
 	await get_tree().create_timer(1 / firerate).timeout

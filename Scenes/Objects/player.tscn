@@ -188,7 +188,7 @@ script = ExtResource("1_ym8ee")
 oob_death = ExtResource("2_o8rcn")
 
 [node name="EnvironmentalCollision" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(6, 0, 0, 8, -6, 0, 0, -8)
+polygon = PackedVector2Array(6, 0, 3, 8, -3, 8, -6, 0, 0, -8)
 
 [node name="DeathParticles" parent="." instance=ExtResource("7_tlm4h")]
 position = Vector2(0, -2)
@@ -212,11 +212,19 @@ texture = ExtResource("3_0l5bj")
 hframes = 8
 vframes = 8
 
-[node name="Walljump Timer" type="Timer" parent="."]
+[node name="WalljumpTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="ClingTimer" type="Timer" parent="."]
+wait_time = 0.4
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
-[connection signal="timeout" from="Walljump Timer" to="." method="_on_walljump_timer_timeout"]
+[connection signal="timeout" from="WalljumpTimer" to="." method="_on_walljump_timer_timeout"]
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
+[connection signal="timeout" from="ClingTimer" to="." method="_on_cling_timer_timeout"]
