@@ -31,7 +31,7 @@ func authPassword(playerID: int, passwd: String) -> void:
 		rpc("updatePlayerList", playerID)
 	else:
 		print("Authorization rejected")
-		rpc_id(playerID, "kick", "password")
+		rpc_id(playerID, "kick", "Heh\nLoser got the password wrong")
 
 @rpc("any_peer", "call_local")
 func updatePlayerList(player: int) -> void:
