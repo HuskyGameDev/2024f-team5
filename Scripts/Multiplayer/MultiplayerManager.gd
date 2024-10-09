@@ -1,6 +1,6 @@
 class_name MultiplayerManager extends MultiplayerSpawner
 
-signal playerAdded(player: PlayerData)
+signal playerListChanged()
 signal playerLost(player: int)
 
 @export var playerData: PackedScene
@@ -8,9 +8,49 @@ signal playerLost(player: int)
 var peer: ENetMultiplayerPeer
 var hosting: bool = false
 var password: String
-var authenticationAttempts: int = 5
-var hostData: PlayerData
+#var authenticationAttempts: int = 5
+#var hostData: PlayerData
 var data: PlayerData
+var authenticated: bool = false
+
+@rpc("any_peer")
+func kick(reason: String) -> void:
+	leaveServer()
+	$/root/Root/Menu.notify(reason)
+
+@rpc("any_peer")
+func getAuth(result: bool) -> void:
+	print("Authentication received")
+	authenticated = result
+
+@rpc("any_peer")
+func authPassword(playerID: int, passwd: String) -> void:
+	print("Authorization requested")
+	if (passwd == password || password == ""):
+		rpc_id(playerID, "getAuth", true)
+		rpc("updatePlayerList", playerID)
+	else:
+		print("Authorization rejected")
+		rpc_id(playerID, "kick", "password")
+
+@rpc("any_peer", "call_local")
+func updatePlayerList(player: int) -> void:
+	print("Emitting update signal")
+	playerListChanged.emit()
+
+# This method is not currently used, but since I had the infrastructure for it already, I left it
+@rpc("any_peer", "call_local")
+func chatMessage(playerID: int, msg: String) -> void:
+	pass
+	#Example code of how this is used in a different game using the same multiplayer system:
+	#Chat.append_text("\n<%s> %s" % [get_node("/root/Root/MultiplayerManager/%s" % str(playerID)).username, msg])
+
+# This method is not currently used, but since I had the infrastructure for it already, I left it
+@rpc("any_peer", "call_local")
+func chatAnnouncement(msg: String) -> void:
+	pass
+	#Example code of how this is used in a different game using the same multiplayer system:
+	#Chat.append_text("\n[color=YELLOW]%s[/color]" % msg)
 
 func hostServer(port: int, upnp: bool, pswd: String) -> Error:
 	peer = ENetMultiplayerPeer.new()
@@ -44,13 +84,11 @@ func addPlayer(id: int) -> void:
 	player.name = str(id)
 	add_child(player)
 	if (id == 1):
-		hostData = $'1'
+		#hostData = $'1'
 		player.isAdmin = true
-		player.password = password
-		playerAdded.emit(player)
 		return
 	player.isAdmin = false
-	#await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.1).timeout
 
 func removePlayer(id: int) -> void:
 	for player: PlayerData in get_children():
@@ -62,14 +100,10 @@ func serverClosed() -> void:
 	leaveServer()
 	$/root/Root/Menu.message("connection")
 
-func kick(reason: String) -> void:
-	leaveServer()
-	$/root/Root/Menu.message(reason)
-
 func leaveServer() -> void:
-	data.rpc("chatAnnouncement", "%s left the game!" % data.username)
+	#data.rpc("chatAnnouncement", "%s left the game!" % data.username)
 	multiplayer.multiplayer_peer = null
 	$/root/Root.name = "OldRoot"
-	var root: Node = load("res://Scenes/Misc/root.tscn").instantiate()
+	var root: Node = load("res://Scenes/Root.tscn").instantiate()
 	$/root.add_child(root)
 	$/root/OldRoot.queue_free()

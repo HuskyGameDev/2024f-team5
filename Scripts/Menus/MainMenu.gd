@@ -19,7 +19,6 @@ func _on_join_pressed() -> void:
 	var data: PlayerData = PlayerData.new()
 	data.username = "Placeholder Joiner"
 	data.name = "PlayerData"
-	data.password = $Join/GridContainer/PasswordEntry.text
 	$/root.add_child(data)
 	var loading: LoadingScreen = loadingScreen.instantiate()
 	$/root/Root.add_child(loading)
