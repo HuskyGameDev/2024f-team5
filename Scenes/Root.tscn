@@ -8,3 +8,4 @@
 [node name="Menu" parent="." instance=ExtResource("1_md0jd")]
 
 [node name="MultiplayerManager" parent="." instance=ExtResource("2_xf7vo")]
+_spawnable_scenes = PackedStringArray("res://Scenes/Multiplayer/PlayerData.tscn")
