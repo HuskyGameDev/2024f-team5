@@ -41,6 +41,15 @@ var cursors: Array = [
 	preload("res://Sprites/UI/crosshair3.png")
 ]
 
+@onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
+var sfx: Dictionary = {
+	"death" : preload("res://SFX/Temp/death.wav"),
+	"oob_death" : preload("res://SFX/Temp/oob_death.wav"),
+	"jump" : preload("res://SFX/Temp/jump.wav"),
+	"land" : preload("res://SFX/Temp/land.wav"),
+	"run" : preload("res://SFX/Temp/run.wav")
+}
+
 var crouching: bool = false
 var dead: bool = false
 
@@ -81,6 +90,8 @@ func _jump() -> void:
 	var walljump: bool = (is_on_wall_only() 
 	  and can_wall_cling and consecutive_wall_jumps < MAX_WALLJUMPS)
 	if walljump:
+		sound.stream = sfx["jump"]
+		sound.play()
 		can_wall_cling = false
 		if equipped_item == null: #Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
 			walljumpTimer.start()
@@ -92,6 +103,8 @@ func _jump() -> void:
 			else:
 				velocity.x -= WALLJUMP_IMPULSE
 	elif is_on_floor() or coyoteJump:
+		sound.stream = sfx["jump"]
+		sound.play()
 		velocity.y = JUMP_VELOCITY + abs(item_weight_penalty)
 		#Thomas: start a timer here for the wall jump and reset consecutive wall jump counter
 		if equipped_item == null:
@@ -149,6 +162,9 @@ func _physics_process(delta: float) -> void:
 			sprite.flip_h = false
 		if is_on_floor():
 			anim.play("run")
+			if(!sound.playing):
+				sound.stream = sfx["run"]
+				sound.play()
 			velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), GROUND_ACCELERATION)
 		else:
 			velocity.x = move_toward(velocity.x, (direction * SPEED)  - (item_weight_penalty * direction), AIR_ACCELERATION)
@@ -177,6 +193,8 @@ func _physics_process(delta: float) -> void:
 	if(hit_ground != is_on_floor()):
 		# Ground has been hit
 		if(is_on_floor()):
+			sound.stream = sfx["land"]
+			sound.play()
 			anim.current_animation = "idle"
 		# Ground has been left
 		else:
@@ -195,12 +213,16 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	dead = true
 	# Out of bounds death animation
 	if(oob):
+		sound.stream = sfx["oob_death"]
+		sound.play()
 		var od: Node2D = oob_death.instantiate()
 		get_parent().add_child(od)
 		od.position = position
 		od.rotation = theta
 		sprite.visible = false
 	else: # Other death animation
+		sound.stream = sfx["death"]
+		sound.play()
 		death_parts.emitting = true
 		anim.current_animation = "die"
 	unequip()
