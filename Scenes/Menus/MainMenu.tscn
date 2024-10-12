@@ -21,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Main"]
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -32,8 +33,14 @@ bbcode_enabled = true
 text = "[center][b]Shorty Shooters[/b][/center]"
 metadata/_edit_use_anchors_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Main"]
-position = Vector2(560, 129)
+[node name="TextureRect" type="TextureRect" parent="Main"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 315.0
+offset_right = -581.0
+offset_bottom = 128.0
+grow_horizontal = 2
 scale = Vector2(2, 2)
 texture = ExtResource("2_77jpt")
 
