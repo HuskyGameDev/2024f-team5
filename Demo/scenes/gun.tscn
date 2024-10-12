@@ -9,8 +9,8 @@
 [node name="Gun" type="Node2D"]
 z_index = -1
 script = ExtResource("1_0j3p2")
-smoke = ExtResource("2_r71xd")
 barrel_pos = Array[Vector2]([Vector2(16, -11), Vector2(-64, -11)])
+smoke = ExtResource("2_r71xd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(24, -7)

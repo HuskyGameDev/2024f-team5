@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8c2ascpmxw4i"]
+[gd_scene load_steps=3 format=3 uid="uid://b8c2ascpmxw4i"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/MainMenu.gd" id="1_tmlow"]
+[ext_resource type="Texture2D" uid="uid://d0vjjtbcxeahw" path="res://Sprites/UI/shortyshooterslogo.png" id="2_77jpt"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -30,6 +31,11 @@ theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 text = "[center][b]Shorty Shooters[/b][/center]"
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Main"]
+position = Vector2(560, 129)
+scale = Vector2(2, 2)
+texture = ExtResource("2_77jpt")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main"]
 layout_mode = 1

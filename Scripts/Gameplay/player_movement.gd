@@ -53,13 +53,13 @@ static var sfx: Dictionary = {
 
 # Exported class variables
 @export var oob_death: PackedScene
-@onready var coyoteTimer: Timer = $CoyoteTimer 
 
 # EXPERIMENTAL VARIABLES. USE TO TEST FOR NEW CHANGES
 @export var impulsive_walljumps: bool = false
 
 # Child node references
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var coyoteTimer: Timer = $CoyoteTimer 
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
 ## Used for looped sounds such as footsteps
 @onready var loop_sound: AudioStreamPlayer2D = $LoopingAudio
@@ -89,7 +89,7 @@ var _equipped_item: Node = null
 var equipped_item_weight: float = 0
 var item_weight_penalty: float = 0
 
-# ========================[ CUSTOM METHODS ]====================================
+# ======================= [ CLASS METHODS ] ====================================
 
 ## Handles *most* player animations
 func _animate() -> void:
@@ -263,9 +263,8 @@ func unequip() -> void:
 	#Thomas: when uneqipping an item set the weight back to nothing
 	equipped_item_weight = 0 
 
-# ============================[ SIGNALS ]=======================================
+# =========================== [ SIGNALS ] ======================================
 
-# TODO: This method is too long and should probably be reformatted in the future.
 func _physics_process(delta: float) -> void:
 	if(dead): return
 	item_weight_penalty = equipped_item_weight / WEIGHT_TO_SPEED_FACTOR

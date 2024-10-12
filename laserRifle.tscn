@@ -9,9 +9,9 @@
 [node name="LaserRifle" type="Node2D"]
 z_index = -1
 script = ExtResource("1_6tfo7")
+barrel_pos = Array[Vector2]([Vector2(63, -5), Vector2(-92, -5)])
 rev_offset = -29.0
 smoke = ExtResource("2_i7pbe")
-barrel_pos = Array[Vector2]([Vector2(63, -5), Vector2(-92, -5)])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(14, -8)
