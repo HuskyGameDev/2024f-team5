@@ -1,20 +1,19 @@
+## Handles gun controls and shooting
+## Jay Hawkins, Thomas Wilkins
+
 extends Node2D
 class_name Gun
-## This should probably be a resource or whatever Nolan was talking about
-## But idk how to do allat
-## Basically this determines basic gun behaviour
-## Jay Hawkins
-##Minor edits by Thomas Wilkins
 
+enum WeaponType { BULLET, MELEE, LASER }
 const SHOOT_VELOCITY: float = 400
 
-
+@export var weapon_type: WeaponType
 
 # This value is needed to correct the gun's position when pointing left
 @export var rev_offset: float = -48
 
 @onready var spi: Sprite2D = $Sprite2D
-@onready var snd: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 # Visuals
 @export var smoke: PackedScene
@@ -41,10 +40,8 @@ var cooldown: bool = true
 # Fun fact: 15 is the number of rounds in a standard glock 19 magazine
 @export var max_ammo: int = 15
 var ammo: int = max_ammo
-@export var counter: RichTextLabel
 
 func shoot(mousepos: Vector2) -> void:
-	
 	if(!cooldown):
 		return
 	var par: Node = get_parent()
@@ -56,7 +53,7 @@ func shoot(mousepos: Vector2) -> void:
 	var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * SHOOT_VELOCITY
 	par.velocity += recoil
 	barrel.add_child(smoke.instantiate())
-	snd.play()
+	sound.play()
 	# Godot doesn't support ++/-- incrementing. Fuck that.
 	ammo -= 1
 	Hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
@@ -82,7 +79,6 @@ func unflip() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	
 	if(get_global_mouse_position().x < global_position.x):
 		if(!flipped):
 			flip()

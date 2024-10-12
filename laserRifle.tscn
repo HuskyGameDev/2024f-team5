@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="2_i7pbe"]
 [ext_resource type="Texture2D" uid="uid://bpua2om8qsf1m" path="res://Sprites/Weapons/LaserRifle.png" id="3_lpd6g"]
 [ext_resource type="Texture2D" uid="uid://b112vd0jxqdgo" path="res://Sprites/UI/ADS_Line.png" id="4_y7ios"]
-[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://Demo/Sounds/temp_shoot.wav" id="5_iahmm"]
+[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="5_iahmm"]
 
 [node name="LaserRifle" type="Node2D"]
 z_index = -1

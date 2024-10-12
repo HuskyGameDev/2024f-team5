@@ -12,7 +12,6 @@ grow_vertical = 2
 script = ExtResource("1_tmlow")
 
 [node name="Main" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,11 +44,6 @@ offset_right = 35.0
 offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Practice" type="Button" parent="Main/VBoxContainer"]
-layout_mode = 2
-text = "Practice"
-metadata/_edit_use_anchors_ = true
 
 [node name="Host" type="Button" parent="Main/VBoxContainer"]
 layout_mode = 2
@@ -138,7 +132,6 @@ text = "Password"
 
 [node name="PasswordEntry" type="LineEdit" parent="Host/GridContainer"]
 layout_mode = 2
-secret = true
 
 [node name="Back" type="Button" parent="Host/GridContainer"]
 layout_mode = 2
@@ -222,7 +215,6 @@ text = "Password"
 
 [node name="PasswordEntry" type="LineEdit" parent="Join/GridContainer"]
 layout_mode = 2
-secret = true
 
 [node name="Back" type="Button" parent="Join/GridContainer"]
 layout_mode = 2
@@ -233,92 +225,13 @@ layout_mode = 2
 text = "Join Server"
 
 [node name="Settings" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Settings"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -157.0
-offset_top = 14.0
-offset_right = 157.0
-offset_bottom = 94.0
-grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 50
-bbcode_enabled = true
-text = "[center]Settings[/center]"
-
-[node name="ColorRect" type="ColorRect" parent="Settings"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 265.0
-offset_top = 76.0
-offset_right = -265.0
-offset_bottom = 81.0
-grow_horizontal = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Settings"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -189.0
-offset_top = -225.0
-offset_right = 189.0
-offset_bottom = 225.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_scroll_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Settings/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ProfileHeader" type="RichTextLabel" parent="Settings/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 30
-bbcode_enabled = true
-text = "[center]Profile Settings[/center]"
-
-[node name="Seperator" type="ColorRect" parent="Settings/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 3)
-layout_mode = 2
-
-[node name="UsernameLabel" type="RichTextLabel" parent="Settings/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-text = "Username"
-
-[node name="UsernameEntry" type="LineEdit" parent="Settings/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "CoolGuy9000"
-max_length = 32
-
-[node name="Back" type="Button" parent="Settings"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -22.5
-offset_top = -47.0
-offset_right = 22.5
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Back"
 
 [node name="Notification" type="Control" parent="."]
 visible = false
@@ -390,7 +303,6 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Close"
 
-[connection signal="pressed" from="Main/VBoxContainer/Practice" to="." method="_on_practice_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Host" to="." method="_on_host_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Join" to="." method="_on_join_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
@@ -399,5 +311,4 @@ text = "Close"
 [connection signal="pressed" from="Host/GridContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join/GridContainer/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Join/GridContainer/Join" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="Settings/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Notification/Panel/Close" to="." method="_on_close_pressed"]
