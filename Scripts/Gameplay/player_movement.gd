@@ -34,6 +34,8 @@ const MAX_WALLJUMPS: int = 3
 ## Thomas: this is the factor we'll use to divide the equipped items weight into
 ## a move speed penalty
 const WEIGHT_TO_SPEED_FACTOR: float = 1
+## The speed at which grip is recovered as % per second
+const GRIP_RECOVERY: float = 50
 
 # Static variables
 ## Array of cursors that respond to gun movement
@@ -88,6 +90,8 @@ var _equipped_item: Node = null
 ## something
 var equipped_item_weight: float = 0
 var item_weight_penalty: float = 0
+## % of grip strength to hold current item
+var grip: float = 100
 
 # ======================= [ CLASS METHODS ] ====================================
 
@@ -173,15 +177,29 @@ func die(oob: bool = false, theta: float = 0) -> void:
 
 ## Called on item pickup. Equips node item.
 func equip(item: Node) -> void:
-	add_child(item)
+	# This throws an error because its not deferred. But when it's deferred
+	# it just doesn't work so I will be ignoring it.
+	add_child(item) 
 	_equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
 	Hud.ammo_counter.visible = true
+	Hud.grip_bar.visible = true
 	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
 	# This should work better. Weird solution imo but its what the forums say. -Jay
 	if "weight" in item:
 		equipped_item_weight = item.weight
+	if "player" in item:
+		item.player = self
+
+func _grip_process(delta: float) -> void:
+	if grip <= 0:
+		unequip()
+		return
+	grip += GRIP_RECOVERY * delta
+	if(grip > 100):
+		grip = 100
+	Hud.update_grip(grip)
 
 func _jump() -> void:
 	# Determines if player can wall jump
@@ -260,6 +278,7 @@ func unequip() -> void:
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Hide ammo counter
 	Hud.ammo_counter.visible = false
+	Hud.grip_bar.visible = false
 	#Thomas: when uneqipping an item set the weight back to nothing
 	equipped_item_weight = 0 
 
@@ -284,7 +303,7 @@ func _physics_process(delta: float) -> void:
 		unequip()
 	
 	_move(direction)
-	
+	_grip_process(delta)
 
 	var hit_ground: bool = is_on_floor()
 	var hit_wall: bool = is_on_wall()

@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://hccjwm3hunth"]
+[gd_scene load_steps=12 format=4 uid="uid://hccjwm3hunth"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/hud.gd" id="1_1pmy2"]
 [ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="1_iend3"]
 [ext_resource type="PackedScene" uid="uid://bjj5hw1d1pbl" path="res://Scenes/Objects/player.tscn" id="2_lwygx"]
+[ext_resource type="Texture2D" uid="uid://cranidhnf6p04" path="res://Sprites/UI/grip_bar_back.png" id="3_0dmjy"]
+[ext_resource type="Texture2D" uid="uid://dom0r6eod1jfi" path="res://Sprites/UI/grip_bar_front.png" id="3_ge2nw"]
 [ext_resource type="Texture2D" uid="uid://dh8xoqndsykss" path="res://Sprites/Environment/Environment1.png" id="3_m7rpx"]
 [ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Demo/scenes/gun_pickup.tscn" id="4_nf66b"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="5_cdke2"]
@@ -81,8 +83,9 @@ sources/0 = SubResource("TileSetAtlasSource_lungt")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("1_1pmy2")
+grip_colors = Array[Color]([Color(0.0235294, 0.501961, 0.317647, 1), Color(0.858824, 0.294118, 0.0862745, 1), Color(0.768627, 0.0470588, 0.180392, 1)])
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="AmmoCounter" type="Label" parent="CanvasLayer"]
 visible = false
 offset_left = 10.0
 offset_top = 10.0
@@ -91,6 +94,26 @@ offset_bottom = 46.0
 theme_override_fonts/font = ExtResource("1_iend3")
 theme_override_font_sizes/font_size = 40
 text = "15/15"
+
+[node name="GripBar" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_left = 10.0
+offset_top = 60.0
+offset_right = 138.0
+offset_bottom = 100.0
+texture = ExtResource("3_0dmjy")
+
+[node name="Fill" type="ColorRect" parent="CanvasLayer/GripBar"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 40.0
+pivot_offset = Vector2(128, 0)
+color = Color(0.0235294, 0.501961, 0.317647, 1)
+
+[node name="Front" type="TextureRect" parent="CanvasLayer/GripBar"]
+offset_right = 128.0
+offset_bottom = 40.0
+texture = ExtResource("3_ge2nw")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-224, 0)

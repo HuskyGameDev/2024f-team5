@@ -22,6 +22,8 @@ enum WeaponType { BULLET, MELEE, LASER }
 #Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
 #Jay: changed from constant to variable because it should vary between guns
 @export var weight: float = 15
+## The amount of grip lost each gunshot as a %
+@export var grip_loss: float = 30
 
 # Child node references
 ## Where smoke effects and bullets spawn
@@ -29,8 +31,10 @@ enum WeaponType { BULLET, MELEE, LASER }
 @onready var line: Line2D = $Sprite2D/Barrel/Line2D
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var spi: Sprite2D = $Sprite2D
+@onready var hurt_sound: AudioStreamPlayer2D = $Shield/DamageSound
 
 # Class variables
+var player: Player
 ## When true, the "laser sight" ADS line is visible
 var ads: bool = false
 var ammo: int = max_ammo
@@ -58,6 +62,7 @@ func _shoot(mousepos: Vector2) -> void:
 	var diff: Vector2 = mousepos - self.global_position
 	var angle: float = diff.angle() + PI
 	var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * weapon_recoil
+	player.grip -= grip_loss
 	par.velocity += recoil
 	barrel.add_child(smoke.instantiate())
 	sound.play()
@@ -112,3 +117,9 @@ func _process(_delta: float) -> void:
 	if(Input.is_action_just_released("ADS")):
 		ads = false
 		line.visible = false
+
+
+func _on_shield_body_entered(body: Node2D) -> void:
+	player.grip -= 20
+	hurt_sound.play()
+	pass # Replace with function body.
