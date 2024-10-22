@@ -55,6 +55,7 @@ static var sfx: Dictionary = {
 
 # Exported class variables
 @export var oob_death: PackedScene
+@export var hud: Hud
 
 # EXPERIMENTAL VARIABLES. USE TO TEST FOR NEW CHANGES
 @export var impulsive_walljumps: bool = false
@@ -183,8 +184,9 @@ func equip(item: Node) -> void:
 	_equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
-	Hud.ammo_counter.visible = true
-	Hud.grip_bar.visible = true
+	hud.ammo_counter.visible = true
+	hud.grip_bar.visible = true
+	item.hud = self.hud
 	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
 	# This should work better. Weird solution imo but its what the forums say. -Jay
 	if "weight" in item:
@@ -199,7 +201,7 @@ func _grip_process(delta: float) -> void:
 	grip += GRIP_RECOVERY * delta
 	if(grip > 100):
 		grip = 100
-	Hud.update_grip(grip)
+	hud.update_grip(grip)
 
 func _jump() -> void:
 	# Determines if player can wall jump
@@ -277,8 +279,8 @@ func unequip() -> void:
 	if (is_instance_valid(_equipped_item)): _equipped_item.queue_free()
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Hide ammo counter
-	Hud.ammo_counter.visible = false
-	Hud.grip_bar.visible = false
+	hud.ammo_counter.visible = false
+	hud.grip_bar.visible = false
 	#Thomas: when uneqipping an item set the weight back to nothing
 	equipped_item_weight = 0 
 

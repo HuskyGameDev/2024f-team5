@@ -42,6 +42,7 @@ var ammo: int = max_ammo
 var cooldown: bool = true
 ## Gun is pointing left if true
 var flipped: bool = false
+var hud: Hud
 
 # ====================== [ CLASS METHODS ] =====================================
 
@@ -68,7 +69,7 @@ func _shoot(mousepos: Vector2) -> void:
 	sound.play()
 	# Godot doesn't support ++/-- incrementing. Fuck that.
 	ammo -= 1
-	Hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
+	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 	# Cooldown handling
 	cooldown = false
 	await get_tree().create_timer(1 / firerate).timeout
@@ -117,7 +118,6 @@ func _process(_delta: float) -> void:
 	if(Input.is_action_just_released("ADS")):
 		ads = false
 		line.visible = false
-
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	player.grip -= 20
