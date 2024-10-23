@@ -18,10 +18,10 @@ func _ready() -> void:
 	  south_border == null):
 		print("One or more borders not assigned to camera.")
 		return
-	limit_top = north_border.global_position.y + limit_padding
-	limit_left = west_border.global_position.x + limit_padding
-	limit_right = east_border.global_position.x - limit_padding
-	limit_bottom = south_border.global_position.y - limit_padding
+	limit_top = int(north_border.global_position.y + limit_padding)
+	limit_left = int(west_border.global_position.x + limit_padding)
+	limit_right = int(east_border.global_position.x - limit_padding)
+	limit_bottom = int(south_border.global_position.y - limit_padding)
 
 # Moves camera
 func _process(delta: float) -> void:

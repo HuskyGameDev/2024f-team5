@@ -120,6 +120,8 @@ func _process(_delta: float) -> void:
 		line.visible = false
 
 func _on_shield_body_entered(body: Node2D) -> void:
+	var angle: float = global_position.angle_to_point(body.position)
+	print(angle)
 	player.grip -= 20
 	hurt_sound.play()
 	pass # Replace with function body.
