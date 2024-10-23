@@ -180,7 +180,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 func equip(item: Node) -> void:
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
-	add_child(item) 
+	call_deferred("add_child", item)
 	_equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
