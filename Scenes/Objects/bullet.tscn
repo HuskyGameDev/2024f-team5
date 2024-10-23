@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2wevva10bq6c"]
+
+[ext_resource type="Script" path="res://Scripts/Gameplay/projectile.gd" id="1_decxi"]
+[ext_resource type="Texture2D" uid="uid://d0b24gssumd3c" path="res://Sprites/Weapons/bullet2.png" id="1_puea6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtd25"]
+size = Vector2(6, 4)
+
+[node name="Bullet" type="RigidBody2D"]
+collision_layer = 2
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_decxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_puea6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qtd25")
+debug_color = Color(1, 0.415686, 0.380392, 0.294118)

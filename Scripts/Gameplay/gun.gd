@@ -24,6 +24,11 @@ enum WeaponType { BULLET, MELEE, LASER }
 @export var weight: float = 15
 ## The amount of grip lost each gunshot as a %
 @export var grip_loss: float = 30
+## The type of projectile that the gun will shoot
+@export var projectile: PackedScene
+@export var proj_speed: float = 100
+## Extra distance given to the bullet from barrel
+@export var exit_padding: float = 10
 
 # Child node references
 ## Where smoke effects and bullets spawn
@@ -70,6 +75,21 @@ func _shoot(mousepos: Vector2) -> void:
 	# Godot doesn't support ++/-- incrementing. Fuck that.
 	ammo -= 1
 	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
+	
+	# Shoot the actual bullet
+	var bullet: Node = projectile.instantiate()
+	bullet.global_position = barrel.global_position
+	bullet.global_rotation = self.global_rotation
+	var padding: Vector2 = (Vector2(cos(global_rotation), sin(global_rotation))
+		* exit_padding)
+	if(flipped):
+		padding *= -1
+	bullet.global_position += padding
+	bullet.linear_velocity = (proj_speed * 
+	  Vector2(cos(global_rotation), sin(global_rotation)))
+	if(flipped):
+		bullet.linear_velocity *= -1
+	get_tree().get_root().add_child(bullet)
 	# Cooldown handling
 	cooldown = false
 	await get_tree().create_timer(1 / firerate).timeout
