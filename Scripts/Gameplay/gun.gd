@@ -8,14 +8,12 @@ class_name Gun
 enum WeaponType { BULLET, MELEE, LASER }
 
 # Exported class variables
-@export var barrel_pos: Array[Vector2]
 ## Fire rate (inverse of cooldown) in rounds per second
 @export var firerate: float = 18
 ## Count of rounds in a magazine
 # Fun fact: 15 is the number of rounds in a standard glock 19 magazine
 @export var max_ammo: int = 15
-# This value is needed to correct the gun's position when pointing left
-@export var rev_offset: float = -48
+
 @export var smoke: PackedScene
 @export var weapon_type: WeaponType
 @export var weapon_recoil: float = 400
@@ -29,6 +27,8 @@ enum WeaponType { BULLET, MELEE, LASER }
 @export var proj_speed: float = 100
 ## Extra distance given to the bullet from barrel
 @export var exit_padding: float = 10
+## Can trigger be held to continuously fire weapon.
+@export var full_auto: bool = false
 
 # Child node references
 ## Where smoke effects and bullets spawn
@@ -37,6 +37,11 @@ enum WeaponType { BULLET, MELEE, LASER }
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var spi: Sprite2D = $Sprite2D
 @onready var hurt_sound: AudioStreamPlayer2D = $Shield/DamageSound
+# This value is needed to correct the gun's position when pointing left
+@onready var rev_offset: float = -2 * spi.position.x
+# Needed for flipping the barrel with gun
+@onready var init_barrel_posX: float = barrel.position.x
+@onready var rev_barrel_posX: float = -init_barrel_posX + rev_offset
 
 # Class variables
 var player: Player
@@ -55,8 +60,9 @@ func _flip() -> void:
 	spi.offset.x = rev_offset
 	spi.flip_h = true
 	flipped = true
-	barrel.position = barrel_pos[1]
+	#barrel.position = barrel_pos[1]
 	barrel.rotate(PI)
+	barrel.position.x = rev_barrel_posX
 
 func _shoot(mousepos: Vector2) -> void:
 	if(!cooldown):
@@ -100,7 +106,8 @@ func _unflip() -> void:
 	spi.flip_h = false
 	flipped = false
 	barrel.rotate(PI)
-	barrel.position = barrel_pos[0]
+	barrel.position.x = init_barrel_posX
+
 
 # ============================= [ SIGNALS ] ====================================
 
@@ -119,8 +126,6 @@ func _process(_delta: float) -> void:
 	var mousepos: Vector2 = (
 		get_global_mouse_position() +
 		Vector2(offsetY * sin(crosshairAngle + PI), offsetY * cos(crosshairAngle))
-		# NO clue why the x value nees PI added to the angle,
-		# But it helps correct the angle when it's close to +-90 degrees
 	)
 	look_at(mousepos)
 	
@@ -130,8 +135,12 @@ func _process(_delta: float) -> void:
 	if(ads):
 		line.points[1] = Vector2(1000, 0)
 		
-	if(Input.is_action_just_pressed("shoot")):
-		_shoot(mousepos)
+	if(full_auto):
+		if(Input.is_action_pressed("shoot")):
+			_shoot(mousepos)
+	else:
+		if(Input.is_action_just_pressed("shoot")):
+			_shoot(mousepos)
 	if(Input.is_action_just_pressed("ADS")):
 		ads = true
 		line.visible = true
@@ -141,7 +150,6 @@ func _process(_delta: float) -> void:
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	var angle: float = global_position.angle_to_point(body.position)
-	print(angle)
 	player.grip -= 20
 	hurt_sound.play()
 	pass # Replace with function body.
