@@ -12,6 +12,8 @@ var password: String
 #var hostData: PlayerData
 var data: PlayerData
 var authenticated: bool = false
+var inLobby: bool = true
+var readyPlayers: Dictionary
 
 @rpc("any_peer")
 func kick(reason: String) -> void:
@@ -26,17 +28,23 @@ func getAuth(result: bool) -> void:
 @rpc("any_peer")
 func authPassword(playerID: int, passwd: String) -> void:
 	print("Authorization requested")
-	if (passwd == password || password == ""):
+	if (!inLobby):
+		print("Rejected join request during gameplay")
+		rpc_id(playerID, "kick", "Game already in progress")
+	elif (passwd == password || password == ""):
 		rpc_id(playerID, "getAuth", true)
-		rpc("updatePlayerList", playerID)
+		rpc("updatePlayerList")
 	else:
 		print("Authorization rejected")
 		rpc_id(playerID, "kick", "Heh\nLoser got the password wrong")
 
 @rpc("any_peer", "call_local")
-func updatePlayerList(player: int) -> void:
+func updatePlayerList() -> void:
 	print("Emitting update signal")
 	playerListChanged.emit()
+	readyPlayers.clear()
+	for peer: PlayerData in get_children():
+		readyPlayers[peer.uuid] = false
 
 # This method is not currently used, but since I had the infrastructure for it already, I left it
 @rpc("any_peer", "call_local")
@@ -51,6 +59,34 @@ func chatAnnouncement(msg: String) -> void:
 	pass
 	#Example code of how this is used in a different game using the same multiplayer system:
 	#Chat.append_text("\n[color=YELLOW]%s[/color]" % msg)
+
+# This method will be called by every client (including the host) from the lobby when the game
+# is ready to start. It will tell all clients to delete the lobby and load a given map ID. Once
+# loaded, each client will send a ready message to the host. Once all clients have given the signal,
+# the host will begin the game. 
+@rpc("any_peer", "call_local")
+func loadMap(mapID: String) -> void:
+	inLobby = false
+	var map: Node2D = load("res://Scenes/Maps/%s.tscn" % mapID).instantiate()
+	$/root/Root.add_child(map)
+	await map.ready
+	$/root/Root/Lobby.queue_free()
+	rpc_id(1, "mapLoaded", data.uuid)
+	if (data.uuid == 1):
+		while true:
+			await get_tree().create_timer(0.25).timeout
+			for r: bool in readyPlayers.values():
+				if !r: continue
+			rpc("beginGame")
+			break
+
+@rpc("any_peer")
+func mapLoaded(playerID: int) -> void:
+	readyPlayers[playerID] = true
+
+@rpc("any_peer", "call_local")
+func beginGame() -> void:
+	print("Begin game")
 
 func hostServer(port: int, upnp: bool, pswd: String) -> Error:
 	peer = ENetMultiplayerPeer.new()

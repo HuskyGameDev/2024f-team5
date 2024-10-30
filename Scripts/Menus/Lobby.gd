@@ -25,3 +25,6 @@ func updatePlayerList() -> void:
 		var nameplate: MenuNameplate = nameplateScene.instantiate()
 		playerList.add_child(nameplate)
 		nameplate.setPlayer(player)
+
+func _on_begin_pressed() -> void:
+	multiplayerManager.rpc("loadMap", "houghton")

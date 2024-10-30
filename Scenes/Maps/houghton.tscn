@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=4 uid="uid://hccjwm3hunth"]
+[gd_scene load_steps=11 format=4 uid="uid://hccjwm3hunth"]
 
+[ext_resource type="Script" path="res://Scripts/Map.gd" id="1_32161"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_6jei0"]
 [ext_resource type="PackedScene" uid="uid://bjj5hw1d1pbl" path="res://Scenes/Objects/player.tscn" id="2_lwygx"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/dynamic_camera.gd" id="3_c5vbn"]
@@ -78,6 +79,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_lungt")
 
 [node name="Houghton" type="Node2D"]
+script = ExtResource("1_32161")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
