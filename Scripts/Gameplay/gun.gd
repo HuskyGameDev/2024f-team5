@@ -7,7 +7,9 @@ class_name Gun
 # Constants and enums
 enum WeaponType { BULLET, MELEE, LASER }
 
-@export var activeGunResource : GunResource
+@export var gun1 : GunResource
+@export var gun2 : GunResource
+@export var gun3 : GunResource
 
 # Exported class variables
 ## Fire rate (inverse of cooldown) in rounds per second
@@ -149,6 +151,13 @@ func _process(_delta: float) -> void:
 	if(Input.is_action_just_released("ADS")):
 		ads = false
 		line.visible = false
+		
+	if(Input.is_key_pressed(KEY_1)):
+		load_weapon(gun1)
+	if(Input.is_key_pressed(KEY_2)):
+		load_weapon(gun2)
+	if(Input.is_key_pressed(KEY_3)):
+		load_weapon(gun3)
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	var angle: float = global_position.angle_to_point(body.position)
@@ -157,25 +166,31 @@ func _on_shield_body_entered(body: Node2D) -> void:
 	pass # Replace with function body.
 	
 	#This will load a new weapon for the player TODO: make it take a GunResource for a parameter
-func load_weapon() -> void:
+func load_weapon(newWeaponResource : GunResource) -> void:
 	## Fire rate (inverse of cooldown) in rounds per second
-	firerate = activeGunResource.fireRate
+	firerate = newWeaponResource.fireRate
 	## Count of rounds in a magazine
 	# Fun fact: 15 is the number of rounds in a standard glock 19 magazine
-	ammo = activeGunResource.maxAmmo
-	max_ammo = activeGunResource.maxAmmo
-	smoke = activeGunResource.smoke
-	weapon_recoil = activeGunResource.weaponRecoil
+	ammo = newWeaponResource.maxAmmo
+	max_ammo = newWeaponResource.maxAmmo
+	smoke = newWeaponResource.smoke
+	weapon_recoil = newWeaponResource.weaponRecoil
 	#Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
 	#Jay: changed from constant to variable because it should vary between guns
-	weight = activeGunResource.weaponWeight
+	weight = newWeaponResource.weaponWeight
 	## The amount of grip lost each gunshot as a %
-	grip_loss = activeGunResource.gripLoss
+	grip_loss = newWeaponResource.gripLoss
 	## The type of projectile that the gun will shoot
-	projectile = activeGunResource.bullet
-	proj_speed = activeGunResource.projectileSpeed
+	projectile = newWeaponResource.bullet
+	proj_speed = newWeaponResource.projectileSpeed
 	## Extra distance given to the bullet from barrel
-	exit_padding = activeGunResource.exitPadding
+	exit_padding = newWeaponResource.exitPadding
+	
+	#Change the gun sprite
+	$Sprite2D.texture = newWeaponResource.weaponSprite
+	
+	#update ammo count on the HUD
+	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
 func _ready() -> void:
-	load_weapon()
+	load_weapon(gun1)

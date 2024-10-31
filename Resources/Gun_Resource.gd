@@ -7,14 +7,14 @@ class_name GunResource
 #Sprites
 @export_category("Sprites")
 @export var weaponSprite : Texture2D
-@export var bullet : PackedScene #TODO will need to access the bullet scene to edit this maybe? or just make this the bullet scene (same for damage)
-@export var smoke : PackedScene #TODO will need to access the smoke scene to edit this maybe? or just make this the smoke scene
+@export var bullet : PackedScene
+@export var smoke : PackedScene
 
 #Bullet information (if its a melee weapon ignore the rest)
 @export_category("Damage Settings")
 enum WeaponType { BULLET, MELEE, LASER} #I think we'll need to make sure this matches the gun script, at least until I find a better way to handle it (maybe making another script that both reference defining the enum)
 @export var weaponType : WeaponType
-@export var weaponDamage : float
+@export var weaponDamage : float #TODO: need to properly implement this (edit bullet scene?) do we want to construct bullets here or have that as a seperate resource?
 
 #Most these don't apply to melee weapons, I'll look into a way to get them to not dispaly when weapontype is set to melee
 @export var fireRate : float 
@@ -25,6 +25,10 @@ enum WeaponType { BULLET, MELEE, LASER} #I think we'll need to make sure this ma
 @export var weaponRecoil : float
 @export var weaponWeight : float
 @export var gripLoss : float #do we want to make this dependent on reocil/rate of fire?
+
+@export_category("Audio") #TODO: need to properly implement this
+@export var fireSound : Array[AudioStream] #this way if we have multiple sound effects we can have varied shooting sounds
+@export var discardSound : AudioStream #when you drop the weapon or run out of ammo
 
 @export_category("Technical Stuff")
 @export var exitPadding : float
