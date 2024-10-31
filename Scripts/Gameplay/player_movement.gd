@@ -95,6 +95,11 @@ var item_weight_penalty: float = 0
 ## % of grip strength to hold current item
 var grip: float = 100
 
+##Thomas: when the gun is fired set this to true to disable the players normal movent (it gets reset to false when they touch the ground)
+var projectileMovement : bool = false
+var projectileMoveOffset : float = 0 #TODO: this isn't functional rn
+var normalMovement : bool = true
+
 # ======================= [ CLASS METHODS ] ====================================
 
 func _enter_tree() -> void:
@@ -244,13 +249,16 @@ func _move(direction: float) -> void:
 		else:
 			sprite.flip_h = false
 		if is_on_floor():
+			projectileMovement = false
+			projectileMoveOffset = 0
 			anim.play("run")
 			if(!loop_sound.playing):
 				loop_sound.stream = sfx["run"]
 				loop_sound.play()
 			velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), GROUND_ACCELERATION)
 		else:
-			velocity.x = move_toward(velocity.x, (direction * SPEED)  - (item_weight_penalty * direction), AIR_ACCELERATION)
+			if projectileMovement == false or normalMovement:
+				velocity.x = move_toward(velocity.x, (direction * SPEED)  - (item_weight_penalty * direction), AIR_ACCELERATION)
 			
 		#Thomas: Only let the player wall jump/cling if they're on a wall and haven't just jumped (adjust timer in the walljump timer node)
 		if is_on_wall_only() and can_wall_cling and velocity.abs().x > 0:
@@ -320,6 +328,9 @@ func _physics_process(delta: float) -> void:
 	# Godot doesn't have the collision signals that unity has, so this
 	# is my solution. -Jay
 	_collide(hit_ground != is_on_floor(), hit_wall != is_on_wall())
+	
+	if Input.is_action_just_pressed("ToggleMoveTypes"): #TODO: this is for testing purposes, probably want to remove it later
+		normalMovement = !normalMovement
 
 func _ready() -> void:
 	if (!is_multiplayer_authority()): return
