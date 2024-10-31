@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bjj5hw1d1pbl"]
+[gd_scene load_steps=18 format=3 uid="uid://bjj5hw1d1pbl"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/player_movement.gd" id="1_ym8ee"]
 [ext_resource type="PackedScene" uid="uid://bnowe750hxon4" path="res://Demo/scenes/oob_death.tscn" id="2_o8rcn"]
@@ -182,6 +182,20 @@ _data = {
 "run": SubResource("Animation_la5tg")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xbynr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("Sprite2D:flip_h")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+
 [node name="Player" type="CharacterBody2D"]
 input_pickable = true
 script = ExtResource("1_ym8ee")
@@ -225,6 +239,9 @@ wait_time = 0.4
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="LoopingAudio" type="AudioStreamPlayer2D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_xbynr")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

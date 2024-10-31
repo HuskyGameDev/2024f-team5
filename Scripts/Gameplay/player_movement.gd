@@ -55,6 +55,7 @@ static var sfx: Dictionary = {
 
 # Exported class variables
 @export var oob_death: PackedScene
+@export var singleplayerTesting: bool = false
 @export var hud: Hud
 
 # EXPERIMENTAL VARIABLES. USE TO TEST FOR NEW CHANGES
@@ -95,6 +96,9 @@ var item_weight_penalty: float = 0
 var grip: float = 100
 
 # ======================= [ CLASS METHODS ] ====================================
+
+func _enter_tree() -> void:
+	if (!singleplayerTesting): set_multiplayer_authority(name.to_int())
 
 ## Handles *most* player animations
 func _animate() -> void:
@@ -178,6 +182,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 
 ## Called on item pickup. Equips node item.
 func equip(item: Node) -> void:
+	if (!is_multiplayer_authority()): return
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
 	call_deferred("add_child", item)
@@ -276,6 +281,7 @@ func uncrouch() -> void:
 
 # Unequips item
 func unequip() -> void:
+	if (!is_multiplayer_authority()): return
 	if (is_instance_valid(_equipped_item)): _equipped_item.queue_free()
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Hide ammo counter
@@ -287,7 +293,7 @@ func unequip() -> void:
 # =========================== [ SIGNALS ] ======================================
 
 func _physics_process(delta: float) -> void:
-	if(dead): return
+	if(dead || !is_multiplayer_authority()): return
 	item_weight_penalty = equipped_item_weight / WEIGHT_TO_SPEED_FACTOR
 	_animate()
 	var direction: float = Input.get_axis("move_left", "move_right")
@@ -316,6 +322,8 @@ func _physics_process(delta: float) -> void:
 	_collide(hit_ground != is_on_floor(), hit_wall != is_on_wall())
 
 func _ready() -> void:
+	if (!is_multiplayer_authority()): return
+	hud = $/root/Root/Map/CanvasLayer/PlayerHud
 	anim.play("idle")
 
 func _on_mouse_entered() -> void:

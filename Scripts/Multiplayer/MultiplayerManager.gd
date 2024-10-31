@@ -67,11 +67,12 @@ func chatAnnouncement(msg: String) -> void:
 @rpc("any_peer", "call_local")
 func loadMap(mapID: String) -> void:
 	inLobby = false
-	var map: Node2D = load("res://Scenes/Maps/%s.tscn" % mapID).instantiate()
+	var map: Map = load("res://Scenes/Maps/%s.tscn" % mapID).instantiate()
+	map.soloTest = false
+	map.data = data
+	map.multiplayerManager = self
 	$/root/Root.add_child(map)
-	await map.ready
 	$/root/Root/Lobby.queue_free()
-	rpc_id(1, "mapLoaded", data.uuid)
 	if (data.uuid == 1):
 		while true:
 			await get_tree().create_timer(0.25).timeout
@@ -80,12 +81,18 @@ func loadMap(mapID: String) -> void:
 			rpc("beginGame")
 			break
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func mapLoaded(playerID: int) -> void:
+	print("Map loaded")
 	readyPlayers[playerID] = true
 
 @rpc("any_peer", "call_local")
 func beginGame() -> void:
+	var map: Map = $/root/Root/Map
+	if (data.uuid == 1):
+		for player: PlayerData in get_children():
+			map.spawnPlayer(player.uuid)
+			print("Creating player %s" % str(player.uuid))
 	print("Begin game")
 
 func hostServer(port: int, upnp: bool, pswd: String) -> Error:
