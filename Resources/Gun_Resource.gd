@@ -7,8 +7,8 @@ class_name GunResource
 #Sprites
 @export_category("Sprites")
 @export var weaponSprite : Texture2D
-@export var bulletSprite : Texture2D #TODO will need to access the bullet scene to edit this maybe? or just make this the bullet scene (same for damage)
-@export var smoke : Texture2D #TODO will need to access the smoke scene to edit this maybe? or just make this the smoke scene
+@export var bullet : PackedScene #TODO will need to access the bullet scene to edit this maybe? or just make this the bullet scene (same for damage)
+@export var smoke : PackedScene #TODO will need to access the smoke scene to edit this maybe? or just make this the smoke scene
 
 #Bullet information (if its a melee weapon ignore the rest)
 @export_category("Damage Settings")
@@ -24,7 +24,7 @@ enum WeaponType { BULLET, MELEE, LASER} #I think we'll need to make sure this ma
 @export_category("Recoil")
 @export var weaponRecoil : float
 @export var weaponWeight : float
-@export var recoilLoss : float #do we want to make this dependent on reocil/rate of fire?
+@export var gripLoss : float #do we want to make this dependent on reocil/rate of fire?
 
 @export_category("Technical Stuff")
 @export var exitPadding : float

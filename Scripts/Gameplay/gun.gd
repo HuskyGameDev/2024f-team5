@@ -7,28 +7,30 @@ class_name Gun
 # Constants and enums
 enum WeaponType { BULLET, MELEE, LASER }
 
+@export var activeGunResource : GunResource
+
 # Exported class variables
 ## Fire rate (inverse of cooldown) in rounds per second
-@export var firerate: float = 18
+var firerate: float
 ## Count of rounds in a magazine
 # Fun fact: 15 is the number of rounds in a standard glock 19 magazine
-@export var max_ammo: int = 15
+var max_ammo: int
 
-@export var smoke: PackedScene
-@export var weapon_type: WeaponType
-@export var weapon_recoil: float = 400
+var smoke: PackedScene
+@export var weapon_type: WeaponType #TODO: make this take from activeGunResource
+var weapon_recoil: float
 #Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
 #Jay: changed from constant to variable because it should vary between guns
-@export var weight: float = 15
+var weight: float
 ## The amount of grip lost each gunshot as a %
-@export var grip_loss: float = 30
+var grip_loss: float
 ## The type of projectile that the gun will shoot
-@export var projectile: PackedScene
-@export var proj_speed: float = 100
+var projectile: PackedScene
+var proj_speed: float
 ## Extra distance given to the bullet from barrel
-@export var exit_padding: float = 10
+var exit_padding: float
 ## Can trigger be held to continuously fire weapon.
-@export var full_auto: bool = false
+@export var full_auto: bool = false #TODO: I feel like this should always be true (was false previously)
 
 # Child node references
 ## Where smoke effects and bullets spawn
@@ -47,7 +49,7 @@ enum WeaponType { BULLET, MELEE, LASER }
 var player: Player
 ## When true, the "laser sight" ADS line is visible
 var ads: bool = false
-var ammo: int = max_ammo
+var ammo: int = 0 #was set as ammo: int = max_ammo originally but now max_ammo doesn't get loaded until the ready function is called
 ## True if cooldown is complete
 var cooldown: bool = true
 ## Gun is pointing left if true
@@ -153,3 +155,27 @@ func _on_shield_body_entered(body: Node2D) -> void:
 	player.grip -= 20
 	hurt_sound.play()
 	pass # Replace with function body.
+	
+	#This will load a new weapon for the player TODO: make it take a GunResource for a parameter
+func load_weapon() -> void:
+	## Fire rate (inverse of cooldown) in rounds per second
+	firerate = activeGunResource.fireRate
+	## Count of rounds in a magazine
+	# Fun fact: 15 is the number of rounds in a standard glock 19 magazine
+	ammo = activeGunResource.maxAmmo
+	max_ammo = activeGunResource.maxAmmo
+	smoke = activeGunResource.smoke
+	weapon_recoil = activeGunResource.weaponRecoil
+	#Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
+	#Jay: changed from constant to variable because it should vary between guns
+	weight = activeGunResource.weaponWeight
+	## The amount of grip lost each gunshot as a %
+	grip_loss = activeGunResource.gripLoss
+	## The type of projectile that the gun will shoot
+	projectile = activeGunResource.bullet
+	proj_speed = activeGunResource.projectileSpeed
+	## Extra distance given to the bullet from barrel
+	exit_padding = activeGunResource.exitPadding
+
+func _ready() -> void:
+	load_weapon()
