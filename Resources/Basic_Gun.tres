@@ -2,16 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://d0b24gssumd3c" path="res://Sprites/Weapons/bullet2.png" id="1_d8slr"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="1_y61x7"]
-[ext_resource type="Texture2D" uid="uid://dyvxgllp7cwej" path="res://Sprites/Weapons/goldeneagle.png" id="3_66jvj"]
+[ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="3_7m8nx"]
 
 [resource]
 script = ExtResource("1_y61x7")
-weaponSprite = ExtResource("3_66jvj")
+weaponSprite = ExtResource("3_7m8nx")
 bulletSprite = ExtResource("1_d8slr")
 weaponType = 0
-weaponRecoil = 0.0
-weaponDamage = 5.0
-weaponWeight = 0.0
-recoilLoss = 0.0
-fireRate = 0.0
-projectileSpeed = 0.0
+weaponDamage = 0.0
+fireRate = 6.0
+projectileSpeed = 500.0
+maxAmmo = 15
+weaponRecoil = 400.0
+weaponWeight = 15.0
+recoilLoss = 30.0
+exitPadding = 10.0

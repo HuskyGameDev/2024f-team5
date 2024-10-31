@@ -323,7 +323,8 @@ func _physics_process(delta: float) -> void:
 
 func _ready() -> void:
 	if (!is_multiplayer_authority()): return
-	hud = $/root/Root/Map/CanvasLayer/PlayerHud
+	if (singleplayerTesting): hud = $/root/Map/CanvasLayer/PlayerHud
+	else: hud = $/root/Root/Map/CanvasLayer/PlayerHud
 	anim.play("idle")
 
 func _on_mouse_entered() -> void:

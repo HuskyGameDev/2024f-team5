@@ -14,7 +14,7 @@ func _ready() -> void:
 	if (soloTest):
 		var player: Player = playerScene.instantiate()
 		player.singleplayerTesting = true
-		add_child(player)
+		$Players.add_child(player)
 	else:
 		print("Map instantiated")
 		multiplayerManager.rpc_id(1, "mapLoaded", data.uuid)
