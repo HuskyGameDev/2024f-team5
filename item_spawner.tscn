@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://50ppak4kua7q"]
+
+[ext_resource type="Script" path="res://Scenes/Maps/item_spawner.gd" id="1_h43r8"]
+
+[node name="ItemSpawner" type="Node2D"]
+position = Vector2(78, -4)
+script = ExtResource("1_h43r8")

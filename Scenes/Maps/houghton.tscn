@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://hccjwm3hunth"]
+[gd_scene load_steps=11 format=4 uid="uid://hccjwm3hunth"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_32161"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_6jei0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Demo/scenes/gun_pickup.tscn" id="4_nf66b"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="5_cdke2"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="5_sde8d"]
+[ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://item_spawner.tscn" id="8_8mrdh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
@@ -125,6 +126,11 @@ _spawnable_scenes = PackedStringArray("res://Scenes/Objects/player.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node2D" parent="."]
+
+[node name="ItemSpawner" parent="." instance=ExtResource("8_8mrdh")]
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("8_8mrdh")]
+position = Vector2(150, -52)
 
 [connection signal="ready" from="CanvasLayer" to="CanvasLayer" method="_on_ready"]
 
