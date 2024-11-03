@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Demo/scenes/gun_pickup.tscn" id="4_nf66b"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="5_cdke2"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="5_sde8d"]
-[ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://item_spawner.tscn" id="8_8mrdh"]
+[ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://Scenes/Objects/item_spawner.tscn" id="8_8mrdh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
