@@ -81,7 +81,6 @@ func _shoot(mousepos: Vector2) -> void:
 	player.grip -= grip_loss
 	player.projectileMovement = true #Thomas: tell the player movement script to temporarily disable the normal movement so we can fling the character
 	player.projectileMoveOffset = recoil.x #If we want to allow players to keep their movement augment the speed by this to allow the player to move in the same direction as the gun? TODO: this isn't functional rn
-	print(recoil.x)
 	par.velocity += recoil
 	barrel.add_child(smoke.instantiate())
 	sound.play()
@@ -96,6 +95,7 @@ func _shoot(mousepos: Vector2) -> void:
 	var padding: Vector2 = (Vector2(cos(global_rotation), sin(global_rotation))
 		* exit_padding)
 	if(flipped):
+		bullet.global_rotation += PI
 		padding *= -1
 	bullet.global_position += padding
 	bullet.linear_velocity = (proj_speed * 
