@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=4 uid="uid://hccjwm3hunth"]
+[gd_scene load_steps=12 format=4 uid="uid://hccjwm3hunth"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_32161"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_6jei0"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/dynamic_camera.gd" id="3_c5vbn"]
 [ext_resource type="Texture2D" uid="uid://dh8xoqndsykss" path="res://Sprites/Environment/Environment1.png" id="3_m7rpx"]
-[ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Demo/scenes/gun_pickup.tscn" id="4_nf66b"]
+[ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Scenes/Objects/gun_pickup.tscn" id="4_nf66b"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="5_cdke2"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="5_sde8d"]
 [ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://Scenes/Objects/item_spawner.tscn" id="8_8mrdh"]
+[ext_resource type="Resource" uid="uid://djmt2hny3wdy8" path="res://Resources/GoldenEye.tres" id="9_ma7dq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
@@ -91,7 +92,7 @@ tile_map_data = PackedByteArray("AAD//wEAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAE
 tile_set = SubResource("TileSet_ejak1")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("pois", "north_border", "west_border", "east_border", "south_border")]
-zoom = Vector2(1.61, 1.61)
+zoom = Vector2(1.55, 1.55)
 script = ExtResource("3_c5vbn")
 smoothing = 0.25
 pois = [NodePath("../World Borders")]
@@ -131,6 +132,10 @@ spawn_path = NodePath("../Players")
 
 [node name="ItemSpawner2" parent="." instance=ExtResource("8_8mrdh")]
 position = Vector2(150, -52)
+
+[node name="Gun Pickup2" parent="." instance=ExtResource("4_nf66b")]
+position = Vector2(-162, -15)
+gun_resource = ExtResource("9_ma7dq")
 
 [connection signal="ready" from="CanvasLayer" to="CanvasLayer" method="_on_ready"]
 

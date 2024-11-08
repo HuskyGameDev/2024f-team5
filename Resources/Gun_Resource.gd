@@ -7,6 +7,8 @@ class_name GunResource
 #Sprites
 @export_category("Sprites")
 @export var weaponSprite : Texture2D
+## This is the sprite that should show up on the spawner's display.
+@export var icon: Texture2D
 @export var bullet : PackedScene
 @export var smoke : PackedScene
 

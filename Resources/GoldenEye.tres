@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="GunResource" load_steps=6 format=3 uid="uid://djmt2hny3wdy8"]
+
+[ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_3g36l"]
+[ext_resource type="Texture2D" uid="uid://b3gjh2glox6sj" path="res://Sprites/Weapons/geIcon.png" id="2_k0l5t"]
+[ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="3_olo8t"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="4_wynm6"]
+[ext_resource type="Texture2D" uid="uid://dyvxgllp7cwej" path="res://Sprites/Weapons/goldeneagle.png" id="5_1kwmr"]
+
+[resource]
+script = ExtResource("3_olo8t")
+weaponSprite = ExtResource("5_1kwmr")
+icon = ExtResource("2_k0l5t")
+bullet = ExtResource("1_3g36l")
+smoke = ExtResource("4_wynm6")
+weaponType = 0
+weaponDamage = 99999.0
+fireRate = 2.0
+projectileSpeed = 500.0
+maxAmmo = 1
+weaponRecoil = 800.0
+weaponWeight = 20.0
+gripLoss = 80.0
+fireSound = Array[AudioStream]([])
+exitPadding = 11.0

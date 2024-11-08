@@ -1,6 +1,9 @@
 ## Moves camera to average point between many points of interest
 ## Jay Hawkins
 extends Camera2D
+class_name  DynamicCamera
+
+static var instance: DynamicCamera
 
 # The factor at which distance affects camera speed
 @export var smoothing: float = 1
@@ -14,6 +17,7 @@ extends Camera2D
 
 # Sets camera boundaries based off borders
 func _ready() -> void:
+	instance = self
 	if(north_border == null || west_border == null || east_border == null || 
 	  south_border == null):
 		print("One or more borders not assigned to camera.")

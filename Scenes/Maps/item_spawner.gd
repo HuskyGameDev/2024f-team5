@@ -7,7 +7,7 @@ var spawn_timer: float = 10.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	items_to_spawn.append(load("res://Demo/scenes/gun_pickup.tscn"))
+	items_to_spawn.append(load("res://Scenes/Objects/gun_pickup.tscn"))
 	_start_timer()
 	
 func _start_timer() -> void:

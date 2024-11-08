@@ -7,9 +7,13 @@ class_name Gun
 # Constants and enums
 enum WeaponType { BULLET, MELEE, LASER }
 
+# For testing with number keys
 @export var gun1 : GunResource
 @export var gun2 : GunResource
 @export var gun3 : GunResource
+
+# For normal gameplay
+@export var gun_resource: GunResource
 
 # Exported class variables
 ## Fire rate (inverse of cooldown) in rounds per second
@@ -196,4 +200,4 @@ func load_weapon(newWeaponResource : GunResource) -> void:
 	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
 func _ready() -> void:
-	load_weapon(gun1)
+	load_weapon(gun_resource)

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="GunResource" load_steps=6 format=3 uid="uid://cpf1dst5yfgbk"]
+
+[ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_orclw"]
+[ext_resource type="Texture2D" uid="uid://12goi6amxmwm" path="res://Sprites/Weapons/GlockIcon.png" id="2_fwhjq"]
+[ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="3_hhpsr"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="4_bugjl"]
+[ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="5_vta6t"]
+
+[resource]
+script = ExtResource("3_hhpsr")
+weaponSprite = ExtResource("5_vta6t")
+icon = ExtResource("2_fwhjq")
+bullet = ExtResource("1_orclw")
+smoke = ExtResource("4_bugjl")
+weaponType = 0
+weaponDamage = 0.0
+fireRate = 6.0
+projectileSpeed = 500.0
+maxAmmo = 15
+weaponRecoil = 400.0
+weaponWeight = 15.0
+gripLoss = 30.0
+fireSound = Array[AudioStream]([])
+exitPadding = 10.0

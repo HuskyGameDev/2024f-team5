@@ -341,6 +341,8 @@ func _ready() -> void:
 	if (singleplayerTesting): hud = $/root/Map/CanvasLayer/PlayerHud
 	else: hud = $/root/Root/Map/CanvasLayer/PlayerHud
 	anim.play("idle")
+	# Add to dynamic camera points
+	DynamicCamera.instance.pois.append(self)
 
 func _on_mouse_entered() -> void:
 	if(_equipped_item != null):

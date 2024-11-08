@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/gun.gd" id="1_0j3p2"]
 [ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="2_cpxqo"]
-[ext_resource type="Resource" uid="uid://cpf1dst5yfgbk" path="res://Resources/Basic_Gun.tres" id="2_gk0x5"]
-[ext_resource type="Resource" uid="uid://djmt2hny3wdy8" path="res://Resources/Golden_Gun.tres" id="3_5osrd"]
+[ext_resource type="Resource" uid="uid://cpf1dst5yfgbk" path="res://Resources/Glock.tres" id="2_gk0x5"]
+[ext_resource type="Resource" uid="uid://djmt2hny3wdy8" path="res://Resources/GoldenEye.tres" id="3_5osrd"]
 [ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="3_fqaim"]
 [ext_resource type="Texture2D" uid="uid://b112vd0jxqdgo" path="res://Sprites/UI/ADS_Line.png" id="4_0wfsj"]
 [ext_resource type="Resource" uid="uid://f2lwxww284lx" path="res://Resources/Rifle.tres" id="4_aakfw"]
