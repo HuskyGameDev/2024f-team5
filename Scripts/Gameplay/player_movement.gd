@@ -135,13 +135,14 @@ func _collide(change_in_ground_state: bool, change_in_wall_state: bool) -> void:
 	if(change_in_ground_state):
 		# Ground has been hit
 		if(is_on_floor()):
+			coyoteJump = true
 			sound.stream = sfx["land"]
 			sound.play()
 			anim.current_animation = "idle"
 			# Ensures accurate resetting of wall jump count
 			consecutive_wall_jumps = 0
 		# Ground has been left
-		else:
+		elif(coyoteJump): # if statement prevents a sequential coyoteJump after a normal jump
 			_start_coyote()
 	# Handle wall collisions and exits
 	if(change_in_wall_state):
@@ -188,6 +189,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 ## Called on item pickup. Equips node item.
 func equip(item: Node) -> void:
 	if (!is_multiplayer_authority()): return
+	unequip()
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
 	call_deferred("add_child", item)
@@ -225,7 +227,8 @@ func _jump() -> void:
 			walljumpTimer.start()
 			velocity.y = JUMP_VELOCITY / WALLJUMP_FACTOR
 			consecutive_wall_jumps += 1
-			if(!impulsive_walljumps): return
+			if(!impulsive_walljumps): 
+				return
 			if(sprite.flip_h):
 				velocity.x += WALLJUMP_IMPULSE
 			else:
@@ -313,10 +316,7 @@ func _physics_process(delta: float) -> void:
 		if(Input.is_action_pressed("crouch") && !direction):
 			crouch()
 
-	if Input.is_action_just_pressed("jump"):
-		_jump()
-	if Input.is_action_just_pressed("drop_item"):
-		unequip()
+	
 	
 	_move(direction)
 	_grip_process(delta)
@@ -329,6 +329,10 @@ func _physics_process(delta: float) -> void:
 	# is my solution. -Jay
 	_collide(hit_ground != is_on_floor(), hit_wall != is_on_wall())
 	
+	if Input.is_action_just_pressed("jump"):
+		_jump()
+	if Input.is_action_just_pressed("drop_item"):
+		unequip()
 	if Input.is_action_just_pressed("ToggleMoveTypes"): #TODO: this is for testing purposes, probably want to remove it later
 		normalMovement = !normalMovement
 
