@@ -5,8 +5,13 @@ class_name GunResource
 #Then we can quickly switch between guns and any edits can be made across all of them (since a change to the gun script will affect how these variables are handled)
 
 #Sprites
-@export_category("Sprites")
+@export_category("Sprites and Animations")
 @export var weaponSprite : Texture2D
+@export var alt_sprites: Array[Texture2D]
+enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
+@export var animation_mode : AnimationMode
+## The amount of time it takes to return to original sprite when using pulse animation
+@export var pulse_time : float = .25
 ## This is the sprite that should show up on the spawner's display.
 @export var icon: Texture2D
 @export var bullet : PackedScene
@@ -22,6 +27,7 @@ enum WeaponType { BULLET, MELEE, LASER} #I think we'll need to make sure this ma
 @export var fireRate : float 
 @export var projectileSpeed : float 
 @export var maxAmmo : int
+@export var full_auto: bool
 
 @export_category("Recoil")
 @export var weaponRecoil : float
@@ -29,7 +35,7 @@ enum WeaponType { BULLET, MELEE, LASER} #I think we'll need to make sure this ma
 @export var gripLoss : float #do we want to make this dependent on reocil/rate of fire?
 
 @export_category("Audio") #TODO: need to properly implement this
-@export var fireSound : Array[AudioStream] #this way if we have multiple sound effects we can have varied shooting sounds
+@export var fireSounds : Array[AudioStream] #this way if we have multiple sound effects we can have varied shooting sounds
 @export var discardSound : AudioStream #when you drop the weapon or run out of ammo
 
 @export_category("Technical Stuff")

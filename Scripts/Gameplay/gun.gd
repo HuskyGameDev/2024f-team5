@@ -37,9 +37,12 @@ var proj_speed: float
 var exit_padding: float
 ## Can trigger be held to continuously fire weapon.
 @export var full_auto: bool = false #TODO: I feel like this should always be true (was false previously)
+# ^ fair take but I feel like since we're mostly dealing with pistols,
+# this option will give more variety to weapon feel.
 
 # Child node references
 ## Where smoke effects and bullets spawn
+@onready var anim_timer : Timer = $AnimationTimer
 @onready var barrel: Node2D = $Sprite2D/Barrel
 @onready var line: Line2D = $Sprite2D/Barrel/Line2D
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
@@ -107,6 +110,17 @@ func _shoot(mousepos: Vector2) -> void:
 	if(flipped):
 		bullet.linear_velocity *= -1
 	get_tree().get_root().add_child(bullet)
+	
+	# Handle animation
+	# Currently only implemented pulse
+	if(gun_resource.animation_mode == GunResource.AnimationMode.PULSE):
+		spi.texture = gun_resource.alt_sprites[0]
+		anim_timer.start()
+	elif(gun_resource.animation_mode == GunResource.AnimationMode.PULSE_EMPTY):
+		spi.texture = gun_resource.alt_sprites[0]
+		if(ammo > 0):
+			anim_timer.start()
+	
 	# Cooldown handling
 	cooldown = false
 	await get_tree().create_timer(1 / firerate).timeout
@@ -174,6 +188,7 @@ func _on_shield_body_entered(body: Node2D) -> void:
 	
 	#This will load a new weapon for the player TODO: make it take a GunResource for a parameter
 func load_weapon(newWeaponResource : GunResource) -> void:
+	gun_resource = newWeaponResource
 	## Fire rate (inverse of cooldown) in rounds per second
 	firerate = newWeaponResource.fireRate
 	## Count of rounds in a magazine
@@ -192,12 +207,19 @@ func load_weapon(newWeaponResource : GunResource) -> void:
 	proj_speed = newWeaponResource.projectileSpeed
 	## Extra distance given to the bullet from barrel
 	exit_padding = newWeaponResource.exitPadding
+	full_auto = newWeaponResource.full_auto
 	
 	#Change the gun sprite
-	$Sprite2D.texture = newWeaponResource.weaponSprite
+	spi.texture = newWeaponResource.weaponSprite
+	anim_timer.wait_time = newWeaponResource.pulse_time
+	# Currently doesn't implement varied shooting sounds
+	sound.stream = newWeaponResource.fireSounds[0]
 	
 	#update ammo count on the HUD
 	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
 func _ready() -> void:
 	load_weapon(gun_resource)
+
+func _on_animation_timer_timeout() -> void:
+	spi.texture = gun_resource.weaponSprite

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="GunResource" load_steps=8 format=3 uid="uid://udj1y0gfnsw8"]
+
+[ext_resource type="Texture2D" uid="uid://blsrimqf0vs0a" path="res://Sprites/Weapons/el_dante_alt.png" id="1_lik16"]
+[ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="2_348wf"]
+[ext_resource type="AudioStream" uid="uid://dfdan04ft18ec" path="res://SFX/Temp/impact.wav" id="3_frbn2"]
+[ext_resource type="Texture2D" uid="uid://b8rxcwcfhrt" path="res://Sprites/Weapons/El_Dante_Icon.png" id="3_ibttt"]
+[ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="4_pvkol"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="5_7o4sn"]
+[ext_resource type="Texture2D" uid="uid://bdrfpgdbvixeb" path="res://Sprites/Weapons/El_Dante.png" id="6_7u6oi"]
+
+[resource]
+script = ExtResource("4_pvkol")
+weaponSprite = ExtResource("6_7u6oi")
+alt_sprites = Array[Texture2D]([ExtResource("1_lik16")])
+animation_mode = 3
+pulse_time = 0.02
+icon = ExtResource("3_ibttt")
+bullet = ExtResource("2_348wf")
+smoke = ExtResource("5_7o4sn")
+weaponType = 0
+weaponDamage = 0.0
+fireRate = 25.0
+projectileSpeed = 1000.0
+maxAmmo = 200
+full_auto = true
+weaponRecoil = -75.0
+weaponWeight = 15.0
+gripLoss = 3.0
+fireSounds = Array[AudioStream]([ExtResource("3_frbn2")])
+exitPadding = 40.0

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="GunResource" load_steps=6 format=3 uid="uid://djmt2hny3wdy8"]
+[gd_resource type="Resource" script_class="GunResource" load_steps=7 format=3 uid="uid://db6irsiucf3se"]
 
 [ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_3g36l"]
+[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="2_ist40"]
 [ext_resource type="Texture2D" uid="uid://b3gjh2glox6sj" path="res://Sprites/Weapons/geIcon.png" id="2_k0l5t"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="3_olo8t"]
 [ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="4_wynm6"]
@@ -9,6 +10,9 @@
 [resource]
 script = ExtResource("3_olo8t")
 weaponSprite = ExtResource("5_1kwmr")
+alt_sprites = Array[Texture2D]([])
+animation_mode = 0
+pulse_time = 0.25
 icon = ExtResource("2_k0l5t")
 bullet = ExtResource("1_3g36l")
 smoke = ExtResource("4_wynm6")
@@ -17,8 +21,9 @@ weaponDamage = 99999.0
 fireRate = 2.0
 projectileSpeed = 500.0
 maxAmmo = 1
+full_auto = false
 weaponRecoil = 800.0
 weaponWeight = 20.0
 gripLoss = 80.0
-fireSound = Array[AudioStream]([])
+fireSounds = Array[AudioStream]([ExtResource("2_ist40")])
 exitPadding = 11.0
