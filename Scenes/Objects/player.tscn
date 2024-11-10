@@ -202,7 +202,7 @@ script = ExtResource("1_ym8ee")
 oob_death = ExtResource("2_o8rcn")
 
 [node name="EnvironmentalCollision" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(6, 0, 3, 8, -3, 8, -6, 0, 0, -8)
+polygon = PackedVector2Array(6, 0, 3, 8, -3, 8, -6, 0, 0, -7)
 
 [node name="DeathParticles" parent="." instance=ExtResource("7_tlm4h")]
 position = Vector2(0, -2)

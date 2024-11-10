@@ -57,6 +57,10 @@ static var sfx: Dictionary = {
 @export var oob_death: PackedScene
 @export var singleplayerTesting: bool = false
 @export var hud: Hud
+## Threshold of magnitude of velocity to initiate a wallbounce upon collision
+@export var wallbounce_thresh: float = 150
+## Factor that velocity is multiplied by upon bounce
+@export var bounciness: float = 0.45
 
 # EXPERIMENTAL VARIABLES. USE TO TEST FOR NEW CHANGES
 @export var impulsive_walljumps: bool = false
@@ -130,7 +134,8 @@ func _animate() -> void:
 			anim.current_animation = "bump"
 
 ## Handles player entering and exiting ground
-func _collide(change_in_ground_state: bool, change_in_wall_state: bool) -> void:
+func _collide(change_in_ground_state: bool, change_in_wall_state: bool,
+  prev_vel: Vector2) -> void:
 	# Handle ground collisions and exits
 	if(change_in_ground_state):
 		# Ground has been hit
@@ -148,8 +153,11 @@ func _collide(change_in_ground_state: bool, change_in_wall_state: bool) -> void:
 	if(change_in_wall_state):
 		# Wall has been hit
 		if is_on_wall():
-			# only allow the player to cling for so long
-			cling_timer.start()
+			if(prev_vel.length() >= wallbounce_thresh):
+				velocity.x = prev_vel.x * -bounciness
+			elif(_equipped_item == null):
+				# only allow the player to cling for so long
+				cling_timer.start()
 		# Wall has been left
 		else:
 			_start_coyote()
@@ -323,11 +331,13 @@ func _physics_process(delta: float) -> void:
 
 	var hit_ground: bool = is_on_floor()
 	var hit_wall: bool = is_on_wall()
+	var pre_collision_vel: Vector2 = velocity
 	move_and_slide()
 	# != conditions help detect a change in state before and after moving.
 	# Godot doesn't have the collision signals that unity has, so this
 	# is my solution. -Jay
-	_collide(hit_ground != is_on_floor(), hit_wall != is_on_wall())
+	_collide(hit_ground != is_on_floor(), hit_wall != is_on_wall(),
+	  pre_collision_vel)
 	
 	if Input.is_action_just_pressed("jump"):
 		_jump()
