@@ -14,8 +14,9 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 @export var pulse_time : float = .25
 ## This is the sprite that should show up on the spawner's display.
 @export var icon: Texture2D
-@export var bullet : PackedScene
-@export var smoke : PackedScene
+@export var bullet: PackedScene
+@export var smoke: PackedScene
+@export var barrel_pos: Vector2
 
 #Bullet information (if its a melee weapon ignore the rest)
 @export_category("Damage Settings")

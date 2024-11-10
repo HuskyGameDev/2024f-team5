@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://canvtpms427w8"]
+
+[ext_resource type="Script" path="res://Scripts/Gameplay/projectile.gd" id="1_ovajo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtd25"]
+size = Vector2(6, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_854hw"]
+size = Vector2(18, 18)
+
+[sub_resource type="Gradient" id="Gradient_d7r1f"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0.121569, 0.152941, 0.309804)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_14y3r"]
+gradient = SubResource("Gradient_d7r1f")
+
+[node name="WeaponHitbox" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 7
+gravity_scale = 0.0
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_ovajo")
+melee = true
+timeout = 0.05
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qtd25")
+debug_color = Color(1, 0.415686, 0.380392, 0.294118)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_854hw")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3.57628e-07, 0)
+scale = Vector2(0.0703125, 18)
+texture = SubResource("GradientTexture1D_14y3r")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

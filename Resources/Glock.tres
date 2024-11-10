@@ -17,6 +17,7 @@ pulse_time = 0.1
 icon = ExtResource("2_fwhjq")
 bullet = ExtResource("1_orclw")
 smoke = ExtResource("4_bugjl")
+barrel_pos = Vector2(16, -11)
 weaponType = 0
 weaponDamage = 0.0
 fireRate = 6.0

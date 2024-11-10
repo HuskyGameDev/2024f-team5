@@ -45,6 +45,7 @@ var exit_padding: float
 @onready var anim_timer : Timer = $AnimationTimer
 @onready var barrel: Node2D = $Sprite2D/Barrel
 @onready var line: Line2D = $Sprite2D/Barrel/Line2D
+@onready var shield: Area2D = $Shield
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var spi: Sprite2D = $Sprite2D
 @onready var hurt_sound: AudioStreamPlayer2D = $Shield/DamageSound
@@ -69,6 +70,7 @@ var hud: Hud
 
 func _flip() -> void:
 	spi.offset.x = rev_offset
+	shield.position.x = rev_offset
 	spi.flip_h = true
 	flipped = true
 	#barrel.position = barrel_pos[1]
@@ -97,8 +99,15 @@ func _shoot(mousepos: Vector2) -> void:
 	
 	# Shoot the actual bullet
 	var bullet: Node = projectile.instantiate()
+	# If melee, "projectile" will be attached to barrel, otherwise outside
+	var melee: bool = false
+	if("melee" in bullet && bullet.melee):
+		melee = true
+		add_child(bullet)
 	bullet.global_position = barrel.global_position
 	bullet.global_rotation = self.global_rotation
+	if "shot_by" in bullet:
+		bullet.shot_by = self
 	var padding: Vector2 = (Vector2(cos(global_rotation), sin(global_rotation))
 		* exit_padding)
 	if(flipped):
@@ -109,7 +118,8 @@ func _shoot(mousepos: Vector2) -> void:
 	  Vector2(cos(global_rotation), sin(global_rotation)))
 	if(flipped):
 		bullet.linear_velocity *= -1
-	get_tree().get_root().add_child(bullet)
+	if(!melee):
+		get_tree().get_root().add_child(bullet)
 	
 	# Handle animation
 	# Currently only implemented pulse
@@ -128,6 +138,7 @@ func _shoot(mousepos: Vector2) -> void:
 
 func _unflip() -> void:
 	spi.offset.x = 0
+	shield.position.x = 0
 	spi.flip_h = false
 	flipped = false
 	barrel.rotate(PI)
@@ -181,10 +192,11 @@ func _process(_delta: float) -> void:
 		load_weapon(gun3)
 
 func _on_shield_body_entered(body: Node2D) -> void:
+	if "shot_by" in body && body.shot_by == self:
+		return
 	var angle: float = global_position.angle_to_point(body.position)
 	player.grip -= 20
 	hurt_sound.play()
-	pass # Replace with function body.
 	
 	#This will load a new weapon for the player TODO: make it take a GunResource for a parameter
 func load_weapon(newWeaponResource : GunResource) -> void:
@@ -214,7 +226,9 @@ func load_weapon(newWeaponResource : GunResource) -> void:
 	anim_timer.wait_time = newWeaponResource.pulse_time
 	# Currently doesn't implement varied shooting sounds
 	sound.stream = newWeaponResource.fireSounds[0]
-	
+	barrel.position = newWeaponResource.barrel_pos
+	init_barrel_posX = barrel.position.x
+	rev_barrel_posX = -init_barrel_posX + rev_offset
 	#update ammo count on the HUD
 	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
