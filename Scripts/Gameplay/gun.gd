@@ -91,7 +91,8 @@ func _shoot(mousepos: Vector2) -> void:
 	player.projectileMovement = true #Thomas: tell the player movement script to temporarily disable the normal movement so we can fling the character
 	player.projectileMoveOffset = recoil.x #If we want to allow players to keep their movement augment the speed by this to allow the player to move in the same direction as the gun? TODO: this isn't functional rn
 	par.velocity += recoil
-	barrel.add_child(smoke.instantiate())
+	if(smoke != null):
+		barrel.add_child(smoke.instantiate())
 	sound.play()
 	# Godot doesn't support ++/-- incrementing. Fuck that.
 	ammo -= 1

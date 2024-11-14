@@ -215,7 +215,6 @@ func equip(item: Node) -> void:
 	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
 	# This should work better. Weird solution imo but its what the forums say. -Jay
 	add_child(item)
-	print(item.weight)
 	if "weight" in item:
 		equipped_item_weight = item.weight
 	if "player" in item:

@@ -1,15 +1,14 @@
-[gd_resource type="Resource" script_class="GunResource" load_steps=12 format=3 uid="uid://waoe00ag7fse"]
+[gd_resource type="Resource" script_class="GunResource" load_steps=11 format=3 uid="uid://waoe00ag7fse"]
 
 [ext_resource type="Texture2D" uid="uid://c1wfxaa60dvw0" path="res://Sprites/Weapons/BananaGun1.png" id="1_02kwg"]
-[ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_ixj7j"]
-[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="2_3bgqi"]
 [ext_resource type="Texture2D" uid="uid://f6ygoaypu1qi" path="res://Sprites/Weapons/BananaGun2.png" id="2_no1wn"]
 [ext_resource type="Texture2D" uid="uid://hs1ykpyubu4v" path="res://Sprites/Weapons/BananaGun3.png" id="3_6hqy0"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="4_742d2"]
 [ext_resource type="Texture2D" uid="uid://bvamclpd6obj2" path="res://Sprites/Weapons/BananaGun4.png" id="4_gykym"]
 [ext_resource type="Texture2D" uid="uid://dqkwqiglwf7nt" path="res://Sprites/Weapons/BananaGun5.png" id="5_5nmot"]
-[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="5_nfonw"]
 [ext_resource type="Texture2D" uid="uid://b0d2ynsv7tepu" path="res://Sprites/Weapons/BananaGun6.png" id="6_7tia0"]
+[ext_resource type="PackedScene" uid="uid://ci5nsqbqxhwgw" path="res://Scenes/Objects/banana_chunk.tscn" id="7_m1fid"]
+[ext_resource type="AudioStream" uid="uid://dd0xnp3vxd76e" path="res://SFX/Temp/pop.wav" id="8_xjwyn"]
 [ext_resource type="Texture2D" uid="uid://dw4cl60wsbof0" path="res://Sprites/Weapons/banana_icon.png" id="9_ifhnr"]
 
 [resource]
@@ -19,9 +18,8 @@ alt_sprites = Array[Texture2D]([ExtResource("1_02kwg"), ExtResource("2_no1wn"), 
 animation_mode = 2
 pulse_time = 0.25
 icon = ExtResource("9_ifhnr")
-bullet = ExtResource("1_ixj7j")
-smoke = ExtResource("5_nfonw")
-barrel_pos = Vector2(0, 0)
+bullet = ExtResource("7_m1fid")
+barrel_pos = Vector2(27, -9)
 weaponType = 0
 weaponDamage = 10.0
 fireRate = 2.0
@@ -31,5 +29,5 @@ full_auto = true
 weaponRecoil = 50.0
 weaponWeight = 3.0
 gripLoss = 20.0
-fireSounds = Array[AudioStream]([ExtResource("2_3bgqi")])
+fireSounds = Array[AudioStream]([ExtResource("8_xjwyn")])
 exitPadding = 11.0
