@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d18otvutwtn1n" path="res://Demo/Sprites/Borrowed Assets/C2013.png" id="4_gurjx"]
 [ext_resource type="Texture2D" uid="uid://dp4as0a1uofeg" path="res://Demo/Sprites/Borrowed Assets/C2010.png" id="4_n2wmm"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="10_ivq5u"]
-[ext_resource type="PackedScene" uid="uid://dbsrwca0u43j4" path="res://Scenes/Objects/gun_pickup.tscn" id="10_ynwbb"]
+[ext_resource type="PackedScene" uid="uid://c0ltnigbp72g2" path="res://Scenes/Objects/gun_pickup.tscn" id="10_ynwbb"]
 [ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="11_vb1t2"]
 [ext_resource type="PackedScene" uid="uid://8fxygf81du2b" path="res://Demo/scenes/complete_trigger.tscn" id="12_820gm"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="14_5oiri"]
