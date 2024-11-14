@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c0ltnigbp72g2" path="res://Scenes/Objects/gun_pickup.tscn" id="4_nf66b"]
 [ext_resource type="PackedScene" uid="uid://5go066ip627a" path="res://Demo/scenes/spike.tscn" id="5_cdke2"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="5_sde8d"]
-[ext_resource type="Resource" uid="uid://udj1y0gfnsw8" path="res://Resources/El_Dante.tres" id="7_bshl0"]
+[ext_resource type="Resource" uid="uid://waoe00ag7fse" path="res://Resources/Nanner.tres" id="7_ojip6"]
 [ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://Scenes/Objects/item_spawner.tscn" id="8_8mrdh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
@@ -216,7 +216,7 @@ south_border = NodePath("../World Borders/South Border")
 
 [node name="Gun Pickup" parent="." instance=ExtResource("4_nf66b")]
 position = Vector2(-221, -16)
-gun_resource = ExtResource("7_bshl0")
+gun_resource = ExtResource("7_ojip6")
 
 [node name="World Borders" parent="." instance=ExtResource("5_sde8d")]
 position = Vector2(0, 8)

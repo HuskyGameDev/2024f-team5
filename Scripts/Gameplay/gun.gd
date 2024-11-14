@@ -122,14 +122,19 @@ func _shoot(mousepos: Vector2) -> void:
 		get_tree().get_root().add_child(bullet)
 	
 	# Handle animation
-	# Currently only implemented pulse
-	if(gun_resource.animation_mode == GunResource.AnimationMode.PULSE):
-		spi.texture = gun_resource.alt_sprites[0]
-		anim_timer.start()
-	elif(gun_resource.animation_mode == GunResource.AnimationMode.PULSE_EMPTY):
-		spi.texture = gun_resource.alt_sprites[0]
-		if(ammo > 0):
+	match gun_resource.animation_mode:
+		GunResource.AnimationMode.PULSE:
+			spi.texture = gun_resource.alt_sprites[0]
 			anim_timer.start()
+		GunResource.AnimationMode.PULSE_EMPTY:
+			spi.texture = gun_resource.alt_sprites[0]
+			if(ammo > 0):
+				anim_timer.start()
+		GunResource.AnimationMode.NEXT:
+			var i: int = max_ammo - ammo
+			var n: int = gun_resource.alt_sprites.size()
+			spi.texture = gun_resource.alt_sprites[i % n]
+		
 	
 	# Cooldown handling
 	cooldown = false
@@ -198,8 +203,9 @@ func _on_shield_body_entered(body: Node2D) -> void:
 	player.grip -= 20
 	hurt_sound.play()
 	
-	#This will load a new weapon for the player TODO: make it take a GunResource for a parameter
-func load_weapon(newWeaponResource : GunResource) -> void:
+#This will load a new weapon for the player
+# Jay: Providing no argument will load the assigned gun resource.
+func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	gun_resource = newWeaponResource
 	## Fire rate (inverse of cooldown) in rounds per second
 	firerate = newWeaponResource.fireRate
@@ -209,8 +215,6 @@ func load_weapon(newWeaponResource : GunResource) -> void:
 	max_ammo = newWeaponResource.maxAmmo
 	smoke = newWeaponResource.smoke
 	weapon_recoil = newWeaponResource.weaponRecoil
-	#Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
-	#Jay: changed from constant to variable because it should vary between guns
 	weight = newWeaponResource.weaponWeight
 	## The amount of grip lost each gunshot as a %
 	grip_loss = newWeaponResource.gripLoss
@@ -233,7 +237,7 @@ func load_weapon(newWeaponResource : GunResource) -> void:
 	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
 func _ready() -> void:
-	load_weapon(gun_resource)
+	load_weapon()
 
 func _on_animation_timer_timeout() -> void:
 	spi.texture = gun_resource.weaponSprite

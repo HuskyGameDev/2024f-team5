@@ -59,6 +59,8 @@ static var sfx: Dictionary = {
 @export var hud: Hud
 ## Threshold of magnitude of velocity to initiate a wallbounce upon collision
 @export var wallbounce_thresh: float = 150
+## The threshold of equipped item weight in which you can no longer walljump
+@export var wj_weight_threshold: float = 10
 ## Factor that velocity is multiplied by upon bounce
 @export var bounciness: float = 0.45
 
@@ -155,13 +157,16 @@ func _collide(change_in_ground_state: bool, change_in_wall_state: bool,
 		if is_on_wall():
 			if(prev_vel.length() >= wallbounce_thresh):
 				velocity.x = prev_vel.x * -bounciness
-			elif(_equipped_item == null):
+			elif can_walljump():
 				# only allow the player to cling for so long
 				cling_timer.start()
 		# Wall has been left
 		else:
 			_start_coyote()
 
+## Returns whether a player can walljump with currently equipped item
+func can_walljump() -> bool:
+	return _equipped_item == null || equipped_item_weight < wj_weight_threshold
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
 func crouch() -> void:
@@ -200,7 +205,7 @@ func equip(item: Node) -> void:
 	unequip()
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
-	call_deferred("add_child", item)
+	#call_deferred("add_child", item)
 	_equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
@@ -209,6 +214,8 @@ func equip(item: Node) -> void:
 	item.hud = self.hud
 	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
 	# This should work better. Weird solution imo but its what the forums say. -Jay
+	add_child(item)
+	print(item.weight)
 	if "weight" in item:
 		equipped_item_weight = item.weight
 	if "player" in item:
@@ -231,7 +238,8 @@ func _jump() -> void:
 		sound.stream = sfx["jump"]
 		sound.play()
 		can_wall_cling = false
-		if _equipped_item == null: #Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
+		#Doing this here so that if you pick something up while wall clinging you'll just fall (but we do need to deactivate wall cling)
+		if can_walljump(): 
 			walljumpTimer.start()
 			velocity.y = JUMP_VELOCITY / WALLJUMP_FACTOR
 			consecutive_wall_jumps += 1
@@ -247,7 +255,7 @@ func _jump() -> void:
 		velocity.y = JUMP_VELOCITY + abs(item_weight_penalty)
 		# Thomas: start a timer here for the wall jump and reset consecutive 
 		# wall jump counter
-		if _equipped_item == null:
+		if can_walljump():
 			walljumpTimer.start()
 			consecutive_wall_jumps = 0
 	coyoteJump = false
