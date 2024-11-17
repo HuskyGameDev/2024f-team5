@@ -91,6 +91,19 @@ func _shoot(mousepos: Vector2) -> void:
 	
 	# Shoot the actual bullet
 	var bullet: Node = projectile.instantiate()
+	
+	#Set the variables on the bullet to make sure they match the gun resource #TODO #WARNING only will work if bullet is a projectile script
+	if gun_resource.WeaponType == WeaponReferences.WeaponType.MELEE:
+		bullet.melee = true
+	else:
+		bullet.melee = false
+	bullet.damage = gun_resource.weaponDamage
+	bullet.knockback = gun_resource.weaponKnockback
+	bullet.delete_on_collide = gun_resource.deleteOnCollide
+	bullet.trail_period = gun_resource.trailPeriod
+	bullet.timeout = gun_resource.timeOut
+	
+	
 	# If melee, "projectile" will be attached to barrel, otherwise outside
 	var melee: bool = false
 	if("melee" in bullet && bullet.melee):

@@ -20,8 +20,14 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 
 #Bullet information (if its a melee weapon ignore the rest)
 @export_category("Damage Settings")
-@export var WeaponType : WeaponReferences.WeaponType #TODO
-@export var weaponDamage : float #TODO: need to properly implement this (edit bullet scene?) do we want to construct bullets here or have that as a seperate resource?
+@export var WeaponType : WeaponReferences.WeaponType
+
+#TODO: need to properly implement this (edit bullet scene?) do we want to construct bullets here or have that as a seperate resource?
+@export var weaponDamage : float
+@export var weaponKnockback : float 
+@export var deleteOnCollide : bool
+@export var trailPeriod : float
+@export var timeOut : float
 
 #Most these don't apply to melee weapons, I'll look into a way to get them to not dispaly when weapontype is set to melee
 @export var fireRate : float 
