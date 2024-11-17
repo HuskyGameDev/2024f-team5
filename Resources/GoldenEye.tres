@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="GunResource" load_steps=7 format=3 uid="uid://db6irsiucf3se"]
 
 [ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_3g36l"]
-[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="2_ist40"]
 [ext_resource type="Texture2D" uid="uid://b3gjh2glox6sj" path="res://Sprites/Weapons/geIcon.png" id="2_k0l5t"]
+[ext_resource type="AudioStream" uid="uid://dwdgmwcm43l0b" path="res://SFX/HGD Sound Library/Gun_Fire_GUN_Hunt.wav" id="2_vb22l"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="3_olo8t"]
 [ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="4_wynm6"]
 [ext_resource type="Texture2D" uid="uid://dyvxgllp7cwej" path="res://Sprites/Weapons/goldeneagle.png" id="5_1kwmr"]
@@ -30,5 +30,5 @@ full_auto = false
 weaponRecoil = 800.0
 weaponWeight = 20.0
 gripLoss = 80.0
-fireSounds = Array[AudioStream]([ExtResource("2_ist40")])
+fireSounds = Array[AudioStream]([ExtResource("2_vb22l")])
 exitPadding = 11.0

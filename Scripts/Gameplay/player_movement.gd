@@ -46,11 +46,11 @@ static var cursors: Array = [
 ]
 ## Array of sound effects, currently temporary
 static var sfx: Dictionary = {
-	"death" : preload("res://SFX/Temp/death.wav"),
-	"oob_death" : preload("res://SFX/Temp/oob_death.wav"),
-	"jump" : preload("res://SFX/Temp/jump.wav"),
-	"land" : preload("res://SFX/Temp/land.wav"),
-	"run" : preload("res://SFX/Temp/run.wav")
+	"death" : preload("res://SFX/Itch/FGHTImpt_Anime Melee 6.wav"),
+	"oob_death" : preload("res://SFX/Itch/MAGSpel_Anime Ability Release 10.wav"),
+	"jump" : preload("res://SFX/Itch/jump.wav"),
+	"land" : preload("res://SFX/Itch/land.wav"),
+	"run" : preload("res://SFX/Itch/run.wav")
 }
 
 # Exported class variables

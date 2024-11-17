@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://utfu1y5e5wb4"
-path="res://.godot/imported/hurt.wav-045e34bbc06537c9843635633e5469c0.sample"
+uid="uid://bmtvnqxfu1fs1"
+path="res://.godot/imported/land.wav-bf6e0f86a56596294fd42c77f51ba929.sample"
 
 [deps]
 
-source_file="res://SFX/Temp/hurt.wav"
-dest_files=["res://.godot/imported/hurt.wav-045e34bbc06537c9843635633e5469c0.sample"]
+source_file="res://SFX/Itch/land.wav"
+dest_files=["res://.godot/imported/land.wav-bf6e0f86a56596294fd42c77f51ba929.sample"]
 
 [params]
 

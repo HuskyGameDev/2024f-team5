@@ -25,7 +25,7 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 @export var weaponKnockback : float 
 @export var deleteOnCollide : bool
 @export var trailPeriod : float
-@export var timeOut : float
+@export var timeOut : float = 3
 
 #Most these don't apply to melee weapons, I'll look into a way to get them to not dispaly when weapontype is set to melee
 @export var fireRate : float 

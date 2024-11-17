@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://n6n4qtg6r3ed"
-path="res://.godot/imported/oob_death.wav-2835c9799d31c3849d52005d707ad49a.sample"
+uid="uid://b6qs3fiw8nked"
+path="res://.godot/imported/run.wav-c74803cfaf749c49f60f91c6c4fff439.sample"
 
 [deps]
 
-source_file="res://SFX/Temp/oob_death.wav"
-dest_files=["res://.godot/imported/oob_death.wav-2835c9799d31c3849d52005d707ad49a.sample"]
+source_file="res://SFX/Itch/run.wav"
+dest_files=["res://.godot/imported/run.wav-c74803cfaf749c49f60f91c6c4fff439.sample"]
 
 [params]
 

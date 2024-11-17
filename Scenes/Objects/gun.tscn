@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="2_cpxqo"]
 [ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="3_fqaim"]
 [ext_resource type="Texture2D" uid="uid://b112vd0jxqdgo" path="res://Sprites/UI/ADS_Line.png" id="4_0wfsj"]
-[ext_resource type="AudioStream" uid="uid://utfu1y5e5wb4" path="res://SFX/Temp/hurt.wav" id="6_q5m6b"]
+[ext_resource type="AudioStream" uid="uid://c77jl5v3qqf3x" path="res://SFX/HGD Sound Library/Damage Hit 1_IMP_Calvert.wav" id="6_fypto"]
 [ext_resource type="Texture2D" uid="uid://dtesq723ptdtt" path="res://crosshair1.png" id="6_re3sp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vpagu"]
@@ -52,7 +52,7 @@ position = Vector2(17, -8)
 shape = SubResource("RectangleShape2D_vpagu")
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="Shield"]
-stream = ExtResource("6_q5m6b")
+stream = ExtResource("6_fypto")
 
 [node name="VISUAL FOR DEBUGGING" type="Sprite2D" parent="Shield"]
 visible = false
