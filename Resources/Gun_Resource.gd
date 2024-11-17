@@ -21,8 +21,6 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 #Bullet information (if its a melee weapon ignore the rest)
 @export_category("Damage Settings")
 @export var WeaponType : WeaponReferences.WeaponType
-
-#TODO: need to properly implement this (edit bullet scene?) do we want to construct bullets here or have that as a seperate resource?
 @export var weaponDamage : float
 @export var weaponKnockback : float 
 @export var deleteOnCollide : bool

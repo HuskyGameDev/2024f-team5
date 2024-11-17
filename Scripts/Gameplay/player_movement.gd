@@ -103,7 +103,7 @@ var grip: float = 100
 
 ##Thomas: when the gun is fired set this to true to disable the players normal movent (it gets reset to false when they touch the ground)
 var projectileMovement : bool = false
-var projectileMoveOffset : float = 0 #TODO: this isn't functional rn
+var projectileMoveOffset : float = 0
 var normalMovement : bool = true
 
 # ======================= [ CLASS METHODS ] ====================================
@@ -259,7 +259,7 @@ func _jump() -> void:
 			consecutive_wall_jumps = 0
 	coyoteJump = false
 
-func _move(direction: float) -> void:
+func _move(direction: float, delta: float) -> void:
 	if direction:
 		uncrouch() # Can't crouch while moving
 		if(direction < 0):
@@ -276,7 +276,9 @@ func _move(direction: float) -> void:
 			velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), GROUND_ACCELERATION)
 		else:
 			if projectileMovement == false or normalMovement:
-				velocity.x = move_toward(velocity.x, (direction * SPEED)  - (item_weight_penalty * direction), AIR_ACCELERATION)
+				velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), AIR_ACCELERATION)
+			else:
+				velocity.x = move_toward(velocity.x + projectileMoveOffset*delta, (direction * SPEED) - (item_weight_penalty * direction), AIR_ACCELERATION + projectileMoveOffset*delta) #TODO: need to test this more but I think it works
 			
 		#Thomas: Only let the player wall jump/cling if they're on a wall and haven't just jumped (adjust timer in the walljump timer node)
 		if is_on_wall_only() and can_wall_cling and velocity.abs().x > 0:
@@ -333,7 +335,7 @@ func _physics_process(delta: float) -> void:
 
 	
 	
-	_move(direction)
+	_move(direction, delta)
 	_grip_process(delta)
 
 	var hit_ground: bool = is_on_floor()
