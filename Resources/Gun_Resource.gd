@@ -20,8 +20,7 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 
 #Bullet information (if its a melee weapon ignore the rest)
 @export_category("Damage Settings")
-enum WeaponType { BULLET, MELEE, LASER} #I think we'll need to make sure this matches the gun script, at least until I find a better way to handle it (maybe making another script that both reference defining the enum)
-@export var weaponType : WeaponType
+@export var WeaponType : WeaponReferences.WeaponType #TODO
 @export var weaponDamage : float #TODO: need to properly implement this (edit bullet scene?) do we want to construct bullets here or have that as a seperate resource?
 
 #Most these don't apply to melee weapons, I'll look into a way to get them to not dispaly when weapontype is set to melee

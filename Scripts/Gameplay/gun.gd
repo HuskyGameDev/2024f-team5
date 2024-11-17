@@ -4,16 +4,8 @@
 extends Node2D
 class_name Gun
 
-# Constants and enums
-enum WeaponType { BULLET, MELEE, LASER }
-
-# For testing with number keys
-@export var gun1 : GunResource
-@export var gun2 : GunResource
-@export var gun3 : GunResource
-
 # For normal gameplay
-@export var gun_resource: GunResource
+@export var gun_resource: GunResource 
 
 # Exported class variables
 ## Fire rate (inverse of cooldown) in rounds per second
@@ -23,7 +15,6 @@ var firerate: float
 var max_ammo: int
 
 var smoke: PackedScene
-@export var weapon_type: WeaponType #TODO: make this take from activeGunResource
 var weapon_recoil: float
 #Thomas: adding some weight so we can slow players with guns down if they just walk, for now I'm going to say this is in ounces 
 #Jay: changed from constant to variable because it should vary between guns
@@ -36,9 +27,9 @@ var proj_speed: float
 ## Extra distance given to the bullet from barrel
 var exit_padding: float
 ## Can trigger be held to continuously fire weapon.
-@export var full_auto: bool = false #TODO: I feel like this should always be true (was false previously)
-# ^ fair take but I feel like since we're mostly dealing with pistols,
-# this option will give more variety to weapon feel.
+var full_auto: bool
+## Determines how the weapon functions
+var WeaponType: WeaponReferences.WeaponType
 
 # Child node references
 ## Where smoke effects and bullets spawn
@@ -189,13 +180,6 @@ func _process(_delta: float) -> void:
 	if(Input.is_action_just_released("ADS")):
 		ads = false
 		line.visible = false
-		
-	if(Input.is_key_pressed(KEY_1)):
-		load_weapon(gun1)
-	if(Input.is_key_pressed(KEY_2)):
-		load_weapon(gun2)
-	if(Input.is_key_pressed(KEY_3)):
-		load_weapon(gun3)
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	if "shot_by" in body && body.shot_by == self:
@@ -225,6 +209,7 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	## Extra distance given to the bullet from barrel
 	exit_padding = newWeaponResource.exitPadding
 	full_auto = newWeaponResource.full_auto
+	WeaponType = newWeaponResource.WeaponType
 	
 	#Change the gun sprite
 	spi.texture = newWeaponResource.weaponSprite
