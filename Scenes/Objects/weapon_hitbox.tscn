@@ -23,7 +23,6 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_ovajo")
-melee = true
 timeout = 0.05
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

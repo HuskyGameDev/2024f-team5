@@ -103,6 +103,8 @@ func _shoot(mousepos: Vector2) -> void:
 	bullet.delete_on_collide = gun_resource.deleteOnCollide
 	bullet.trail_period = gun_resource.trailPeriod
 	bullet.timeout = gun_resource.timeOut
+	if(WeaponType == WeaponReferences.WeaponType.MELEE):
+		bullet.melee = true
 	
 	
 	# If melee, "projectile" will be attached to barrel, otherwise outside
