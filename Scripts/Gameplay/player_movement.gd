@@ -104,7 +104,8 @@ var grip: float = 100
 ##Thomas: when the gun is fired set this to true to disable the players normal movent (it gets reset to false when they touch the ground)
 var projectileMovement : bool = false
 var projectileMoveOffset : float = 0
-var normalMovement : bool = true
+var normalMovement : bool = false
+var disableMoveTimer : float = 0 #check this against .1, setting it over in the gun script
 
 # ======================= [ CLASS METHODS ] ====================================
 
@@ -214,7 +215,7 @@ func equip(item: Node) -> void:
 	item.hud = self.hud
 	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
 	# This should work better. Weird solution imo but its what the forums say. -Jay
-	add_child(item)
+	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
 	if "weight" in item:
 		equipped_item_weight = item.weight
 	if "player" in item:
@@ -260,7 +261,7 @@ func _jump() -> void:
 	coyoteJump = false
 
 func _move(direction: float, delta: float) -> void:
-	if direction:
+	if direction and disableMoveTimer <= 0:
 		uncrouch() # Can't crouch while moving
 		if(direction < 0):
 			sprite.flip_h = true
@@ -273,12 +274,12 @@ func _move(direction: float, delta: float) -> void:
 			if(!loop_sound.playing):
 				loop_sound.stream = sfx["run"]
 				loop_sound.play()
-			velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), GROUND_ACCELERATION)
+			velocity.x = move_toward(velocity.x + projectileMoveOffset*delta, (direction * SPEED) - (item_weight_penalty * direction), GROUND_ACCELERATION - projectileMoveOffset*delta*direction)
 		else:
 			if projectileMovement == false or normalMovement:
 				velocity.x = move_toward(velocity.x, (direction * SPEED) - (item_weight_penalty * direction), AIR_ACCELERATION)
 			else:
-				velocity.x = move_toward(velocity.x + projectileMoveOffset*delta, (direction * SPEED) - (item_weight_penalty * direction), AIR_ACCELERATION + projectileMoveOffset*delta) #TODO: need to test this more but I think it works
+				velocity.x = move_toward(velocity.x + projectileMoveOffset*delta, (direction * SPEED) - (item_weight_penalty * direction), AIR_ACCELERATION - projectileMoveOffset*delta*direction) #TODO: need to test this more but I think it works
 			
 		#Thomas: Only let the player wall jump/cling if they're on a wall and haven't just jumped (adjust timer in the walljump timer node)
 		if is_on_wall_only() and can_wall_cling and velocity.abs().x > 0:
@@ -316,7 +317,7 @@ func unequip() -> void:
 	hud.ammo_counter.visible = false
 	hud.grip_bar.visible = false
 	#Thomas: when uneqipping an item set the weight back to nothing
-	equipped_item_weight = 0 
+	equipped_item_weight = 0
 
 # =========================== [ SIGNALS ] ======================================
 
@@ -333,7 +334,8 @@ func _physics_process(delta: float) -> void:
 		if(Input.is_action_pressed("crouch") && !direction):
 			crouch()
 
-	
+	if disableMoveTimer > 0:
+		disableMoveTimer -= delta
 	
 	_move(direction, delta)
 	_grip_process(delta)

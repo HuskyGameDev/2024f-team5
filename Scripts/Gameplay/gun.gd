@@ -78,10 +78,11 @@ func _shoot(mousepos: Vector2) -> void:
 	var diff: Vector2 = mousepos - self.global_position
 	var angle: float = diff.angle() + PI
 	var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * weapon_recoil
+	player.disableMoveTimer = .1 #Triggers temporarily disabling the player being able to move left/right, I think it needs to happen to give variables in player_movment.gd time to update and allow proper air movement
 	player.grip -= grip_loss
 	player.projectileMovement = true #Thomas: tell the player movement script to temporarily disable the normal movement so we can fling the character
 	player.projectileMoveOffset = recoil.x #If we want to allow players to keep their movement augment the speed by this to allow the player to move in the same direction as the gun
-	player.velocity += recoil #TODO: this was par.velocity I changed it, not sure if that affects anything
+	player.velocity += recoil
 	if(smoke != null):
 		barrel.add_child(smoke.instantiate())
 	sound.play()

@@ -8,14 +8,24 @@
 [resource]
 script = ExtResource("2_5wgs8")
 weaponSprite = ExtResource("4_j03j0")
+alt_sprites = Array[Texture2D]([])
+animation_mode = 0
+pulse_time = 0.25
 bullet = ExtResource("1_tcxx2")
 smoke = ExtResource("3_gpco2")
-weaponType = 0
-weaponDamage = 0.0
+barrel_pos = Vector2(0, 0)
+WeaponType = 0
+weaponDamage = 1.0
+weaponKnockback = 1.0
+deleteOnCollide = true
+trailPeriod = 1.0
+timeOut = 1.0
 fireRate = 6.0
 projectileSpeed = 500.0
 maxAmmo = 15
+full_auto = true
 weaponRecoil = 200.0
 weaponWeight = 10.0
 gripLoss = 15.0
+fireSounds = Array[AudioStream]([])
 exitPadding = 23.0
