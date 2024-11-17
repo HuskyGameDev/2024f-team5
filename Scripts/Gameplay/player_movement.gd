@@ -52,6 +52,7 @@ static var sfx: Dictionary = {
 	"land" : preload("res://SFX/Itch/land.wav"),
 	"run" : preload("res://SFX/Itch/run.wav")
 }
+static var players: Array[Player]
 
 # Exported class variables
 @export var oob_death: PackedScene
@@ -106,6 +107,10 @@ var projectileMovement : bool = false
 var projectileMoveOffset : float = 0
 var normalMovement : bool = false
 var disableMoveTimer : float = 0 #check this against .1, setting it over in the gun script
+
+# SCORING
+var score: int = 0
+var player_id: int = 1
 
 # ======================= [ CLASS METHODS ] ====================================
 
@@ -364,6 +369,7 @@ func _ready() -> void:
 	anim.play("idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)
+	players.append(self)
 
 func _on_mouse_entered() -> void:
 	if(_equipped_item != null):
@@ -376,6 +382,11 @@ func _on_mouse_exited() -> void:
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if(body.get_collision_layer() == 2):
 		die()
+		# Add to other player score if killed. Subtract if killed by self
+		if "shot_by" in body:
+			body.shot_by.player.score += 1
+		else:
+			score -= 1
 
 #Thomas: this is for signaling when the player is allowed to wall jump (to prevent them from clipping their normal jump)
 func _on_walljump_timer_timeout() -> void:

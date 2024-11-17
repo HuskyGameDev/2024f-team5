@@ -23,7 +23,7 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 @export var WeaponType : WeaponReferences.WeaponType
 @export var weaponDamage : float
 @export var weaponKnockback : float 
-@export var deleteOnCollide : bool
+@export var deleteOnCollide : bool = true
 @export var trailPeriod : float
 @export var timeOut : float = 3
 

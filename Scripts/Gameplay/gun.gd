@@ -47,6 +47,7 @@ var WeaponType: WeaponReferences.WeaponType
 @onready var rev_barrel_posX: float = -init_barrel_posX + rev_offset
 
 # Class variables
+## Player that is holding gun. Is used for scoring
 var player: Player
 ## When true, the "laser sight" ADS line is visible
 var ads: bool = false

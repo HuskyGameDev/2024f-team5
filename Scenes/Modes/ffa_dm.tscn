@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4mm1d4vx214g"]
+
+[ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="1_xm3sq"]
+[ext_resource type="Script" path="res://Scripts/Gameplay/ffa_dm.gd" id="2_sq7h1"]
+
+[node name="Label" type="Label"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("1_xm3sq")
+theme_override_font_sizes/font_size = 50
+text = "3:00"
+horizontal_alignment = 2
+script = ExtResource("2_sq7h1")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 180.0
+autostart = true
+
+[node name="Leaderboard" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -288.0
+offset_top = 51.0
+offset_right = 1.0
+offset_bottom = 286.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.601223, 0.601223, 0.601223, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_xm3sq")
+theme_override_font_sizes/font_size = 20
+text = "Player 1: 0 kills
+Player 2: 0 kills
+Player 3: 0 kills"
+horizontal_alignment = 2
