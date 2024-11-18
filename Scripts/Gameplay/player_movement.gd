@@ -222,15 +222,16 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	sprite.visible = true
 
 ## Called on item pickup. Equips node item.
-@rpc("call_local")
-func equip(item: Node) -> void:
-	rpc("unequip")
+func equip(scene: PackedScene, gun_resource: GunResource) -> void:
+	if (!is_multiplayer_authority()): return
+	var item: Node = scene.instantiate()
+	item.name = name
+	item.gun_resource = gun_resource
+	unequip()
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
 	#call_deferred("add_child", item)
 	_equipped_item = item
-	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
-	if (!is_multiplayer_authority()): return
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
 	hud.ammo_counter.visible = true
@@ -242,6 +243,7 @@ func equip(item: Node) -> void:
 		equipped_item_weight = item.weight
 	if "player" in item:
 		item.player = self
+	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
 
 # Unequips item
 @rpc("call_local")
@@ -385,9 +387,12 @@ func _physics_process(delta: float) -> void:
 
 func _ready() -> void:
 	if (!is_multiplayer_authority()): return
-	if (singleplayerTesting): hud = $/root/Map/CanvasLayer/PlayerHud
-	else: hud = $/root/Root/Map/CanvasLayer/PlayerHud
-	#anim.play("idle")
+	if (singleplayerTesting): 
+		print("Singleplayer testing")
+		hud = $/root/Map/CanvasLayer/PlayerHud
+	else: 
+		print("Multiplayer")
+		hud = $/root/Root/Map/CanvasLayer/PlayerHud
 	rpc("playAnimation", "idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)

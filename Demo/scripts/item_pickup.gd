@@ -17,8 +17,5 @@ func _ready() -> void:
 # Gives gun to player and deletes self
 func _on_body_entered(body: CharacterBody2D) -> void:
 	if body is Player:
-		var node: Node = gun.instantiate()
-		node.name = body.name
-		node.gun_resource = gun_resource
-		body.rpc("equip", node)
+		body.equip(gun, gun_resource)
 		queue_free()

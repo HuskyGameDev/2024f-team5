@@ -200,6 +200,7 @@ func _process(_delta: float) -> void:
 		line.visible = false
 
 func _on_shield_body_entered(body: Node2D) -> void:
+	if (!is_multiplayer_authority()): return
 	if "shot_by" in body && body.shot_by == self:
 		return
 	var angle: float = global_position.angle_to_point(body.position)
@@ -243,10 +244,8 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
-	print("Multiplayer Authority: %i" % get_multiplayer_authority())
 
 func _ready() -> void:
-	if (!is_multiplayer_authority()): return
 	load_weapon()
 
 func _on_animation_timer_timeout() -> void:
