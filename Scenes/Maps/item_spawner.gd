@@ -18,7 +18,7 @@ func _start_timer() -> void:
 	timer.start()
 	
 func _on_Timer_Timeout() -> void:
-	if (get_children().size() == 0):
+	if (get_children().size() == 1):
 		spawn_random_item()
 
 func spawn_random_item() -> void:

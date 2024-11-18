@@ -223,11 +223,11 @@ func die(oob: bool = false, theta: float = 0) -> void:
 
 ## Called on item pickup. Equips node item.
 func equip(scene: PackedScene, gun_resource: GunResource) -> void:
+	unequip()
 	if (!is_multiplayer_authority()): return
 	var item: Node = scene.instantiate()
 	item.name = name
 	item.gun_resource = gun_resource
-	unequip()
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
 	#call_deferred("add_child", item)
@@ -246,10 +246,9 @@ func equip(scene: PackedScene, gun_resource: GunResource) -> void:
 	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
 
 # Unequips item
-@rpc("call_local")
 func unequip() -> void:
-	if (is_instance_valid(_equipped_item)): _equipped_item.queue_free()
 	if (!is_multiplayer_authority()): return
+	if (is_instance_valid(_equipped_item)): _equipped_item.free()
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Hide ammo counter
 	hud.ammo_counter.visible = false

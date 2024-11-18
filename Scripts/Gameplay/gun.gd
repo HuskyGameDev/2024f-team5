@@ -6,6 +6,7 @@ class_name Gun
 
 # For normal gameplay
 @export var gun_resource: GunResource 
+@export var resourcePath: String
 
 # Exported class variables
 ## Fire rate (inverse of cooldown) in rounds per second
@@ -210,8 +211,10 @@ func _on_shield_body_entered(body: Node2D) -> void:
 #This will load a new weapon for the player
 # Jay: Providing no argument will load the assigned gun resource.
 func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
-	if (!is_multiplayer_authority()): return
+	if (!is_multiplayer_authority()):
+		newWeaponResource = load(resourcePath)
 	gun_resource = newWeaponResource
+	resourcePath = gun_resource.resource_path
 	## Fire rate (inverse of cooldown) in rounds per second
 	firerate = newWeaponResource.fireRate
 	## Count of rounds in a magazine
@@ -240,7 +243,7 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	init_barrel_posX = barrel.position.x
 	rev_barrel_posX = -init_barrel_posX + rev_offset
 	#update ammo count on the HUD
-	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
+	if (is_multiplayer_authority()): hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
