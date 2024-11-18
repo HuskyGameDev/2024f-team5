@@ -18,13 +18,11 @@ func _start_timer() -> void:
 	timer.start()
 	
 func _on_Timer_Timeout() -> void:
-	spawn_random_item()
+	if (get_children().size() == 0):
+		spawn_random_item()
 
 func spawn_random_item() -> void:
 	var random_index: int = randi() % items_to_spawn.size()
 	var item_scene: Variant = items_to_spawn[random_index]
 	var item_instance: Variant = item_scene.instantiate()
 	add_child(item_instance)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

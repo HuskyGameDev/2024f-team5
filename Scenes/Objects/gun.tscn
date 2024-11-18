@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6ca0t1feo4q2"]
+[gd_scene load_steps=11 format=3 uid="uid://c6ca0t1feo4q2"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/gun.gd" id="1_0j3p2"]
 [ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="2_cpxqo"]
@@ -16,6 +16,8 @@ colors = PackedColorArray(0.0235294, 1, 0.298039, 0.262745)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_mcslk"]
 gradient = SubResource("Gradient_o6cb5")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ax4to"]
 
 [node name="Gun" type="Node2D"]
 z_index = -1
@@ -62,6 +64,9 @@ texture = SubResource("GradientTexture1D_mcslk")
 
 [node name="AnimationTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ax4to")
 
 [connection signal="body_entered" from="Shield" to="." method="_on_shield_body_entered"]
 [connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]

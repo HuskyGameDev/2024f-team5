@@ -124,22 +124,28 @@ func _animate() -> void:
 		uncrouch()
 	if(anim.current_animation == "look_up" && 
 	  Input.is_action_just_released("look_up")):
-		anim.current_animation = "idle"
+		#anim.current_animation = "idle"
+		rpc("updateAnimation", "idle")
 	
 	if is_on_floor():
 		if(Input.is_action_just_pressed("look_up")):
-			anim.current_animation = "look_up"
+			#anim.current_animation = "look_up"
+			rpc("updateAnimation", "look_up")
 	else:
 		uncrouch() # Can't crouch while airbourne
 		if(!(can_wall_cling and is_on_wall_only())):
 			if(velocity.y > Y_VEL_ANIM_THRESH):
-				anim.play("jump_down")
+				#anim.play("jump_down")
+				rpc("playAnimation", "jump_down")
 			elif(velocity.y < -Y_VEL_ANIM_THRESH):
-				anim.play("jump_up")
+				#anim.play("jump_up")
+				rpc("playAnimation", "jump_up")
 			else:
-				anim.play("jump_neutral")
+				rpc("playAnimation", "jump_neutral")
+				#anim.play("jump_neutral")
 		elif(anim.current_animation != "bump"):
-			anim.current_animation = "bump"
+			#anim.current_animation = "bump"
+			rpc("updateAnimation", "bump")
 
 ## Handles player entering and exiting ground
 func _collide(change_in_ground_state: bool, change_in_wall_state: bool,
@@ -151,7 +157,8 @@ func _collide(change_in_ground_state: bool, change_in_wall_state: bool,
 			coyoteJump = true
 			sound.stream = sfx["land"]
 			sound.play()
-			anim.current_animation = "idle"
+			#anim.current_animation = "idle"
+			rpc("updateAnimation", "idle")
 			# Ensures accurate resetting of wall jump count
 			consecutive_wall_jumps = 0
 		# Ground has been left
@@ -176,7 +183,8 @@ func can_walljump() -> bool:
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
 func crouch() -> void:
-	anim.current_animation = "crouch"
+	#anim.current_animation = "crouch"
+	rpc("updateAnimation", "crouch")
 	_crouching = true
 
 ## Handles player death and animation
@@ -197,22 +205,32 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		sound.stream = sfx["death"]
 		sound.play()
 		death_parts.emitting = true
-		anim.current_animation = "die"
+		#anim.current_animation = "die"
+		rpc("updateAnimation", "die")
 	unequip()
 	set_deferred("collision.disabled", true)
 	# Temporary handling of death, reloads game after 3 seconds
 	await get_tree().create_timer(3).timeout
 	# Godot doesn't like reloading scenes on collision enter.
-	get_tree().call_deferred("reload_current_scene")
+	# Changed to reset manually as to not crash multiplayer
+	#get_tree().call_deferred("reload_current_scene")
+	set_deferred("collision.disabled", false)
+	#anim.current_animation = "idle"
+	rpc("updateAnimation", "idle")
+	position = Vector2(0, 0)
+	dead = false
+	sprite.visible = true
 
 ## Called on item pickup. Equips node item.
+@rpc("call_local")
 func equip(item: Node) -> void:
-	if (!is_multiplayer_authority()): return
-	unequip()
+	rpc("unequip")
 	# This throws an error because its not deferred. But when it's deferred
 	# it just doesn't work so I will be ignoring it.
 	#call_deferred("add_child", item)
 	_equipped_item = item
+	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
+	if (!is_multiplayer_authority()): return
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
 	hud.ammo_counter.visible = true
@@ -220,11 +238,22 @@ func equip(item: Node) -> void:
 	item.hud = self.hud
 	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
 	# This should work better. Weird solution imo but its what the forums say. -Jay
-	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
 	if "weight" in item:
 		equipped_item_weight = item.weight
 	if "player" in item:
 		item.player = self
+
+# Unequips item
+@rpc("call_local")
+func unequip() -> void:
+	if (is_instance_valid(_equipped_item)): _equipped_item.queue_free()
+	if (!is_multiplayer_authority()): return
+	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
+	# Hide ammo counter
+	hud.ammo_counter.visible = false
+	hud.grip_bar.visible = false
+	#Thomas: when uneqipping an item set the weight back to nothing
+	equipped_item_weight = 0
 
 func _grip_process(delta: float) -> void:
 	if grip <= 0:
@@ -275,7 +304,8 @@ func _move(direction: float, delta: float) -> void:
 		if is_on_floor():
 			projectileMovement = false
 			projectileMoveOffset = 0
-			anim.play("run")
+			rpc("playAnimation", "run")
+			#anim.play("run")
 			if(!loop_sound.playing):
 				loop_sound.stream = sfx["run"]
 				loop_sound.play()
@@ -296,7 +326,8 @@ func _move(direction: float, delta: float) -> void:
 	else:
 		if(is_on_floor()):
 			if(anim.current_animation != "crouch" && anim.current_animation != "look_up"):
-				anim.current_animation = "idle"
+				#anim.current_animation = "idle"
+				rpc("updateAnimation", "idle")
 			var dec: float = GROUND_DECELERATION
 			if(_crouching):
 				dec *= CROUCH_FACTOR
@@ -311,18 +342,8 @@ func _start_coyote() -> void:
 func uncrouch() -> void:
 	_crouching = false
 	if(is_on_floor() && velocity.x == 0):
-		anim.current_animation = "idle"
-
-# Unequips item
-func unequip() -> void:
-	if (!is_multiplayer_authority()): return
-	if (is_instance_valid(_equipped_item)): _equipped_item.queue_free()
-	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
-	# Hide ammo counter
-	hud.ammo_counter.visible = false
-	hud.grip_bar.visible = false
-	#Thomas: when uneqipping an item set the weight back to nothing
-	equipped_item_weight = 0
+		#anim.current_animation = "idle"
+		rpc("updateAnimation", "idle")
 
 # =========================== [ SIGNALS ] ======================================
 
@@ -366,7 +387,8 @@ func _ready() -> void:
 	if (!is_multiplayer_authority()): return
 	if (singleplayerTesting): hud = $/root/Map/CanvasLayer/PlayerHud
 	else: hud = $/root/Root/Map/CanvasLayer/PlayerHud
-	anim.play("idle")
+	#anim.play("idle")
+	rpc("playAnimation", "idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)
 	players.append(self)
@@ -397,3 +419,11 @@ func _on_coyote_timer_timeout() -> void:
 
 func _on_cling_timer_timeout() -> void:
 	can_wall_cling = false
+
+@rpc("call_local")
+func updateAnimation(animation: String) -> void:
+	anim.current_animation = animation
+
+@rpc("call_local")
+func playAnimation(animation: String) -> void:
+	anim.play(animation)

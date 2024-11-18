@@ -162,6 +162,7 @@ func _unflip() -> void:
 # ============================= [ SIGNALS ] ====================================
 
 func _process(_delta: float) -> void:
+	if (!is_multiplayer_authority()): return
 	if(get_global_mouse_position().x < global_position.x):
 		if(!flipped):
 			_flip()
@@ -208,6 +209,7 @@ func _on_shield_body_entered(body: Node2D) -> void:
 #This will load a new weapon for the player
 # Jay: Providing no argument will load the assigned gun resource.
 func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
+	if (!is_multiplayer_authority()): return
 	gun_resource = newWeaponResource
 	## Fire rate (inverse of cooldown) in rounds per second
 	firerate = newWeaponResource.fireRate
@@ -239,7 +241,12 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	#update ammo count on the HUD
 	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+	print("Multiplayer Authority: %i" % get_multiplayer_authority())
+
 func _ready() -> void:
+	if (!is_multiplayer_authority()): return
 	load_weapon()
 
 func _on_animation_timer_timeout() -> void:

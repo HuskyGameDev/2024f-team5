@@ -18,6 +18,7 @@ func _ready() -> void:
 func _on_body_entered(body: CharacterBody2D) -> void:
 	if body is Player:
 		var node: Node = gun.instantiate()
+		node.name = body.name
 		node.gun_resource = gun_resource
-		body.equip(node)
+		body.rpc("equip", node)
 		queue_free()

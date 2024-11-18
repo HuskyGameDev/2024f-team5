@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cndlolvxbrb8h" path="res://Sprites/Environment/MonitorSpawnerSheet.png" id="3_3qkjg"]
 [ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="3_d3s0c"]
 [ext_resource type="Texture2D" uid="uid://12goi6amxmwm" path="res://Sprites/Weapons/GlockIcon.png" id="4_b7mb2"]
-[ext_resource type="PackedScene" path="res://Scenes/Objects/crt_effect.tscn" id="4_tjq0t"]
+[ext_resource type="PackedScene" uid="uid://k3phno0vks8h" path="res://Scenes/Objects/crt_effect.tscn" id="4_tjq0t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai3ny"]
 

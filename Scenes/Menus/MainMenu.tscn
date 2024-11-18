@@ -52,11 +52,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -35.0
-offset_top = -68.0
+offset_top = -31.0
 offset_right = 35.0
-offset_bottom = 68.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Practice" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+text = "Practice"
+metadata/_edit_use_anchors_ = true
 
 [node name="Host" type="Button" parent="Main/VBoxContainer"]
 layout_mode = 2
@@ -396,6 +401,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Close"
 
+[connection signal="pressed" from="Main/VBoxContainer/Practice" to="." method="_on_host_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Host" to="." method="_on_host_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Join" to="." method="_on_join_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
