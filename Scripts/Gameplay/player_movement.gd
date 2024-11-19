@@ -125,27 +125,20 @@ func _animate() -> void:
 		uncrouch()
 	if(anim.current_animation == "look_up" && 
 	  Input.is_action_just_released("look_up")):
-		#anim.current_animation = "idle"
 		rpc("updateAnimation", "idle")
 	
 	if is_on_floor():
 		if(Input.is_action_just_pressed("look_up")):
-			#anim.current_animation = "look_up"
 			rpc("updateAnimation", "look_up")
 	else:
 		uncrouch() # Can't crouch while airbourne
 		if(!(can_wall_cling and is_on_wall_only())):
 			if(velocity.y > Y_VEL_ANIM_THRESH):
-				#anim.play("jump_down")
 				rpc("playAnimation", "jump_down")
 			elif(velocity.y < -Y_VEL_ANIM_THRESH):
-				#anim.play("jump_up")
 				rpc("playAnimation", "jump_up")
-			else:
 				rpc("playAnimation", "jump_neutral")
-				#anim.play("jump_neutral")
 		elif(anim.current_animation != "bump"):
-			#anim.current_animation = "bump"
 			rpc("updateAnimation", "bump")
 
 ## Handles player entering and exiting ground
@@ -158,8 +151,7 @@ func _collide(change_in_ground_state: bool, change_in_wall_state: bool,
 			coyoteJump = true
 			sound.stream = sfx["land"]
 			sound.play()
-			#anim.current_animation = "idle"
-			rpc("updateAnimation", "idle")
+			if (is_multiplayer_authority()): rpc("updateAnimation", "idle")
 			# Ensures accurate resetting of wall jump count
 			consecutive_wall_jumps = 0
 		# Ground has been left
@@ -184,7 +176,6 @@ func can_walljump() -> bool:
 ## Crouching increases "friction" of recoil. Can also be used to drop
 ## Through platforms in the future.
 func crouch() -> void:
-	#anim.current_animation = "crouch"
 	rpc("updateAnimation", "crouch")
 	_crouching = true
 
@@ -207,8 +198,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		sound.stream = sfx["death"]
 		sound.play()
 		death_parts.emitting = true
-		#anim.current_animation = "die"
-		rpc("updateAnimation", "die")
+		if (is_multiplayer_authority()): rpc("updateAnimation", "die")
 	unequip()
 	DeathMatchGamemode.instance.update_board()
 	
@@ -221,7 +211,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	#get_tree().call_deferred("reload_current_scene")
 	#set_deferred("collision.disabled", false)
 	collision.disabled = false
-	rpc("updateAnimation", "idle")
+	if (is_multiplayer_authority()): rpc("updateAnimation", "idle")
 	position = Vector2(0, 0)
 	velocity = Vector2(0, 0)
 	dead = false
@@ -244,10 +234,7 @@ func equip(scene: PackedScene, gun_resource: GunResource) -> void:
 	# This should work better. Weird solution imo but its what the forums say. -Jay
 	if "weight" in item:
 		equipped_item_weight = item.weight
-	# This throws an error because its not deferred. But when it's deferred
-	# it just doesn't work so I will be ignoring it.
-	#call_deferred("add_child", item)
-	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
+	add_child(item)
 
 # Unequips item
 func unequip() -> void:
@@ -311,7 +298,6 @@ func _move(direction: float, delta: float) -> void:
 			projectileMovement = false
 			projectileMoveOffset = 0
 			rpc("playAnimation", "run")
-			#anim.play("run")
 			if(!loop_sound.playing):
 				loop_sound.stream = sfx["run"]
 				loop_sound.play()
@@ -332,7 +318,6 @@ func _move(direction: float, delta: float) -> void:
 	else:
 		if(is_on_floor()):
 			if(anim.current_animation != "crouch" && anim.current_animation != "look_up"):
-				#anim.current_animation = "idle"
 				rpc("updateAnimation", "idle")
 			var dec: float = GROUND_DECELERATION
 			if(_crouching):
@@ -348,7 +333,6 @@ func _start_coyote() -> void:
 func uncrouch() -> void:
 	_crouching = false
 	if(is_on_floor() && velocity.x == 0):
-		#anim.current_animation = "idle"
 		rpc("updateAnimation", "idle")
 
 # =========================== [ SIGNALS ] ======================================

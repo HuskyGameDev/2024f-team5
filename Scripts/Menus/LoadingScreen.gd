@@ -10,12 +10,13 @@ class_name LoadingScreen extends Control
 @export var password: String
 
 var data: PlayerData
-#var hostData: PlayerData
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	statusLabel.text = "[center]Connecting...[/center]"
 	await get_tree().create_timer(bufferTime).timeout
+	var timeoutTimer: SceneTreeTimer = get_tree().create_timer(timeoutLength)
+	timeoutTimer.timeout.connect(timeout)
 	while (!is_instance_valid(data)):
 		for player: PlayerData in multiplayerManager.get_children():
 			if (player.is_multiplayer_authority()):
@@ -23,7 +24,7 @@ func _ready() -> void:
 				multiplayerManager.data = player
 				break
 		await get_tree().create_timer(0.5).timeout
-	#hostData = $'/root/Root/MultiplayerManager/1'
+	timeoutTimer.timeout.disconnect(timeout)
 	statusLabel.text = "[center]Authenticating...[/center]"
 	if (data.uuid != 1):
 		multiplayerManager.rpc_id(1, "authPassword", data.uuid, password)
@@ -40,4 +41,4 @@ func _ready() -> void:
 	queue_free()
 
 func timeout() -> void:
-	if (!data.authenticated): multiplayerManager.kick("timeout")
+	multiplayerManager.kick("Connection timeout")

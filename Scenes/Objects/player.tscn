@@ -197,6 +197,7 @@ properties/3/spawn = true
 properties/3/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 8
 input_pickable = true
 script = ExtResource("1_ym8ee")
 oob_death = ExtResource("2_o8rcn")

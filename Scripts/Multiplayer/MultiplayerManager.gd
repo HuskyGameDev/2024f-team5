@@ -1,7 +1,7 @@
 class_name MultiplayerManager extends MultiplayerSpawner
 
 signal playerListChanged()
-signal playerLost(player: int)
+#signal playerLost(player: int)
 
 @export var playerData: PackedScene
 
@@ -12,6 +12,7 @@ var data: PlayerData
 var authenticated: bool = false
 var inLobby: bool = true
 var readyPlayers: Dictionary
+var playerCap: int = 8
 
 # Static reference added for other scripts to access. - Jay
 static var instance: MultiplayerManager
@@ -35,6 +36,9 @@ func authPassword(playerID: int, passwd: String) -> void:
 	if (!inLobby):
 		print("Rejected join request during gameplay")
 		rpc_id(playerID, "kick", "Game already in progress")
+	elif (get_children().size() + 1 > playerCap):
+		print("Rejected join request due to player cap")
+		rpc_id(playerID, "kick", "Lobby is full")
 	elif (passwd == password || password == ""):
 		rpc_id(playerID, "getAuth", true)
 		rpc("updatePlayerList")
@@ -139,8 +143,9 @@ func addPlayer(id: int) -> void:
 func removePlayer(id: int) -> void:
 	for player: PlayerData in get_children():
 		if (player.uuid == id): 
-			playerLost.emit(player.uuid)
-			player.queue_free()
+			#playerLost.emit(player.uuid)
+			player.free()
+			updatePlayerList()
 
 func serverClosed() -> void:
 	leaveServer()
@@ -151,5 +156,4 @@ func leaveServer() -> void:
 	get_parent().name = "OldRoot"
 	var root: Node = load("res://Scenes/Root.tscn").instantiate()
 	get_tree().root.add_child(root)
-	await root.ready
-	get_parent().queue_free()
+	get_parent().call_deferred("free")
