@@ -56,6 +56,7 @@ texture = ExtResource("6_re3sp")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_fqaim")
+bus = &"Effects"
 
 [node name="Shield" type="Area2D" parent="."]
 collision_layer = 0
@@ -67,6 +68,7 @@ shape = SubResource("RectangleShape2D_vpagu")
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="Shield"]
 stream = ExtResource("6_fypto")
+bus = &"Effects"
 
 [node name="VISUAL FOR DEBUGGING" type="Sprite2D" parent="Shield"]
 visible = false

@@ -304,7 +304,6 @@ position = Vector2(-500, 0)
 position = Vector2(500, 0)
 
 [node name="South Border" parent="World Borders" index="3"]
-visible = false
 position = Vector2(0, 255)
 
 [node name="Spike" parent="." instance=ExtResource("5_cdke2")]
