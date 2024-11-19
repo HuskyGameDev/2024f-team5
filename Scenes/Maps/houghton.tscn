@@ -272,7 +272,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 256)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("pois", "north_border", "west_border", "east_border", "south_border")]
-zoom = Vector2(1.61, 1.61)
+zoom = Vector2(2, 2)
 script = ExtResource("3_c5vbn")
 smoothing = 0.25
 pois = [NodePath("../World Borders")]
