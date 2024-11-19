@@ -42,6 +42,8 @@ func _on_begin_pressed() -> void:
 			multiplayerManager.rpc("loadMap", "houghton")
 		1:
 			multiplayerManager.rpc("loadMap", "Map1")
+		2:
+			multiplayerManager.rpc("loadMap", "testmap")
 
 func _on_username_entry_text_changed(new_text: String) -> void:
 	data.username = new_text

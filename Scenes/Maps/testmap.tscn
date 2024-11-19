@@ -296,6 +296,7 @@ tile_set = SubResource("TileSet_ejak1")
 
 [node name="World Borders" parent="." instance=ExtResource("15_cqqi1")]
 position = Vector2(0, 8)
+collision_mask = 9
 
 [node name="North Border" parent="World Borders" index="0"]
 position = Vector2(1, -410)

@@ -86,10 +86,12 @@ layout_mode = 2
 size_flags_horizontal = 0
 disabled = true
 selected = 0
-item_count = 2
+item_count = 3
 popup/item_0/text = "Houghton"
 popup/item_1/text = "Hancock"
 popup/item_1/id = 1
+popup/item_2/text = "Mountain"
+popup/item_2/id = 2
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
