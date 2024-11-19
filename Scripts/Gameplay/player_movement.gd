@@ -194,6 +194,8 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		od.position = position
 		od.rotation = theta
 		sprite.visible = false
+		position = Vector2(0, 0)
+		velocity = Vector2(0, 0)
 	else: # Other death animation
 		sound.stream = sfx["death"]
 		sound.play()
@@ -202,14 +204,9 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	unequip()
 	DeathMatchGamemode.instance.update_board()
 	
-	#set_deferred("collision.disabled", true)
 	collision.disabled = true
-	# Temporary handling of death, reloads game after 3 seconds
 	await get_tree().create_timer(3).timeout
-	# Godot doesn't like reloading scenes on collision enter.
 	# Changed to reset manually as to not crash multiplayer
-	#get_tree().call_deferred("reload_current_scene")
-	#set_deferred("collision.disabled", false)
 	collision.disabled = false
 	if (is_multiplayer_authority()): rpc("updateAnimation", "idle")
 	position = Vector2(0, 0)

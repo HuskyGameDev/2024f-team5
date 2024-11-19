@@ -64,7 +64,7 @@ size_flags_vertical = 3
 [node name="UsernameLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
-text = "Map"
+text = "Username"
 
 [node name="UsernameEntry" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
 layout_mode = 2
