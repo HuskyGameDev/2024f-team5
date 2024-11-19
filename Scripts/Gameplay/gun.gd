@@ -217,10 +217,10 @@ func _on_shield_body_entered(body: Node2D) -> void:
 #This will load a new weapon for the player
 # Jay: Providing no argument will load the assigned gun resource.
 func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
+	resourcePath = gun_resource.resource_path
 	if (!is_multiplayer_authority()):
 		newWeaponResource = load(resourcePath)
 	gun_resource = newWeaponResource
-	resourcePath = gun_resource.resource_path
 	## Fire rate (inverse of cooldown) in rounds per second
 	firerate = newWeaponResource.fireRate
 	## Count of rounds in a magazine

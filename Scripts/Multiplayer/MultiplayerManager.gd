@@ -13,6 +13,12 @@ var authenticated: bool = false
 var inLobby: bool = true
 var readyPlayers: Dictionary
 
+# Static reference added for other scripts to access. - Jay
+static var instance: MultiplayerManager
+
+func _ready() -> void:
+	instance = self
+
 @rpc("any_peer")
 func kick(reason: String) -> void:
 	leaveServer()

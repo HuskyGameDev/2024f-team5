@@ -38,3 +38,16 @@ text = "Player 1: 0 kills
 Player 2: 0 kills
 Player 3: 0 kills"
 horizontal_alignment = 2
+
+[node name="WinnerDisplay" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -704.0
+offset_top = 270.0
+offset_right = -104.0
+offset_bottom = 360.0
+theme_override_fonts/font = ExtResource("1_xm3sq")
+theme_override_font_sizes/font_size = 100
+text = "WINNER: P1"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

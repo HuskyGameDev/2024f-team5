@@ -210,6 +210,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		#anim.current_animation = "die"
 		rpc("updateAnimation", "die")
 	unequip()
+	DeathMatchGamemode.instance.update_board()
 	
 	#set_deferred("collision.disabled", true)
 	collision.disabled = true
@@ -222,6 +223,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	collision.disabled = false
 	rpc("updateAnimation", "idle")
 	position = Vector2(0, 0)
+	velocity = Vector2(0, 0)
 	dead = false
 	sprite.visible = true
 
@@ -388,6 +390,9 @@ func _physics_process(delta: float) -> void:
 		normalMovement = !normalMovement
 
 func _ready() -> void:
+	# This should probably sync with server, but idk how. - Jay
+	players.append(self)
+	player_id = players.size()
 	if (!is_multiplayer_authority()): return
 	if (singleplayerTesting): 
 		print("Singleplayer testing")
@@ -398,7 +403,7 @@ func _ready() -> void:
 	rpc("playAnimation", "idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)
-	players.append(self)
+	
 
 func _on_mouse_entered() -> void:
 	if(_equipped_item != null):
@@ -411,6 +416,7 @@ func _on_mouse_exited() -> void:
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if (dead): return
 	if(body.get_collision_layer() == 2):
+		DeathMatchGamemode.instance.update_board()
 		call_deferred("die")
 		# Add to other player score if killed. Subtract if killed by self
 		if "shot_by" in body:
