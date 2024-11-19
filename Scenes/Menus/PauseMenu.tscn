@@ -1,0 +1,220 @@
+[gd_scene load_steps=2 format=3 uid="uid://kk7lgpi6glv5"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/PauseMenu.gd" id="1_8otov"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_8otov")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 247.0
+offset_top = 54.0
+offset_right = -247.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pause" type="VBoxContainer" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="RichTextLabel" parent="Panel/Pause"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 75
+bbcode_enabled = true
+text = "[center]Paused[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Separator" type="ColorRect" parent="Panel/Pause"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Pause"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 20
+
+[node name="Resume" type="Button" parent="Panel/Pause/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Resume"
+
+[node name="Settings" type="Button" parent="Panel/Pause/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+
+[node name="Disconnect" type="Button" parent="Panel/Pause/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Disconnect"
+
+[node name="Desktop" type="Button" parent="Panel/Pause/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Quit to Desktop"
+
+[node name="Settings" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="RichTextLabel" parent="Panel/Settings"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 75
+bbcode_enabled = true
+text = "[center]Settings[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Separator" type="ColorRect" parent="Panel/Settings"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="TabContainer" type="TabContainer" parent="Panel/Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+tab_alignment = 1
+current_tab = 0
+
+[node name="Video" type="TabBar" parent="Panel/Settings/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+metadata/_tab_index = 0
+
+[node name="Audio" type="TabBar" parent="Panel/Settings/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+metadata/_tab_index = 1
+
+[node name="Controls" type="TabBar" parent="Panel/Settings/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Settings/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Settings/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MasterVolumeLabel" type="RichTextLabel" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Master Volume"
+fit_content = true
+
+[node name="Separator" type="ColorRect" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MasterVolume" type="HSlider" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Spacer" type="Control" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="RichTextLabel" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Music Volume"
+fit_content = true
+
+[node name="Separator2" type="ColorRect" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MusicVolume" type="HSlider" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Spacer2" type="Control" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="EffectsVolumeLabel" type="RichTextLabel" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Effects Volume"
+fit_content = true
+
+[node name="Separator3" type="ColorRect" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="EffectsVolume" type="HSlider" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Spacer3" type="Control" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Keybinds" type="Button" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 30
+text = "Keybinds"
+
+[node name="Back" type="Button" parent="Panel/Settings/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="pressed" from="Panel/Pause/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/Pause/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Panel/Pause/VBoxContainer/Disconnect" to="." method="_on_disconnect_pressed"]
+[connection signal="pressed" from="Panel/Pause/VBoxContainer/Desktop" to="." method="_on_desktop_pressed"]
+[connection signal="pressed" from="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Panel/Settings/VBoxContainer/Back" to="." method="_on_back_pressed"]

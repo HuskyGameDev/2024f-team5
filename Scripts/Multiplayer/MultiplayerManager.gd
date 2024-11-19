@@ -1,7 +1,6 @@
 class_name MultiplayerManager extends MultiplayerSpawner
 
 signal playerListChanged()
-#signal playerLost(player: int)
 
 @export var playerData: PackedScene
 
@@ -80,6 +79,9 @@ func loadMap(mapID: String) -> void:
 	map.data = data
 	map.multiplayerManager = self
 	$/root/Root.add_child(map)
+	var pauseMenu: PauseMenu = load("res://Scenes/Menus/PauseMenu.tscn").instantiate()
+	pauseMenu.multiplayerManager = self
+	$/root/Root.add_child(pauseMenu)
 	$/root/Root/Lobby.queue_free()
 	if (data.uuid == 1):
 		while true:
