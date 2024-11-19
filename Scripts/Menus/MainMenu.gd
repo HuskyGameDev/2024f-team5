@@ -5,6 +5,7 @@ class_name MainMenu extends Control
 @onready var usernameEntry: LineEdit = $Settings/ScrollContainer/VBoxContainer/UsernameEntry
 
 func _ready() -> void:
+	if (get_node_or_null("/root/FPSCounter") == null): $/root.call_deferred("add_child", load("res://Scenes/UI/FPSCounter.tscn").instantiate())
 	usernameEntry.text = "DefaultNamePeasant" + str(randi())
 	backPressed()
 

@@ -3,6 +3,7 @@ class_name LoadingScreen extends Control
 @onready var statusLabel: RichTextLabel = $Status
 @onready var multiplayerManager: MultiplayerManager = $/root/Root/MultiplayerManager
 @onready var lobbyScene: PackedScene = preload("res://Scenes/Menus/Lobby.tscn")
+@onready var pauseMenuScene: PackedScene = preload("res://Scenes/Menus/PauseMenu.tscn")
 
 @export var bufferTime: float = 0.1
 @export var timeoutLength: float = 10
@@ -35,9 +36,11 @@ func _ready() -> void:
 	data.authenticated = true
 	var lobby: Lobby = lobbyScene.instantiate()
 	lobby.data = data
-	#lobby.hostData = hostData
 	lobby.isAdmin = isAdmin
 	$/root/Root.add_child(lobby)
+	var pauseMenu: PauseMenu = pauseMenuScene.instantiate()
+	pauseMenu.multiplayerManager = multiplayerManager
+	$/root/Root.add_child(pauseMenu)
 	queue_free()
 
 func timeout() -> void:

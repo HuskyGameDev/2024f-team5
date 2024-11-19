@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Menus/PauseMenu.gd" id="1_8otov"]
 
 [node name="PauseMenu" type="CanvasLayer"]
+layer = 127
 script = ExtResource("1_8otov")
 
 [node name="Panel" type="Panel" parent="."]
@@ -17,7 +18,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Pause" type="VBoxContainer" parent="Panel"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,6 +72,7 @@ theme_override_font_sizes/font_size = 30
 text = "Quit to Desktop"
 
 [node name="Settings" type="VBoxContainer" parent="Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,120 +93,273 @@ scroll_active = false
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Settings"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="TabContainer" type="TabContainer" parent="Panel/Settings/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings/MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="TabContainer" type="TabContainer" parent="Panel/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
 tab_alignment = 1
 current_tab = 0
 
-[node name="Video" type="TabBar" parent="Panel/Settings/VBoxContainer/TabContainer"]
+[node name="Video" type="MarginContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-metadata/_tab_index = 0
-
-[node name="Audio" type="TabBar" parent="Panel/Settings/VBoxContainer/TabContainer"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-metadata/_tab_index = 1
-
-[node name="Controls" type="TabBar" parent="Panel/Settings/VBoxContainer/TabContainer"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-metadata/_tab_index = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Panel/Settings/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_right = 40
+metadata/_tab_index = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Settings/VBoxContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video"]
 layout_mode = 2
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MasterVolumeLabel" type="RichTextLabel" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="WindowModeLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Window Mode"
+fit_content = true
+
+[node name="Separator" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="WindowMode" type="OptionButton" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 25
+selected = 0
+item_count = 3
+popup/item_0/text = "Borderless"
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+
+[node name="Spacer2" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="VSyncLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "VSync"
+fit_content = true
+
+[node name="Separator2" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VSync" type="OptionButton" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 25
+selected = 1
+item_count = 4
+popup/item_0/text = "Off"
+popup/item_1/text = "On"
+popup/item_1/id = 1
+popup/item_2/text = "Adaptive"
+popup/item_2/id = 2
+popup/item_3/text = "Mailbox"
+popup/item_3/id = 3
+
+[node name="Spacer3" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="MaxFPSLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "FPS Cap"
+fit_content = true
+
+[node name="Separator3" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MaxFPS" type="OptionButton" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 25
+selected = 0
+item_count = 8
+popup/item_0/text = "Uncapped"
+popup/item_1/text = "24"
+popup/item_1/id = 1
+popup/item_2/text = "30"
+popup/item_2/id = 2
+popup/item_3/text = "60"
+popup/item_3/id = 3
+popup/item_4/text = "90"
+popup/item_4/id = 4
+popup/item_5/text = "120"
+popup/item_5/id = 5
+popup/item_6/text = "144"
+popup/item_6/id = 6
+popup/item_7/text = "240"
+popup/item_7/id = 7
+
+[node name="Spacer4" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="FPSCounterLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "FPS Counter"
+fit_content = true
+
+[node name="Separator4" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="FPSCounter" type="OptionButton" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 25
+selected = 0
+item_count = 3
+popup/item_0/text = "Off"
+popup/item_1/text = "On (Simple)"
+popup/item_1/id = 1
+popup/item_2/text = "On (Advanced)"
+popup/item_2/id = 2
+
+[node name="Spacer" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Audio" type="MarginContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MasterVolumeLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "Master Volume"
 fit_content = true
 
-[node name="Separator" type="ColorRect" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Separator" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 2)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="MasterVolume" type="HSlider" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MasterVolume" type="HSlider" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+max_value = 1.2
+step = 0.01
+value = 1.0
 
-[node name="Spacer" type="Control" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[node name="MusicVolumeLabel" type="RichTextLabel" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MusicVolumeLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "Music Volume"
 fit_content = true
 
-[node name="Separator2" type="ColorRect" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Separator2" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 2)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="MusicVolume" type="HSlider" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MusicVolume" type="HSlider" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+max_value = 1.2
+step = 0.01
+value = 1.0
 
-[node name="Spacer2" type="Control" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer2" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[node name="EffectsVolumeLabel" type="RichTextLabel" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="EffectsVolumeLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "Effects Volume"
 fit_content = true
 
-[node name="Separator3" type="ColorRect" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Separator3" type="ColorRect" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 2)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="EffectsVolume" type="HSlider" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="EffectsVolume" type="HSlider" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+max_value = 1.2
+step = 0.01
+value = 1.0
 
-[node name="Spacer3" type="Control" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Spacer3" type="Control" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[node name="Keybinds" type="Button" parent="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Reset" type="Button" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-theme_override_font_sizes/font_size = 30
-text = "Keybinds"
+theme_override_font_sizes/font_size = 25
+text = "Reset"
 
-[node name="Back" type="Button" parent="Panel/Settings/VBoxContainer"]
+[node name="Controls" type="MarginContainer" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+metadata/_tab_index = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Controls"]
+layout_mode = 2
+text = "To be added: Control viewing and editing"
+
+[node name="Back" type="Button" parent="Panel/Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -216,5 +370,12 @@ text = "Back"
 [connection signal="pressed" from="Panel/Pause/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Panel/Pause/VBoxContainer/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="Panel/Pause/VBoxContainer/Desktop" to="." method="_on_desktop_pressed"]
-[connection signal="pressed" from="Panel/Settings/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/Keybinds" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Panel/Settings/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="item_selected" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer/WindowMode" to="." method="_on_window_mode_item_selected"]
+[connection signal="item_selected" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer/VSync" to="." method="_on_v_sync_item_selected"]
+[connection signal="item_selected" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer/MaxFPS" to="." method="_on_max_fps_item_selected"]
+[connection signal="item_selected" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Video/ScrollContainer/VBoxContainer/FPSCounter" to="." method="_on_fps_counter_item_selected"]
+[connection signal="value_changed" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MasterVolume" to="." method="_on_master_volume_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MusicVolume" to="." method="_on_music_volume_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/EffectsVolume" to="." method="_on_effects_volume_value_changed"]
+[connection signal="pressed" from="Panel/Settings/MarginContainer/VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/Reset" to="." method="_on_reset_audio_pressed"]
+[connection signal="pressed" from="Panel/Settings/MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4d7u60ifm42j"]
+
+[ext_resource type="Script" path="res://Scripts/UI/FPSCounter.gd" id="1_ligir"]
+
+[node name="FPSCounter" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_ligir")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 466.0
+offset_bottom = 40.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
