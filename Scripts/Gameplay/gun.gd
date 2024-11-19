@@ -61,6 +61,7 @@ var hud: Hud
 
 # ====================== [ CLASS METHODS ] =====================================
 
+@rpc("call_local")
 func _flip() -> void:
 	spi.offset.x = rev_offset
 	shield.position.x = rev_offset
@@ -70,6 +71,7 @@ func _flip() -> void:
 	barrel.rotate(PI)
 	barrel.position.x = rev_barrel_posX
 
+@rpc("call_local")
 func _shoot(mousepos: Vector2) -> void:
 	if(!cooldown):
 		return
@@ -90,7 +92,7 @@ func _shoot(mousepos: Vector2) -> void:
 	sound.play()
 	# Godot doesn't support ++/-- incrementing. Fuck that.
 	ammo -= 1
-	hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
+	if (is_multiplayer_authority()): hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 	
 	# Shoot the actual bullet
 	var bullet: Node = projectile.instantiate()
@@ -131,7 +133,14 @@ func _shoot(mousepos: Vector2) -> void:
 	if(!melee):
 		get_tree().get_root().add_child(bullet)
 	
-	# Handle animation
+	animate()
+	
+	# Cooldown handling
+	cooldown = false
+	await get_tree().create_timer(1 / firerate).timeout
+	cooldown = true
+
+func animate() -> void:
 	match gun_resource.animation_mode:
 		GunResource.AnimationMode.PULSE:
 			spi.texture = gun_resource.alt_sprites[0]
@@ -144,13 +153,8 @@ func _shoot(mousepos: Vector2) -> void:
 			var i: int = max_ammo - ammo
 			var n: int = gun_resource.alt_sprites.size()
 			spi.texture = gun_resource.alt_sprites[i % n]
-		
-	
-	# Cooldown handling
-	cooldown = false
-	await get_tree().create_timer(1 / firerate).timeout
-	cooldown = true
 
+@rpc("call_local")
 func _unflip() -> void:
 	spi.offset.x = 0
 	shield.position.x = 0
@@ -166,9 +170,9 @@ func _process(_delta: float) -> void:
 	if (!is_multiplayer_authority()): return
 	if(get_global_mouse_position().x < global_position.x):
 		if(!flipped):
-			_flip()
+			rpc("_flip")
 	elif(flipped):
-		_unflip()
+		rpc("_unflip")
 	var crosshairAngle: float = global_position.angle_to_point(get_global_mouse_position())
 	# The total y offset of barrel from origin. Needed to correct aim
 	var offsetY: float = -barrel.position.y - spi.position.y
@@ -189,10 +193,12 @@ func _process(_delta: float) -> void:
 		
 	if(full_auto):
 		if(Input.is_action_pressed("shoot")):
-			_shoot(mousepos)
+			rpc("_shoot", mousepos)
+			#_shoot(mousepos)
 	else:
 		if(Input.is_action_just_pressed("shoot")):
-			_shoot(mousepos)
+			rpc("_shoot", mousepos)
+			#_shoot(mousepos)
 	if(Input.is_action_just_pressed("ADS")):
 		ads = true
 		line.visible = true
@@ -249,6 +255,7 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
+	player = get_parent()
 	load_weapon()
 
 func _on_animation_timer_timeout() -> void:

@@ -72,6 +72,7 @@ static var players: Array[Player]
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var coyoteTimer: Timer = $CoyoteTimer 
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var collision: CollisionPolygon2D = $EnvironmentalCollision
 ## Used for looped sounds such as footsteps
 @onready var loop_sound: AudioStreamPlayer2D = $LoopingAudio
 @onready var death_parts: GPUParticles2D = $DeathParticles
@@ -191,6 +192,7 @@ func crouch() -> void:
 ## oob: whether or not the player has died from exiting screen bounds
 ## theta: irrelevant if !oob, angle from boundary center
 func die(oob: bool = false, theta: float = 0) -> void:
+	if (dead): return
 	dead = true
 	# Out of bounds death animation
 	if(oob):
@@ -208,14 +210,16 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		#anim.current_animation = "die"
 		rpc("updateAnimation", "die")
 	unequip()
-	set_deferred("collision.disabled", true)
+	
+	#set_deferred("collision.disabled", true)
+	collision.disabled = true
 	# Temporary handling of death, reloads game after 3 seconds
 	await get_tree().create_timer(3).timeout
 	# Godot doesn't like reloading scenes on collision enter.
 	# Changed to reset manually as to not crash multiplayer
 	#get_tree().call_deferred("reload_current_scene")
-	set_deferred("collision.disabled", false)
-	#anim.current_animation = "idle"
+	#set_deferred("collision.disabled", false)
+	collision.disabled = false
 	rpc("updateAnimation", "idle")
 	position = Vector2(0, 0)
 	dead = false
@@ -228,9 +232,6 @@ func equip(scene: PackedScene, gun_resource: GunResource) -> void:
 	var item: Node = scene.instantiate()
 	item.name = name
 	item.gun_resource = gun_resource
-	# This throws an error because its not deferred. But when it's deferred
-	# it just doesn't work so I will be ignoring it.
-	#call_deferred("add_child", item)
 	_equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Show ammo counter
@@ -241,8 +242,9 @@ func equip(scene: PackedScene, gun_resource: GunResource) -> void:
 	# This should work better. Weird solution imo but its what the forums say. -Jay
 	if "weight" in item:
 		equipped_item_weight = item.weight
-	if "player" in item:
-		item.player = self
+	# This throws an error because its not deferred. But when it's deferred
+	# it just doesn't work so I will be ignoring it.
+	#call_deferred("add_child", item)
 	add_child(item) #WARNING: getting an error here "can't change this state while flushing queries. Use call_deferred() or set_deferred() to change monitoring state instead."
 
 # Unequips item
@@ -259,6 +261,7 @@ func unequip() -> void:
 func _grip_process(delta: float) -> void:
 	if grip <= 0:
 		unequip()
+		grip = 100
 		return
 	grip += GRIP_RECOVERY * delta
 	if(grip > 100):
@@ -406,8 +409,9 @@ func _on_mouse_exited() -> void:
 		Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if (dead): return
 	if(body.get_collision_layer() == 2):
-		die()
+		call_deferred("die")
 		# Add to other player score if killed. Subtract if killed by self
 		if "shot_by" in body:
 			body.shot_by.player.score += 1

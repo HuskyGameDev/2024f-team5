@@ -8,8 +8,6 @@ signal playerLost(player: int)
 var peer: ENetMultiplayerPeer
 var hosting: bool = false
 var password: String
-#var authenticationAttempts: int = 5
-#var hostData: PlayerData
 var data: PlayerData
 var authenticated: bool = false
 var inLobby: bool = true
@@ -127,7 +125,6 @@ func addPlayer(id: int) -> void:
 	player.name = str(id)
 	add_child(player)
 	if (id == 1):
-		#hostData = $'1'
 		player.isAdmin = true
 		return
 	player.isAdmin = false
@@ -141,12 +138,12 @@ func removePlayer(id: int) -> void:
 
 func serverClosed() -> void:
 	leaveServer()
-	$/root/Root/Menu.message("connection")
+	$/root/Root/Menu.notify("Server closed")
 
 func leaveServer() -> void:
-	#data.rpc("chatAnnouncement", "%s left the game!" % data.username)
 	multiplayer.multiplayer_peer = null
-	$/root/Root.name = "OldRoot"
+	get_parent().name = "OldRoot"
 	var root: Node = load("res://Scenes/Root.tscn").instantiate()
-	$/root.add_child(root)
-	$/root/OldRoot.queue_free()
+	get_tree().root.add_child(root)
+	await root.ready
+	get_parent().queue_free()

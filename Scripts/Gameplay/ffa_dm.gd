@@ -11,6 +11,7 @@ func _process(delta: float) -> void:
 	update_board()
 
 func update_board() -> void:
+	if (!is_multiplayer_authority()): return
 	var text: String = ""
 	for p: Player in Player.players:
 		text += "Player %d: %d kills\n" % [p.player_id, p.score]
