@@ -2,7 +2,7 @@ extends Node2D
 
 
 var items_to_spawn: Variant = []
-@export var spawn_timer: float = 20.0
+@export var spawn_timer: float = 10.0
 
 # Other approach. Same item every time
 @export var random_item: bool = true
@@ -12,9 +12,7 @@ var items_to_spawn: Variant = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	items_to_spawn.append(load("res://Scenes/Objects/pistol_pickup.tscn"))
-	items_to_spawn.append(load("res://Scenes/Objects/el_dante_pickup.tscn"))
-	spawn_random_item()
+	items_to_spawn.append(load("res://Scenes/Objects/gun_pickup.tscn"))
 	_start_timer()
 	
 func _start_timer() -> void:
