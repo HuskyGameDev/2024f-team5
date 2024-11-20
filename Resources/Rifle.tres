@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="GunResource" load_steps=5 format=3 uid="uid://f2lwxww284lx"]
+[gd_resource type="Resource" script_class="GunResource" load_steps=6 format=3 uid="uid://f2lwxww284lx"]
 
 [ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_tcxx2"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="2_5wgs8"]
+[ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="2_gma50"]
 [ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="3_gpco2"]
 [ext_resource type="Texture2D" uid="uid://bpua2om8qsf1m" path="res://Sprites/Weapons/LaserRifle.png" id="4_j03j0"]
 
@@ -27,5 +28,5 @@ full_auto = true
 weaponRecoil = 200.0
 weaponWeight = 10.0
 gripLoss = 15.0
-fireSounds = Array[AudioStream]([])
+fireSounds = Array[AudioStream]([ExtResource("2_gma50")])
 exitPadding = 23.0

@@ -9,6 +9,8 @@ class_name Lobby extends Control
 @onready var colorPick: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/ColorSelection
 @onready var emotionPick: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/EmotionSelection
 @onready var skinDisplay: Sprite2D = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel/Preview
+@onready var gamemodeSelection: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/GamemodeSelection
+@onready var timelimitSelection: SpinBox = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/TimeLimitSelection
 
 @export var bufferTime: float = 0.1
 @export var timeoutLength: float = 10
@@ -24,6 +26,10 @@ func _ready() -> void:
 		mapSelection.item_selected.connect(_on_map_selection_item_selected)
 		playerCap.editable = true
 		playerCap.value_changed.connect(_on_spin_box_value_changed)
+		gamemodeSelection.disabled = false
+		gamemodeSelection.item_selected.connect(_on_gamemode_selection_item_selected)
+		timelimitSelection.editable = true
+		timelimitSelection.value_changed.connect(_on_time_limit_selection_value_changed)
 		$MarginContainer/VBoxContainer/Begin.show()
 	colorPick.selected = data.color
 	emotionPick.selected = data.emotion
@@ -44,11 +50,11 @@ func updatePlayerList() -> void:
 func _on_begin_pressed() -> void:
 	match mapSelection.selected:
 		0:
-			multiplayerManager.rpc("loadMap", "houghton")
+			multiplayerManager.rpc("loadMap", "houghton", timelimitSelection.value)
 		1:
-			multiplayerManager.rpc("loadMap", "Map1")
+			multiplayerManager.rpc("loadMap", "Map1", timelimitSelection.value)
 		2:
-			multiplayerManager.rpc("loadMap", "testmap")
+			multiplayerManager.rpc("loadMap", "testmap", timelimitSelection.value)
 
 func _on_username_entry_text_changed(new_text: String) -> void:
 	data.username = new_text
@@ -59,19 +65,20 @@ func _on_username_submit_pressed() -> void:
 	updatePlayerList()
 
 func _on_map_selection_item_selected(index: int) -> void:
-	rpc("updateGameSettings", index, playerCap.value)
+	rpc("updateGameSettings", index, playerCap.value, timelimitSelection.value)
 
 func _on_spin_box_value_changed(value: int) -> void:
 	if (multiplayerManager.get_children().size() > value):
 		playerCap.value = multiplayerManager.get_children().size()
 	else:
 		multiplayerManager.playerCap = value
-		rpc("updateGameSettings", mapSelection.selected, multiplayerManager.playerCap)
+		rpc("updateGameSettings", mapSelection.selected, multiplayerManager.playerCap, timelimitSelection.value)
 
 @rpc("call_local")
-func updateGameSettings(map: int, cap: int) -> void:
+func updateGameSettings(map: int, cap: int, time: int) -> void:
 	mapSelection.selected = map
 	playerCap.value = cap
+	timelimitSelection.value = time
 
 func skinChanged(_index: int) -> void:
 	data.color = colorPick.selected as PlayerData.PlayerColor
@@ -81,3 +88,10 @@ func skinChanged(_index: int) -> void:
 
 func _on_timer_timeout() -> void:
 	updatePlayerList()
+
+func _on_time_limit_selection_value_changed(value: int) -> void:
+	rpc("updateGameSettings", mapSelection.selected, multiplayerManager.playerCap, value)
+
+#TODO eventually maybe
+func _on_gamemode_selection_item_selected(index: int) -> void:
+	pass # Replace with function body.

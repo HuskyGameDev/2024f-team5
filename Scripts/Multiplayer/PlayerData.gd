@@ -7,6 +7,8 @@ class_name PlayerData extends Node
 @export var emotion: Emotion
 @export var authenticated: bool = false
 @export var score: int = 0
+@export var wins: int = 0
+@export var totalKills: int = 0
 
 enum PlayerColor{
 	BLUE,

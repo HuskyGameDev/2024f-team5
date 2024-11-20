@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://biaix4ahd7pob" path="res://icon.svg" id="2_cjqb2"]
 
 [node name="MenuNameplate" type="HBoxContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -19,7 +18,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 bbcode_enabled = true
-text = "[right]Placeholder[/right]"
+text = "[right][b]Placeholder[/b][/right]"
 
 [node name="KickButton" type="TextureButton" parent="."]
 visible = false

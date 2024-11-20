@@ -209,7 +209,7 @@ script = ExtResource("1_eq5ux")
 
 [node name="PlayerHud" parent="CanvasLayer" instance=ExtResource("2_a6hsi")]
 
-[node name="Label" parent="CanvasLayer" instance=ExtResource("3_8cybm")]
+[node name="ffa_dm" parent="CanvasLayer" instance=ExtResource("3_8cybm")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer" node_paths=PackedStringArray("camera")]
 offset = Vector2(0, -300)

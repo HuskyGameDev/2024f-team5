@@ -3,22 +3,27 @@
 [ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="1_xm3sq"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/ffa_dm.gd" id="2_sq7h1"]
 
-[node name="Label" type="Label"]
+[node name="ffa_dm" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_sq7h1")
+
+[node name="TimerDisplay" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -50.0
-offset_bottom = 23.0
+offset_left = -120.0
+offset_bottom = 45.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("1_xm3sq")
 theme_override_font_sizes/font_size = 50
 text = "3:00"
 horizontal_alignment = 2
-script = ExtResource("2_sq7h1")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 180.0
-autostart = true
 
 [node name="Leaderboard" type="Label" parent="."]
 layout_mode = 1
@@ -40,15 +45,23 @@ Player 2: 0 kills
 Player 3: 0 kills"
 horizontal_alignment = 2
 
-[node name="WinnerDisplay" type="Label" parent="."]
+[node name="WinnerDisplay" type="RichTextLabel" parent="."]
 visible = false
-layout_mode = 0
-offset_left = -704.0
-offset_top = 270.0
-offset_right = -104.0
-offset_bottom = 360.0
-theme_override_fonts/font = ExtResource("1_xm3sq")
-theme_override_font_sizes/font_size = 100
-text = "WINNER: P1"
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -93.0
+offset_bottom = 93.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/bold_font_size = 50
+bbcode_enabled = true
+text = "[center][b]WINNER: P1[/b][/center]"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 180.0
+one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

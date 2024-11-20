@@ -1,14 +1,16 @@
-extends Label
+extends Control
 class_name DeathMatchGamemode
 
 static var instance: DeathMatchGamemode
 
 @onready var timer: Timer = $Timer
 @onready var lbDisplay: Label = $Leaderboard
-@onready var winDisplay: Label = $WinnerDisplay
+@onready var winDisplay: RichTextLabel = $WinnerDisplay
+@onready var timerDisplay: Label = $TimerDisplay
 
 var leaderboard: Array[Player]
 var winning: PlayerData
+var winners: int = 0
 
 func _ready() -> void:
 	instance = self
@@ -16,7 +18,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	text = "%d:%02d" % [floor(timer.time_left / 60), int(timer.time_left) % 60]
+	timerDisplay.text = "%d:%02d" % [floor(timer.time_left / 60), int(timer.time_left) % 60]
 
 func update_board() -> void:
 	var sb_text: String = "" #scoreboard text
@@ -25,17 +27,20 @@ func update_board() -> void:
 		if(data.score > top_score):
 			winning = data
 			top_score = data.score
-			sb_text += "WINNING "
+			winners = 1
+		elif (data.score == top_score):
+			winners += 1
 		sb_text += "%s: %d kills\n" % [data.username, data.score]
 	lbDisplay.text = sb_text
 
 func _on_timer_timeout() -> void:
-	get_tree().paused = true
-	if(winning == null):
-		winDisplay.text = "TIE GAME"
+	if(winners > 1):
+		winDisplay.text = "[center][b]TIE GAME[/b][/center]"
 	else:
-		winDisplay.text = "WINNER: %d" % [winning.player_id]
-	winDisplay.visible = true
+		winDisplay.text = "[center][b]WINNER: %s[/b][/center]" % [winning.username]
+		if (MultiplayerManager.instance.hosting): winning.wins += 1
+	winDisplay.show()
+	get_tree().paused = true
 	await get_tree().create_timer(5).timeout
 	
 	get_tree().paused = false

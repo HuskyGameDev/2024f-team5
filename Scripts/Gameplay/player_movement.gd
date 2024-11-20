@@ -435,7 +435,8 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		call_deferred("die")
 		# Add to other player score if killed. Subtract if killed by self
 		if "shot_by" in body:
-			MultiplayerManager.instance.getPlayerData(body.shot_by.get_multiplayer_authority()).score += 1
+			MultiplayerManager.instance.getPlayerData(body.shot_by).score += 1
+			MultiplayerManager.instance.getPlayerData(body.shot_by).totalKills += 1
 			#body.shot_by.player.score += 1
 		else:
 			MultiplayerManager.instance.getPlayerData(get_multiplayer_authority()).score -= 1
