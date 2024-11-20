@@ -77,7 +77,7 @@ func _shoot(mousepos: Vector2) -> void:
 		return
 	var par: Node = get_parent()
 	if(ammo <= 0):
-		par.unequip()
+		par.call_deferred("unequip")
 		return
 	var diff: Vector2 = mousepos - self.global_position
 	var angle: float = diff.angle() + PI
@@ -119,7 +119,7 @@ func _shoot(mousepos: Vector2) -> void:
 	bullet.global_position = barrel.global_position
 	bullet.global_rotation = self.global_rotation
 	if "shot_by" in bullet:
-		bullet.shot_by = get_multiplayer_authority()
+		bullet.shot_by = self
 	var padding: Vector2 = (Vector2(cos(global_rotation), sin(global_rotation))
 		* exit_padding)
 	if(flipped):
@@ -208,9 +208,10 @@ func _process(_delta: float) -> void:
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	if (!is_multiplayer_authority()): return
-	if "shot_by" in body && body.shot_by == get_multiplayer_authority():
+	if "shot_by" in body && body.shot_by == self:
 		return
-	var angle: float = global_position.angle_to_point(body.position)
+	# Unused variable, so I commented it out
+	#var angle: float = global_position.angle_to_point(body.position)
 	player.grip -= 20
 	hurt_sound.play()
 	
@@ -253,6 +254,7 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	#name = "Gun%s" % str(randi_range(0, 9999))
 
 func _ready() -> void:
 	player = get_parent()

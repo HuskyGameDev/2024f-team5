@@ -15,15 +15,11 @@ extends RigidBody2D
 @export var timeout: float = 3
 @onready var timer: Timer = $Timer
 var init_pos: Vector2
-var shot_by: int
+var shot_by: Node
 
 func _on_body_entered(body: Node) -> void:
-	if (body.get_multiplayer_authority() != shot_by):
-		print("Bullet collided with %s" % typeof(body))
-		if (body is Player):
-			pass
-		if(delete_on_collide):
-			queue_free()
+	if (delete_on_collide && body != shot_by):
+		queue_free()
 
 func _ready() -> void:
 	if(!melee):
@@ -32,7 +28,7 @@ func _ready() -> void:
 	timer.start()
 	init_pos = global_position
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(trail != null): _trail()
 
 ## Handles bullet trail

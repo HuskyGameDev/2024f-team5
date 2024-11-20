@@ -230,8 +230,7 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		death_parts.emitting = true
 		if (is_multiplayer_authority()): rpc("updateAnimation", "die")
 	unequip()
-	if (is_multiplayer_authority()):
-		DeathMatchGamemode.instance.update_board()
+	DeathMatchGamemode.instance.update_board()
 	
 	collision.disabled = true
 	await get_tree().create_timer(3).timeout
@@ -266,8 +265,7 @@ func equip(scene: PackedScene, gun_resource: GunResource) -> void:
 func unequip() -> void:
 	if (!is_multiplayer_authority()): return
 	if (is_instance_valid(_equipped_item)): 
-		_equipped_item.name = "deleteMe"
-		_equipped_item.queue_free()
+		_equipped_item.free()
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Hide ammo counter
 	hud.ammo_counter.visible = false
@@ -437,11 +435,10 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		call_deferred("die")
 		# Add to other player score if killed. Subtract if killed by self
 		if "shot_by" in body:
-			DeathMatchGamemode.instance.data.get_node(str(body.shot_by)).score += 1
+			MultiplayerManager.instance.getPlayerData(body.shot_by.get_multiplayer_authority()).score += 1
 			#body.shot_by.player.score += 1
 		else:
-			DeathMatchGamemode.instance.data.get_node(str(get_multiplayer_authority())).score -= 1
-			score -= 1
+			MultiplayerManager.instance.getPlayerData(get_multiplayer_authority()).score -= 1
 
 #Thomas: this is for signaling when the player is allowed to wall jump (to prevent them from clipping their normal jump)
 func _on_walljump_timer_timeout() -> void:

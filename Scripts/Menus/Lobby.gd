@@ -74,8 +74,8 @@ func updateGameSettings(map: int, cap: int) -> void:
 	playerCap.value = cap
 
 func skinChanged(_index: int) -> void:
-	data.color = colorPick.selected
-	data.emotion = emotionPick.selected
+	data.color = colorPick.selected as PlayerData.PlayerColor
+	data.emotion = emotionPick.selected as PlayerData.Emotion
 	var image: String = colorPick.get_item_text(colorPick.selected).to_lower() + "_" + emotionPick.get_item_text(emotionPick.selected).to_lower() + ".png"
 	skinDisplay.texture = load("res://Sprites/Player/Skins/%s" % image)
 

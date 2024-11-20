@@ -40,7 +40,7 @@ func _on_timer_timeout() -> void:
 	timer.start()
 
 func average(arr: Array[float]) -> float:
-	var total: float
+	var total: float = 0
 	for num: float in arr:
 		total += num
 	return roundf(total / arr.size())

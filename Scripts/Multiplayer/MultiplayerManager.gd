@@ -19,6 +19,9 @@ static var instance: MultiplayerManager
 func _ready() -> void:
 	instance = self
 
+func getPlayerData(uuid: int) -> PlayerData:
+	return get_node_or_null(str(uuid))
+
 @rpc("any_peer")
 func kick(reason: String) -> void:
 	leaveServer()
@@ -50,19 +53,19 @@ func updatePlayerList() -> void:
 	print("Emitting update signal")
 	playerListChanged.emit()
 	readyPlayers.clear()
-	for peer: PlayerData in get_children():
-		readyPlayers[peer.uuid] = false
+	for player: PlayerData in get_children():
+		readyPlayers[player.uuid] = false
 
 # This method is not currently used, but since I had the infrastructure for it already, I left it
 @rpc("any_peer", "call_local")
-func chatMessage(playerID: int, msg: String) -> void:
+func chatMessage(_playerID: int, _msg: String) -> void:
 	pass
 	#Example code of how this is used in a different game using the same multiplayer system:
 	#Chat.append_text("\n<%s> %s" % [get_node("/root/Root/MultiplayerManager/%s" % str(playerID)).username, msg])
 
 # This method is not currently used, but since I had the infrastructure for it already, I left it
 @rpc("any_peer", "call_local")
-func chatAnnouncement(msg: String) -> void:
+func chatAnnouncement(_msg: String) -> void:
 	pass
 	#Example code of how this is used in a different game using the same multiplayer system:
 	#Chat.append_text("\n[color=YELLOW]%s[/color]" % msg)
