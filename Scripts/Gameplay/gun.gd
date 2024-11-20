@@ -119,7 +119,7 @@ func _shoot(mousepos: Vector2) -> void:
 	bullet.global_position = barrel.global_position
 	bullet.global_rotation = self.global_rotation
 	if "shot_by" in bullet:
-		bullet.shot_by = get_multiplayer_authority()
+		bullet.shot_by = player
 	var padding: Vector2 = (Vector2(cos(global_rotation), sin(global_rotation))
 		* exit_padding)
 	if(flipped):
@@ -128,6 +128,7 @@ func _shoot(mousepos: Vector2) -> void:
 	bullet.global_position += padding
 	bullet.linear_velocity = (proj_speed * 
 	  Vector2(cos(global_rotation), sin(global_rotation)))
+	bullet.delete_on_collide = gun_resource.deleteOnCollide
 	if(flipped):
 		bullet.linear_velocity *= -1
 	if(!melee):
@@ -208,7 +209,7 @@ func _process(_delta: float) -> void:
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	if (!is_multiplayer_authority()): return
-	if "shot_by" in body && body.shot_by == get_multiplayer_authority():
+	if "shot_by" in body && body.shot_by == player:
 		return
 	# Unused variable, so I commented it out
 	#var angle: float = global_position.angle_to_point(body.position)
