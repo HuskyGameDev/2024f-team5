@@ -12,10 +12,9 @@ var items_to_spawn: Variant = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	items_to_spawn.append(load("res://Scenes/Objects/pistol_pickup.tscn"))
-	items_to_spawn.append(load("res://Scenes/Objects/el_dante_pickup.tscn"))
+	#items_to_spawn.append(load("res://Scenes/Objects/pistol_pickup.tscn"))
+	#items_to_spawn.append(load("res://Scenes/Objects/el_dante_pickup.tscn"))
 	items_to_spawn.append(load("res://Scenes/Objects/g_eagle_pickup.tscn"))
-	items_to_spawn.append(load("res://Scenes/Objects/nanner_pickup.tscn"))
 	#items_to_spawn.append(load("res://Scenes/Objects/laser_rifle_pickup.tscn")) Not currently functioning
 	spawn_random_item()
 	_start_timer()
