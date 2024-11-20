@@ -1,0 +1,33 @@
+[gd_scene load_steps=9 format=3 uid="uid://dq5obscox3tb2"]
+
+[ext_resource type="Script" path="res://Demo/scripts/item_pickup.gd" id="1_opd13"]
+[ext_resource type="PackedScene" uid="uid://brj4t62y7n070" path="res://Scenes/Objects/rifle.tscn" id="2_2hy3s"]
+[ext_resource type="Resource" uid="uid://udj1y0gfnsw8" path="res://Resources/El_Dante.tres" id="3_ldlx8"]
+[ext_resource type="PackedScene" uid="uid://k3phno0vks8h" path="res://Scenes/Objects/crt_effect.tscn" id="4_rl6ij"]
+[ext_resource type="Texture2D" uid="uid://cndlolvxbrb8h" path="res://Sprites/Environment/MonitorSpawnerSheet.png" id="5_aq8fb"]
+[ext_resource type="Texture2D" uid="uid://12goi6amxmwm" path="res://Sprites/Weapons/GlockIcon.png" id="6_12q5d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai3ny"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or0p5"]
+atlas = ExtResource("5_aq8fb")
+region = Rect2(0, 0, 16, 16)
+
+[node name="Gun Pickup" type="Area2D"]
+z_index = -2
+collision_mask = 8
+script = ExtResource("1_opd13")
+gun = ExtResource("2_2hy3s")
+gun_resource = ExtResource("3_ldlx8")
+effect = ExtResource("4_rl6ij")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ai3ny")
+
+[node name="Monitor" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_or0p5")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("6_12q5d")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
