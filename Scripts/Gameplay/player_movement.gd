@@ -107,6 +107,7 @@ static var players: Array[Player]
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var cling_timer: Timer = $ClingTimer
 @onready var walljumpTimer: Timer = $WalljumpTimer
+@onready var name_display: RichTextLabel = $NameDisplay
 
 # Class variables
 # private variables are denoted with an underscore, not all are marked yet
@@ -398,8 +399,16 @@ func _physics_process(delta: float) -> void:
 		unequip()
 	if Input.is_action_just_pressed("ToggleMoveTypes"): #TODO: this is for testing purposes, probably want to remove it later
 		normalMovement = !normalMovement
+	if Input.is_action_just_pressed("show_names"):
+		for p: Player in players:
+			p.name_display.visible = true
+	elif Input.is_action_just_released("show_names"):
+		for p: Player in players:
+			p.name_display.visible = false
+	
 
 func _ready() -> void:
+	name_display.text = MultiplayerManager.instance.getPlayerData(get_multiplayer_authority()).username
 	# This should probably sync with server, but idk how. - Jay
 	players.append(self)
 	player_id = players.size()

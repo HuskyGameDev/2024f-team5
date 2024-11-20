@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://hccjwm3hunth"]
+[gd_scene load_steps=22 format=4 uid="uid://hccjwm3hunth"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_32161"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_6jei0"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://csv0igdbog8vx" path="res://Demo/Sprites/Borrowed Assets/C2012.png" id="14_li1f1"]
 [ext_resource type="Texture2D" uid="uid://d18otvutwtn1n" path="res://Demo/Sprites/Borrowed Assets/C2013.png" id="15_ya22u"]
 [ext_resource type="Texture2D" uid="uid://dp4as0a1uofeg" path="res://Demo/Sprites/Borrowed Assets/C2010.png" id="16_42o67"]
+[ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="18_ly31s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
@@ -316,9 +317,13 @@ spawn_path = NodePath("../Players")
 [node name="Players" type="Node2D" parent="."]
 
 [node name="ItemSpawner" parent="." instance=ExtResource("8_8mrdh")]
+gun_resource = ExtResource("18_ly31s")
+spawn_obj = ExtResource("4_nf66b")
 
 [node name="ItemSpawner2" parent="." instance=ExtResource("8_8mrdh")]
 position = Vector2(150, -52)
+gun_resource = ExtResource("18_ly31s")
+spawn_obj = ExtResource("4_nf66b")
 
 [connection signal="ready" from="CanvasLayer" to="CanvasLayer" method="_on_ready"]
 

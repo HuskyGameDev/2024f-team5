@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://bjj5hw1d1pbl"]
+[gd_scene load_steps=19 format=3 uid="uid://bjj5hw1d1pbl"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/player_movement.gd" id="1_ym8ee"]
 [ext_resource type="PackedScene" uid="uid://bnowe750hxon4" path="res://Demo/scenes/oob_death.tscn" id="2_o8rcn"]
-[ext_resource type="Texture2D" uid="uid://bo57hy65sdxjd" path="res://Sprites/Player/Skins/blue_happy.png" id="4_gr3te"]
+[ext_resource type="Texture2D" uid="uid://ibxa85st2i70" path="res://Sprites/Player/Skins/green_neutral.png" id="4_ks3ku"]
+[ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="5_rco1c"]
 [ext_resource type="PackedScene" uid="uid://cub4sgnrp1jbm" path="res://Demo/scenes/death_particles.tscn" id="7_tlm4h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7coln"]
@@ -224,7 +225,7 @@ libraries = {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("4_gr3te")
+texture = ExtResource("4_ks3ku")
 hframes = 8
 vframes = 8
 
@@ -248,6 +249,24 @@ replication_config = SubResource("SceneReplicationConfig_xbynr")
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/Objects/gun.tscn")
 spawn_path = NodePath("..")
+
+[node name="NameDisplay" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -16.0
+offset_right = 20.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("5_rco1c")
+theme_override_font_sizes/normal_font_size = 8
+text = "PLAYER 1"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
