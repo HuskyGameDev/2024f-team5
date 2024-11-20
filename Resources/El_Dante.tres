@@ -1,11 +1,10 @@
-[gd_resource type="Resource" script_class="GunResource" load_steps=8 format=3 uid="uid://udj1y0gfnsw8"]
+[gd_resource type="Resource" script_class="GunResource" load_steps=7 format=3 uid="uid://udj1y0gfnsw8"]
 
 [ext_resource type="Texture2D" uid="uid://blsrimqf0vs0a" path="res://Sprites/Weapons/el_dante_alt.png" id="1_lik16"]
 [ext_resource type="PackedScene" uid="uid://canvtpms427w8" path="res://Scenes/Objects/weapon_hitbox.tscn" id="2_x8pih"]
 [ext_resource type="AudioStream" uid="uid://dkf6r8p36eomv" path="res://SFX/HGD Sound Library/Torch Ignition_GUN_Calvert.wav" id="3_hgm2q"]
 [ext_resource type="Texture2D" uid="uid://b8rxcwcfhrt" path="res://Sprites/Weapons/El_Dante_Icon.png" id="3_ibttt"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="4_pvkol"]
-[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="5_7o4sn"]
 [ext_resource type="Texture2D" uid="uid://bdrfpgdbvixeb" path="res://Sprites/Weapons/El_Dante.png" id="6_7u6oi"]
 
 [resource]
@@ -16,7 +15,6 @@ animation_mode = 3
 pulse_time = 0.02
 icon = ExtResource("3_ibttt")
 bullet = ExtResource("2_x8pih")
-smoke = ExtResource("5_7o4sn")
 barrel_pos = Vector2(25, -8)
 WeaponType = 1
 weaponDamage = 0.0
