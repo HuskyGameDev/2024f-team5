@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxtj4r2bkagne"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ScoreboardEntry.gd" id="1_pw3fa"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rh0hd"]
+properties/0/path = NodePath(".:score")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:user")
+properties/1/spawn = true
+properties/1/replication_mode = 0
+
+[node name="ScoreboardEntry" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pw3fa")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_rh0hd")

@@ -33,7 +33,6 @@ func _ready() -> void:
 	updatePlayerList()
 
 func updatePlayerList() -> void:
-	print("Updating list")
 	for nameplate: MenuNameplate in playerList.get_children():
 		nameplate.free()
 	for player: PlayerData in multiplayerManager.get_children():
@@ -52,11 +51,12 @@ func _on_begin_pressed() -> void:
 			multiplayerManager.rpc("loadMap", "testmap")
 
 func _on_username_entry_text_changed(new_text: String) -> void:
-	_on_username_submit_pressed()
+	data.username = new_text
+	updatePlayerList()
 
 func _on_username_submit_pressed() -> void:
 	data.username = usernameEntry.text
-	multiplayerManager.rpc("updatePlayerList")
+	updatePlayerList()
 
 func _on_map_selection_item_selected(index: int) -> void:
 	rpc("updateGameSettings", index, playerCap.value)
@@ -78,4 +78,6 @@ func skinChanged(_index: int) -> void:
 	data.emotion = emotionPick.selected
 	var image: String = colorPick.get_item_text(colorPick.selected).to_lower() + "_" + emotionPick.get_item_text(emotionPick.selected).to_lower() + ".png"
 	skinDisplay.texture = load("res://Sprites/Player/Skins/%s" % image)
-	
+
+func _on_timer_timeout() -> void:
+	updatePlayerList()

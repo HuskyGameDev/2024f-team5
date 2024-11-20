@@ -119,7 +119,7 @@ func _shoot(mousepos: Vector2) -> void:
 	bullet.global_position = barrel.global_position
 	bullet.global_rotation = self.global_rotation
 	if "shot_by" in bullet:
-		bullet.shot_by = self
+		bullet.shot_by = get_multiplayer_authority()
 	var padding: Vector2 = (Vector2(cos(global_rotation), sin(global_rotation))
 		* exit_padding)
 	if(flipped):
@@ -208,7 +208,7 @@ func _process(_delta: float) -> void:
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	if (!is_multiplayer_authority()): return
-	if "shot_by" in body && body.shot_by == self:
+	if "shot_by" in body && body.shot_by == get_multiplayer_authority():
 		return
 	var angle: float = global_position.angle_to_point(body.position)
 	player.grip -= 20
