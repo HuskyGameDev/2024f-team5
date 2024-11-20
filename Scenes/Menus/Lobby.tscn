@@ -175,6 +175,7 @@ layout_mode = 2
 text = "Submit"
 
 [node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
@@ -253,6 +254,7 @@ libraries = {
 }
 
 [node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
@@ -279,6 +281,7 @@ popup/item_2/text = "Mountain"
 popup/item_2/id = 2
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
@@ -301,6 +304,53 @@ value = 8.0
 editable = false
 
 [node name="Spacer4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="GamemodeLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Gamemode"
+
+[node name="Separator4" type="ColorRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="GamemodeSelection" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+disabled = true
+selected = 0
+item_count = 1
+popup/item_0/text = "Free For All"
+
+[node name="Spacer5" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="RoundTimeLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Round Length (Minutes)"
+
+[node name="Separator5" type="ColorRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TimeLimitSelection" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+max_value = 10.0
+value = 3.0
+editable = false
+
+[node name="Spacer6" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 

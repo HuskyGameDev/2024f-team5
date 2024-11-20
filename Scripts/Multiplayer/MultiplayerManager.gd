@@ -75,12 +75,13 @@ func chatAnnouncement(_msg: String) -> void:
 # loaded, each client will send a ready message to the host. Once all clients have given the signal,
 # the host will begin the game. 
 @rpc("any_peer", "call_local")
-func loadMap(mapID: String) -> void:
+func loadMap(mapID: String, roundLength: int) -> void:
 	inLobby = false
 	var map: Map = load("res://Scenes/Maps/%s.tscn" % mapID).instantiate()
 	map.soloTest = false
 	map.data = data
 	map.multiplayerManager = self
+	map.roundLength = roundLength
 	$/root/Root.add_child(map)
 	$/root/Root/Lobby.queue_free()
 	if (data.uuid == 1):
@@ -103,6 +104,7 @@ func beginGame() -> void:
 		for player: PlayerData in get_children():
 			map.spawnPlayer(player.uuid)
 			print("Creating player %s" % str(player.uuid))
+	map.start()
 	print("Begin game")
 
 func hostServer(port: int, upnp: bool, pswd: String) -> Error:

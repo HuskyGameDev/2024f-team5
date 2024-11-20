@@ -18,6 +18,12 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath(".:score")
 properties/4/spawn = true
 properties/4/replication_mode = 2
+properties/5/path = NodePath(".:wins")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath(".:totalKills")
+properties/6/spawn = true
+properties/6/replication_mode = 1
 
 [node name="PlayerData" type="Node"]
 script = ExtResource("1_cqsxl")
