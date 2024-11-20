@@ -14,6 +14,7 @@ var items_to_spawn: Variant = []
 func _ready() -> void:
 	items_to_spawn.append(load("res://Scenes/Objects/gun_pickup.tscn"))
 	_start_timer()
+	spawn_item()
 	
 func _start_timer() -> void:
 	var timer: Timer = Timer.new()
