@@ -22,7 +22,6 @@ gdscript/warnings/inferred_declaration=2
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 mouse_cursor/custom_image="res://crosshair1.png"

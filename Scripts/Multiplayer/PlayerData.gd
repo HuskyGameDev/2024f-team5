@@ -3,18 +3,23 @@ class_name PlayerData extends Node
 @export var username: String
 @export var uuid: int
 @export var isAdmin: bool
-@export var skin: PlayerSkin
+@export var color: PlayerColor = 3
+@export var emotion: Emotion = 2
 @export var authenticated: bool = false
 
-enum PlayerSkin{
-	RED,
-	GREEN,
+enum PlayerColor{
 	BLUE,
+	GREEN,
 	PURPLE,
-	YELLOW,
-	ORANGE,
-	BLACK,
-	WHITE
+	RED,
+	YELLOW
+}
+enum Emotion{
+	HAPPY,
+	MEH,
+	NEUTRAL,
+	MAD,
+	SAD
 }
 
 func _enter_tree() -> void:
@@ -25,4 +30,6 @@ func _ready() -> void:
 	if (get_node_or_null("/root/PlayerData") == null): return
 	username = $/root/PlayerData.username
 	uuid = name.to_int()
+	color = randi_range(0, 4)
+	emotion = randi_range(0, 4)
 	$/root/PlayerData.queue_free()

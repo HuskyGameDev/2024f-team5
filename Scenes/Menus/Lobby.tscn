@@ -1,6 +1,96 @@
-[gd_scene load_steps=2 format=3 uid="uid://djuyy2k1dp4hu"]
+[gd_scene load_steps=10 format=3 uid="uid://djuyy2k1dp4hu"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/Lobby.gd" id="1_56xls"]
+[ext_resource type="Script" path="res://Scripts/Menus/CharacterPreview.gd" id="2_34h4w"]
+[ext_resource type="Texture2D" uid="uid://ibxa85st2i70" path="res://Sprites/Player/Skins/green_neutral.png" id="2_q7vn3"]
+
+[sub_resource type="Animation" id="Animation_oxf4v"]
+resource_name = "idle"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Preview:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.2, 1.4, 1.56667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_8swua"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Preview:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_spwej"]
+resource_name = "run"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Preview:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667, 0.8, 0.933333, 1.06667, 1.2, 1.33333, 1.46667, 1.6, 1.73333, 1.86667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_4m4hb"]
+resource_name = "look_up"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Preview:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_3s46c"]
+resource_name = "crouch"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Preview:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ag1r7"]
+_data = {
+"RESET": SubResource("Animation_8swua"),
+"crouch": SubResource("Animation_3s46c"),
+"idle": SubResource("Animation_oxf4v"),
+"look_up": SubResource("Animation_4m4hb"),
+"run": SubResource("Animation_spwej")
+}
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -66,10 +156,105 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 text = "Username"
 
-[node name="UsernameEntry" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+[node name="Separator3" type="ColorRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 2)
 layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="UsernameEntry" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "CoolGuy9000"
 max_length = 32
+
+[node name="Submit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Submit"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ColorLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Color"
+
+[node name="Separator" type="ColorRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ColorSelection" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+selected = 1
+item_count = 5
+popup/item_0/text = "Blue"
+popup/item_1/text = "Green"
+popup/item_1/id = 1
+popup/item_2/text = "Purple"
+popup/item_2/id = 2
+popup/item_3/text = "Red"
+popup/item_3/id = 3
+popup/item_4/text = "Yellow"
+popup/item_4/id = 4
+
+[node name="EmotionLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Face"
+
+[node name="Separator2" type="ColorRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="EmotionSelection" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+selected = 2
+item_count = 5
+popup/item_0/text = "Happy"
+popup/item_1/text = "Meh"
+popup/item_1/id = 1
+popup/item_2/text = "Neutral"
+popup/item_2/id = 2
+popup/item_3/text = "Pissed"
+popup/item_3/id = 3
+popup/item_4/text = "Sad"
+popup/item_4/id = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(136, 136)
+layout_mode = 2
+script = ExtResource("2_34h4w")
+
+[node name="Preview" type="Sprite2D" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel"]
+position = Vector2(4, 3)
+scale = Vector2(8, 8)
+texture = ExtResource("2_q7vn3")
+centered = false
+hframes = 8
+vframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel"]
+libraries = {
+"": SubResource("AnimationLibrary_ag1r7")
+}
+
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
 
 [node name="MapLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
@@ -115,6 +300,10 @@ max_value = 8.0
 value = 8.0
 editable = false
 
+[node name="Spacer4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
 [node name="PlayerList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -145,5 +334,9 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Start Game"
 
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/UsernameEntry" to="." method="_on_username_entry_text_changed"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2/UsernameEntry" to="." method="_on_username_entry_text_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2/Submit" to="." method="_on_username_submit_pressed"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/ColorSelection" to="." method="skinChanged"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/EmotionSelection" to="." method="skinChanged"]
+[connection signal="animation_finished" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel/AnimationPlayer" to="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel" method="_on_animation_player_animation_finished"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Begin" to="." method="_on_begin_pressed"]

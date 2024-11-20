@@ -64,10 +64,10 @@ static var skins: Array[Texture] = [
 	preload("res://Sprites/Player/Skins/green_pissed.png"),
 	preload("res://Sprites/Player/Skins/green_sad.png"),
 	preload("res://Sprites/Player/Skins/purple_happy.png"),
-	preload("res://Sprites/Player/Skins/purple_sad.png"),
+	preload("res://Sprites/Player/Skins/purple_meh.png"),
 	preload("res://Sprites/Player/Skins/purple_neutral.png"),
 	preload("res://Sprites/Player/Skins/purple_pissed.png"),
-	preload("res://Sprites/Player/Skins/purple_meh.png"),
+	preload("res://Sprites/Player/Skins/purple_sad.png"),
 	preload("res://Sprites/Player/Skins/red_happy.png"),
 	preload("res://Sprites/Player/Skins/red_meh.png"),
 	preload("res://Sprites/Player/Skins/red_neutral.png"),
@@ -78,7 +78,6 @@ static var skins: Array[Texture] = [
 	preload("res://Sprites/Player/Skins/yellow_neutral.png"),
 	preload("res://Sprites/Player/Skins/yellow_pissed.png"),
 	preload("res://Sprites/Player/Skins/yellow_sad.png")
-	
 ]
 static var players: Array[Player]
 
@@ -403,6 +402,12 @@ func _ready() -> void:
 	# This should probably sync with server, but idk how. - Jay
 	players.append(self)
 	player_id = players.size()
+	# Randomize skin
+	if(rand_skin):
+		sprite.texture = skins[randi() % skins.size()]
+	else:
+		var data: PlayerData = get_node("/root/Root/MultiplayerManager/%s" % name)
+		sprite.texture = skins[(data.color * 5) + data.emotion]
 	if (!is_multiplayer_authority()): return
 	if (singleplayerTesting): 
 		print("Singleplayer testing")
@@ -413,10 +418,6 @@ func _ready() -> void:
 	rpc("playAnimation", "idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)
-	# Randomize skin
-	if(rand_skin):
-		sprite.texture = skins[randi() % skins.size()]
-	
 
 func _on_mouse_entered() -> void:
 	if(_equipped_item != null):

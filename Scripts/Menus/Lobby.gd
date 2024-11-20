@@ -5,7 +5,10 @@ class_name Lobby extends Control
 @onready var nameplateScene: PackedScene = preload("res://Scenes/Menus/MenuNameplate.tscn")
 @onready var mapSelection: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/MapSelection
 @onready var playerCap: SpinBox = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/SpinBox
-@onready var usernameEntry: LineEdit = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/UsernameEntry
+@onready var usernameEntry: LineEdit = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2/UsernameEntry
+@onready var colorPick: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/ColorSelection
+@onready var emotionPick: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/EmotionSelection
+@onready var skinDisplay: Sprite2D = $MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel/Preview
 
 @export var bufferTime: float = 0.1
 @export var timeoutLength: float = 10
@@ -22,6 +25,9 @@ func _ready() -> void:
 		playerCap.editable = true
 		playerCap.value_changed.connect(_on_spin_box_value_changed)
 		$MarginContainer/VBoxContainer/Begin.show()
+	colorPick.selected = data.color
+	emotionPick.selected = data.emotion
+	skinChanged(0)
 	usernameEntry.text = data.username
 	multiplayerManager.playerListChanged.connect(updatePlayerList)
 	updatePlayerList()
@@ -46,8 +52,11 @@ func _on_begin_pressed() -> void:
 			multiplayerManager.rpc("loadMap", "testmap")
 
 func _on_username_entry_text_changed(new_text: String) -> void:
-	data.username = new_text
-	multiplayerManager.call_deferred("rpc", "updatePlayerList")
+	_on_username_submit_pressed()
+
+func _on_username_submit_pressed() -> void:
+	data.username = usernameEntry.text
+	multiplayerManager.rpc("updatePlayerList")
 
 func _on_map_selection_item_selected(index: int) -> void:
 	rpc("updateGameSettings", index, playerCap.value)
@@ -63,3 +72,10 @@ func _on_spin_box_value_changed(value: int) -> void:
 func updateGameSettings(map: int, cap: int) -> void:
 	mapSelection.selected = map
 	playerCap.value = cap
+
+func skinChanged(_index: int) -> void:
+	data.color = colorPick.selected
+	data.emotion = emotionPick.selected
+	var image: String = colorPick.get_item_text(colorPick.selected).to_lower() + "_" + emotionPick.get_item_text(emotionPick.selected).to_lower() + ".png"
+	skinDisplay.texture = load("res://Sprites/Player/Skins/%s" % image)
+	

@@ -79,7 +79,6 @@ func loadMap(mapID: String) -> void:
 	map.data = data
 	map.multiplayerManager = self
 	$/root/Root.add_child(map)
-	var pauseMenu: PauseMenu = load("res://Scenes/Menus/PauseMenu.tscn").instantiate()
 	$/root/Root/Lobby.queue_free()
 	if (data.uuid == 1):
 		while true:

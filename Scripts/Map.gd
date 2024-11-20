@@ -23,4 +23,5 @@ func _ready() -> void:
 func spawnPlayer(authority: int) -> void:
 	var player: Player = playerScene.instantiate()
 	player.name = str(authority)
+	var playerData: PlayerData = multiplayerManager.get_node(str(authority))
 	$Players.add_child(player)

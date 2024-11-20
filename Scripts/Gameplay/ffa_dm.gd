@@ -36,5 +36,9 @@ func _on_timer_timeout() -> void:
 		winDisplay.text = "WINNER: P%d" % [winning.player_id]
 	winDisplay.visible = true
 	await get_tree().create_timer(5).timeout
-	# TODO: GO TO LOBBY
-	MultiplayerManager.instance.leaveServer()
+	
+	var lobby: Lobby = load("res://Scenes/Menus/Lobby.tscn").instantiate()
+	lobby.isAdmin = MultiplayerManager.instance.hosting
+	lobby.data = MultiplayerManager.instance.data
+	$/root/Root.add_child(lobby)
+	$/root/Root/Map.queue_free()
