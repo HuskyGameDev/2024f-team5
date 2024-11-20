@@ -52,6 +52,34 @@ static var sfx: Dictionary = {
 	"land" : preload("res://SFX/Itch/land.wav"),
 	"run" : preload("res://SFX/Itch/run.wav")
 }
+static var skins: Array[Texture] = [
+	preload("res://Sprites/Player/Skins/blue_happy.png"),
+	preload("res://Sprites/Player/Skins/blue_meh.png"),
+	preload("res://Sprites/Player/Skins/blue_neutral.png"),
+	preload("res://Sprites/Player/Skins/blue_pissed.png"),
+	preload("res://Sprites/Player/Skins/blue_sad.png"),
+	preload("res://Sprites/Player/Skins/green_happy.png"),
+	preload("res://Sprites/Player/Skins/green_meh.png"),
+	preload("res://Sprites/Player/Skins/green_neutral.png"),
+	preload("res://Sprites/Player/Skins/green_pissed.png"),
+	preload("res://Sprites/Player/Skins/green_sad.png"),
+	preload("res://Sprites/Player/Skins/purple_happy.png"),
+	preload("res://Sprites/Player/Skins/purple_sad.png"),
+	preload("res://Sprites/Player/Skins/purple_neutral.png"),
+	preload("res://Sprites/Player/Skins/purple_pissed.png"),
+	preload("res://Sprites/Player/Skins/purple_meh.png"),
+	preload("res://Sprites/Player/Skins/red_happy.png"),
+	preload("res://Sprites/Player/Skins/red_meh.png"),
+	preload("res://Sprites/Player/Skins/red_neutral.png"),
+	preload("res://Sprites/Player/Skins/red_pissed.png"),
+	preload("res://Sprites/Player/Skins/red_sad.png"),
+	preload("res://Sprites/Player/Skins/yellow_happy.png"),
+	preload("res://Sprites/Player/Skins/yellow_meh.png"),
+	preload("res://Sprites/Player/Skins/yellow_neutral.png"),
+	preload("res://Sprites/Player/Skins/yellow_pissed.png"),
+	preload("res://Sprites/Player/Skins/yellow_sad.png")
+	
+]
 static var players: Array[Player]
 
 # Exported class variables
@@ -67,6 +95,7 @@ static var players: Array[Player]
 
 # EXPERIMENTAL VARIABLES. USE TO TEST FOR NEW CHANGES
 @export var impulsive_walljumps: bool = false
+@export var rand_skin: bool = true
 
 # Child node references
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -384,6 +413,9 @@ func _ready() -> void:
 	rpc("playAnimation", "idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)
+	# Randomize skin
+	if(rand_skin):
+		sprite.texture = skins[randi() % skins.size()]
 	
 
 func _on_mouse_entered() -> void:

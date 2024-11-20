@@ -43,13 +43,15 @@ func _process(delta: float) -> void:
 	var dist: float = position.distance_to(goal)
 	position = position.move_toward(goal, dist * delta / smoothing)
 	# ZOOM
-	if(!dynamic_zoom): return
+	if(dynamic_zoom): _dynamic_zoom()
+	
+
+func _dynamic_zoom() -> void:
 	var stretch: float = position.distance_to(pois[0].position)
 	if(stretch > dist_thresh):
 		var newZoom : float = max_zoom - (stretch - dist_thresh) * zoom_slope
 		newZoom = clamp(newZoom, min_zoom, max_zoom)
 		zoom = Vector2(newZoom, newZoom)
-	
 
 func _avg_between_pois() -> Vector2:
 	var sum: Vector2 = Vector2(0, 0)
