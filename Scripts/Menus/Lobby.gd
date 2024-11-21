@@ -18,6 +18,7 @@ class_name Lobby extends Control
 var data: PlayerData
 var isAdmin: bool = false
 var password: String
+var ip_address: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,11 +32,32 @@ func _ready() -> void:
 		timelimitSelection.editable = true
 		timelimitSelection.value_changed.connect(_on_time_limit_selection_value_changed)
 		$MarginContainer/VBoxContainer/Begin.show()
+		$IP.show()
+		$CopyIP.show()
+		
+		if OS.has_feature("windows"):
+			if OS.has_environment("COMPUTERNAME"):
+				ip_address =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+		elif OS.has_feature("x11"):
+			if OS.has_environment("HOSTNAME"):
+				ip_address =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+		elif OS.has_feature("OSX"):
+			if OS.has_environment("HOSTNAME"):
+				ip_address =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+		for adr: String in IP.get_local_addresses():
+			if (adr[3] == '.' && adr.substr(0, 3) != "127"):
+				ip_address = adr
+		$IP.text = "IP: %s" % ip_address
 	colorPick.selected = data.color
 	emotionPick.selected = data.emotion
 	skinChanged(0)
 	usernameEntry.text = data.username
 	multiplayerManager.playerListChanged.connect(updatePlayerList)
+	timelimitSelection.value = multiplayerManager.roundLength
+	match (multiplayerManager.mapSelection):
+		"houghton": mapSelection.selected = 0
+		"Map1": mapSelection.selected = 1
+		"testmap": mapSelection.selected = 2
 	updatePlayerList()
 
 func updatePlayerList() -> void:
@@ -95,3 +117,6 @@ func _on_time_limit_selection_value_changed(value: int) -> void:
 #TODO eventually maybe
 func _on_gamemode_selection_item_selected(index: int) -> void:
 	pass # Replace with function body.
+
+func _on_copy_ip_pressed() -> void:
+	DisplayServer.clipboard_set(ip_address)
