@@ -15,10 +15,10 @@ extends RigidBody2D
 @export var timeout: float = 3
 @onready var timer: Timer = $Timer
 var init_pos: Vector2
-var shot_by: Player
+var shot_by: int
 
 func _on_body_entered(body: Node) -> void:
-	if (delete_on_collide && body != shot_by):
+	if (delete_on_collide):
 		queue_free()
 
 func _ready() -> void:
