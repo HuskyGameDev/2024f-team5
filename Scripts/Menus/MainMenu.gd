@@ -6,6 +6,7 @@ class_name MainMenu extends Control
 
 func _ready() -> void:
 	if (get_node_or_null("/root/FPSCounter") == null): $/root.call_deferred("add_child", load("res://Scenes/UI/FPSCounter.tscn").instantiate())
+	if (get_node_or_null("/root/PauseMenu") == null): $/root.call_deferred("add_child", load("res://Scenes/Menus/PauseMenu.tscn").instantiate())
 	usernameEntry.text = "Shorty" + str(randi_range(99,9999)).pad_zeros(4)
 	backPressed()
 
@@ -38,8 +39,9 @@ func _on_join_menu_pressed() -> void:
 	$Join.show()
 
 func _on_settings_pressed() -> void:
-	$Main.hide()
-	$Settings.show()
+	#$Main.hide()
+	$/root/PauseMenu.show()
+	#$Settings.show()
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

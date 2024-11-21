@@ -38,9 +38,9 @@ func _ready() -> void:
 	lobby.data = data
 	lobby.isAdmin = isAdmin
 	$/root/Root.add_child(lobby)
-	var pauseMenu: PauseMenu = pauseMenuScene.instantiate()
-	pauseMenu.multiplayerManager = multiplayerManager
-	$/root/Root.add_child(pauseMenu)
+	#var pauseMenu: PauseMenu = pauseMenuScene.instantiate()
+	#pauseMenu.multiplayerManager = multiplayerManager
+	#$/root/Root.add_child(pauseMenu)
 	queue_free()
 
 func timeout() -> void:

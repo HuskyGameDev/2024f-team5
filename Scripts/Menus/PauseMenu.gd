@@ -4,17 +4,18 @@ class_name PauseMenu extends CanvasLayer
 @onready var settingsMenu: VBoxContainer = $Panel/Settings
 @onready var fpsCounter: FPSCounter = $/root/FPSCounter
 
-var multiplayerManager: MultiplayerManager
+var onMM: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
+	setMainMenu(onMM)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("escape")):
 		visible = !visible
-		_on_back_pressed()
+		if (!onMM): _on_back_pressed()
 
 # ---- Pause Menu ---- #
 func _on_resume_pressed() -> void:
@@ -25,16 +26,28 @@ func _on_settings_pressed() -> void:
 	settingsMenu.show()
 
 func _on_disconnect_pressed() -> void:
-	multiplayerManager.leaveServer()
+	MultiplayerManager.instance.leaveServer()
+	hide()
 
 func _on_desktop_pressed() -> void:
 	get_tree().quit()
 
+func setMainMenu(on: bool) -> void:
+	onMM = on
+	if (on):
+		pauseMenu.hide()
+		settingsMenu.show()
+	else:
+		pauseMenu.show()
+		settingsMenu.hide()
 
 # ---- Settings Menu ---- #
 func _on_back_pressed() -> void:
-	settingsMenu.hide()
-	pauseMenu.show()
+	if (onMM):
+		hide()
+	else:
+		settingsMenu.hide()
+		pauseMenu.show()
 
 # -- Video -- #
 func _on_window_mode_item_selected(index: int) -> void:

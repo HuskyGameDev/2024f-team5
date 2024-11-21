@@ -37,13 +37,13 @@ func _ready() -> void:
 		
 		if OS.has_feature("windows"):
 			if OS.has_environment("COMPUTERNAME"):
-				ip_address =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+				ip_address =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")), IP.TYPE_IPV4)
 		elif OS.has_feature("x11"):
 			if OS.has_environment("HOSTNAME"):
-				ip_address =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+				ip_address =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")), IP.TYPE_IPV4)
 		elif OS.has_feature("OSX"):
 			if OS.has_environment("HOSTNAME"):
-				ip_address =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+				ip_address =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")), IP.TYPE_IPV4)
 		for adr: String in IP.get_local_addresses():
 			if (adr[3] == '.' && adr.substr(0, 3) != "127"):
 				ip_address = adr
@@ -60,6 +60,7 @@ func _ready() -> void:
 		"testmap": mapSelection.selected = 2
 		"Map2": mapSelection.selected = 3
 	updatePlayerList()
+	$/root/PauseMenu.setMainMenu(false)
 
 func updatePlayerList() -> void:
 	for nameplate: MenuNameplate in playerList.get_children():
@@ -118,7 +119,7 @@ func _on_time_limit_selection_value_changed(value: int) -> void:
 	rpc("updateGameSettings", mapSelection.selected, multiplayerManager.playerCap, value)
 
 #TODO eventually maybe
-func _on_gamemode_selection_item_selected(index: int) -> void:
+func _on_gamemode_selection_item_selected(_index: int) -> void:
 	pass # Replace with function body.
 
 func _on_copy_ip_pressed() -> void:

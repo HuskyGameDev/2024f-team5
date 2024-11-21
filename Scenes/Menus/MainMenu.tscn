@@ -193,15 +193,14 @@ layout_mode = 2
 text = "Join"
 metadata/_edit_use_anchors_ = true
 
+[node name="Settings" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+metadata/_edit_use_anchors_ = true
+
 [node name="HowToPlay" type="Button" parent="Main/VBoxContainer"]
 layout_mode = 2
 text = "How To Play"
-metadata/_edit_use_anchors_ = true
-
-[node name="Settings" type="Button" parent="Main/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Settings"
 metadata/_edit_use_anchors_ = true
 
 [node name="Quit" type="Button" parent="Main/VBoxContainer"]
@@ -637,8 +636,8 @@ bus = &"Music"
 
 [connection signal="pressed" from="Main/VBoxContainer/Host" to="." method="_on_host_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Join" to="." method="_on_join_menu_pressed"]
-[connection signal="pressed" from="Main/VBoxContainer/HowToPlay" to="." method="_on_how_to_play_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/HowToPlay" to="." method="_on_how_to_play_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Host/GridContainer/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Host/GridContainer/Host" to="." method="_on_host_pressed"]

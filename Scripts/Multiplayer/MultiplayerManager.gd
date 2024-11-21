@@ -79,13 +79,13 @@ func chatAnnouncement(_msg: String) -> void:
 @rpc("any_peer", "call_local")
 func loadMap(mapID: String, roundLen: int) -> void:
 	inLobby = false
+	roundLength = roundLen
+	mapSelection = mapID
 	var map: Map = load("res://Scenes/Maps/%s.tscn" % mapID).instantiate()
 	map.soloTest = false
 	map.data = data
 	map.multiplayerManager = self
 	map.roundLength = roundLength
-	mapSelection = mapID
-	roundLength = roundLen
 	$/root/Root.add_child(map)
 	$/root/Root/Lobby.queue_free()
 	if (data.uuid == 1):
@@ -143,6 +143,8 @@ func addPlayer(id: int) -> void:
 	player.name = str(id)
 	add_child(player)
 	if (id == 1):
+		player.color = randi_range(0, 4) as PlayerData.PlayerColor
+		player.emotion = randi_range(0, 4) as PlayerData.Emotion
 		player.isAdmin = true
 		return
 	player.isAdmin = false
@@ -160,6 +162,7 @@ func serverClosed() -> void:
 	$/root/Root/Menu.notify("Server closed")
 
 func leaveServer() -> void:
+	$/root/PauseMenu.setMainMenu(true)
 	multiplayer.multiplayer_peer = null
 	get_parent().name = "OldRoot"
 	var root: Node = load("res://Scenes/Root.tscn").instantiate()
