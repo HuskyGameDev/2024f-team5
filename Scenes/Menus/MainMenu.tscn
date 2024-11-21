@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8c2ascpmxw4i"]
+[gd_scene load_steps=14 format=3 uid="uid://b8c2ascpmxw4i"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/MainMenu.gd" id="1_tmlow"]
 [ext_resource type="Texture2D" uid="uid://d0vjjtbcxeahw" path="res://Sprites/UI/shortyshooterslogo.png" id="2_77jpt"]
@@ -9,6 +9,22 @@
 [ext_resource type="Texture2D" uid="uid://ibxa85st2i70" path="res://Sprites/Player/Skins/green_neutral.png" id="5_gbhil"]
 [ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="6_2067k"]
 [ext_resource type="Texture2D" uid="uid://bkql22o70cw1m" path="res://Sprites/Player/Skins/red_pissed.png" id="7_t51p2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gqrh"]
+atlas = ExtResource("7_t51p2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhp4s"]
+atlas = ExtResource("3_reilc")
+region = Rect2(32.0368, 0, 16.1859, 16.1869)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_513v5"]
+atlas = ExtResource("4_3akun")
+region = Rect2(0, 0, 16.6763, 16.1831)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xm3tq"]
+atlas = ExtResource("5_gbhil")
+region = Rect2(0, 0, 16, 16)
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -33,46 +49,52 @@ grow_vertical = 2
 texture = ExtResource("2_nsr7i")
 stretch_mode = 4
 
-[node name="Sprite2D3" type="Sprite2D" parent="Visuals"]
-position = Vector2(485, 572)
-rotation = -0.0132972
-scale = Vector2(14, 14)
-texture = ExtResource("3_reilc")
-region_enabled = true
-region_rect = Rect2(32, 0, 16, 16)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Visuals"]
-position = Vector2(322, 584)
-rotation = 0.187213
-scale = Vector2(14, 14)
-texture = ExtResource("4_3akun")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
-
-[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
-position = Vector2(176, 580)
-rotation = -0.0713434
-scale = Vector2(14, 14)
-texture = ExtResource("5_gbhil")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
-
-[node name="Sprite2D5" type="Sprite2D" parent="Visuals"]
-position = Vector2(1102.62, 542.443)
-rotation = 0.529324
-scale = Vector2(5.34829, 5.34829)
+[node name="TextureRect5" type="TextureRect" parent="Visuals"]
+layout_mode = 0
+offset_left = 1058.0
+offset_top = 277.0
+offset_right = 1516.0
+offset_bottom = 506.0
+rotation = 0.95969
+scale = Vector2(0.901669, 0.901669)
 texture = ExtResource("6_2067k")
+expand_mode = 3
 flip_h = true
-region_rect = Rect2(0, 0, 16, 16)
 
-[node name="Sprite2D4" type="Sprite2D" parent="Visuals"]
-position = Vector2(1189, 632)
-rotation = -0.0132972
-scale = Vector2(5.67363, 5.67363)
-texture = ExtResource("7_t51p2")
+[node name="TextureRect4" type="TextureRect" parent="Visuals"]
+layout_mode = 0
+offset_left = 1103.0
+offset_top = 571.0
+offset_right = 1332.0
+offset_bottom = 800.0
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_6gqrh")
 flip_h = true
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
+
+[node name="TextureRect3" type="TextureRect" parent="Visuals"]
+layout_mode = 0
+offset_left = 375.0
+offset_top = 455.0
+offset_right = 604.0
+offset_bottom = 684.0
+texture = SubResource("AtlasTexture_dhp4s")
+
+[node name="TextureRect2" type="TextureRect" parent="Visuals"]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 453.0
+offset_right = 441.0
+offset_bottom = 682.0
+rotation = 0.113822
+texture = SubResource("AtlasTexture_513v5")
+
+[node name="TextureRect" type="TextureRect" parent="Visuals"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 463.0
+offset_right = 292.0
+offset_bottom = 692.0
+texture = SubResource("AtlasTexture_xm3tq")
 
 [node name="Main" type="Control" parent="."]
 visible = false
@@ -322,6 +344,7 @@ layout_mode = 2
 text = "Join Server"
 
 [node name="HowToPlay" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
