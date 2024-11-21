@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 [gd_scene load_steps=12 format=4 uid="uid://c82nlr0hcpcjk"]
-=======
 [gd_scene load_steps=12 format=4 uid="uid://bifs70flvlvle"]
->>>>>>> Stashed changes
-=======
 [gd_scene load_steps=14 format=4 uid="uid://c82nlr0hcpcjk"]
->>>>>>> Stashed changes
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_1wljc"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_flm1b"]
