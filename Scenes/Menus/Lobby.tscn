@@ -388,6 +388,24 @@ text = "Start Game"
 wait_time = 0.5
 autostart = true
 
+[node name="IP" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 201.0
+offset_bottom = 31.0
+text = "IP: "
+
+[node name="CopyIP" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 5.0
+offset_top = 26.0
+offset_right = 52.0
+offset_bottom = 57.0
+text = "Copy"
+
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2/UsernameEntry" to="." method="_on_username_entry_text_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer2/Submit" to="." method="_on_username_submit_pressed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/ColorSelection" to="." method="skinChanged"]
@@ -395,3 +413,4 @@ autostart = true
 [connection signal="animation_finished" from="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel/AnimationPlayer" to="MarginContainer/VBoxContainer/HBoxContainer/Settings/ScrollContainer/VBoxContainer/HBoxContainer/Panel" method="_on_animation_player_animation_finished"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Begin" to="." method="_on_begin_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="CopyIP" to="." method="_on_copy_ip_pressed"]

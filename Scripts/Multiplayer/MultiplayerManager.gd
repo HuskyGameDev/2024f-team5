@@ -12,6 +12,8 @@ var authenticated: bool = false
 var inLobby: bool = true
 var readyPlayers: Dictionary
 var playerCap: int = 8
+var mapSelection: String = "testmap"
+var roundLength: int = 3
 
 # Static reference added for other scripts to access. - Jay
 static var instance: MultiplayerManager
@@ -75,13 +77,15 @@ func chatAnnouncement(_msg: String) -> void:
 # loaded, each client will send a ready message to the host. Once all clients have given the signal,
 # the host will begin the game. 
 @rpc("any_peer", "call_local")
-func loadMap(mapID: String, roundLength: int) -> void:
+func loadMap(mapID: String, roundLen: int) -> void:
 	inLobby = false
 	var map: Map = load("res://Scenes/Maps/%s.tscn" % mapID).instantiate()
 	map.soloTest = false
 	map.data = data
 	map.multiplayerManager = self
 	map.roundLength = roundLength
+	mapSelection = mapID
+	roundLength = roundLen
 	$/root/Root.add_child(map)
 	$/root/Root/Lobby.queue_free()
 	if (data.uuid == 1):

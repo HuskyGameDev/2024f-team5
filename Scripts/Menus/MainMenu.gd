@@ -6,7 +6,7 @@ class_name MainMenu extends Control
 
 func _ready() -> void:
 	if (get_node_or_null("/root/FPSCounter") == null): $/root.call_deferred("add_child", load("res://Scenes/UI/FPSCounter.tscn").instantiate())
-	usernameEntry.text = "DefaultNamePeasant" + str(randi())
+	usernameEntry.text = "Shorty" + str(randi_range(99,9999)).pad_zeros(4)
 	backPressed()
 
 func _on_host_pressed() -> void:

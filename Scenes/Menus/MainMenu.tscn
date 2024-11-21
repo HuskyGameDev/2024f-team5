@@ -57,6 +57,7 @@ offset_right = 35.0
 offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 15
 
 [node name="Host" type="Button" parent="Main/VBoxContainer"]
 layout_mode = 2
@@ -69,6 +70,7 @@ text = "Join"
 metadata/_edit_use_anchors_ = true
 
 [node name="Settings" type="Button" parent="Main/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Settings"
 metadata/_edit_use_anchors_ = true
