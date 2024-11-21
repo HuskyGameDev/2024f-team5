@@ -58,6 +58,7 @@ func _ready() -> void:
 		"houghton": mapSelection.selected = 0
 		"Map1": mapSelection.selected = 1
 		"testmap": mapSelection.selected = 2
+		"Map2": mapSelection.selected = 3
 	updatePlayerList()
 
 func updatePlayerList() -> void:
@@ -77,6 +78,8 @@ func _on_begin_pressed() -> void:
 			multiplayerManager.rpc("loadMap", "Map1", timelimitSelection.value)
 		2:
 			multiplayerManager.rpc("loadMap", "testmap", timelimitSelection.value)
+		3:
+			multiplayerManager.rpc("loadMap", "Map2", timelimitSelection.value)
 
 func _on_username_entry_text_changed(new_text: String) -> void:
 	data.username = new_text
