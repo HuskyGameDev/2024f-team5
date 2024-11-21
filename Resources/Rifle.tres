@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c2wevva10bq6c" path="res://Scenes/Objects/bullet.tscn" id="1_tcxx2"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="2_5wgs8"]
 [ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="2_gma50"]
-[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="3_gpco2"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Scenes/Objects/gun_smoke.tscn" id="3_gpco2"]
 [ext_resource type="Texture2D" uid="uid://bpua2om8qsf1m" path="res://Sprites/Weapons/LaserRifle.png" id="4_j03j0"]
 
 [resource]

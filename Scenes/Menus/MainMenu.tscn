@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Menus/MainMenu.gd" id="1_tmlow"]
 [ext_resource type="Texture2D" uid="uid://d0vjjtbcxeahw" path="res://Sprites/UI/shortyshooterslogo.png" id="2_77jpt"]
-[ext_resource type="Texture2D" uid="uid://bf1lhm2wjl5c7" path="res://Demo/Sprites/Borrowed Assets/B1013-5.png" id="2_nsr7i"]
+[ext_resource type="Texture2D" uid="uid://bf1lhm2wjl5c7" path="res://Sprites/Borrowed Assets/B1013-5.png" id="2_nsr7i"]
 [ext_resource type="AudioStream" uid="uid://cga5uc2f6jiup" path="res://SFX/Music/Slompin.wav" id="3_2lkjt"]
 [ext_resource type="Texture2D" uid="uid://byi30djr8uuwm" path="res://Sprites/Player/Skins/yellow_happy.png" id="3_reilc"]
 [ext_resource type="Texture2D" uid="uid://0rxbo2f4g1iq" path="res://Sprites/Player/Skins/blue_sad.png" id="4_3akun"]
@@ -40,21 +40,24 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -27.0
-offset_right = 215.0
-offset_bottom = 46.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_nsr7i")
-stretch_mode = 4
+stretch_mode = 6
 
 [node name="TextureRect5" type="TextureRect" parent="Visuals"]
-layout_mode = 0
-offset_left = 1058.0
-offset_top = 277.0
-offset_right = 1516.0
-offset_bottom = 506.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -179.0
+offset_top = -437.0
+offset_right = 279.0
+offset_bottom = -208.0
+grow_horizontal = 0
+grow_vertical = 0
 rotation = 0.95969
 scale = Vector2(0.901669, 0.901669)
 texture = ExtResource("6_2067k")
@@ -62,42 +65,62 @@ expand_mode = 3
 flip_h = true
 
 [node name="TextureRect4" type="TextureRect" parent="Visuals"]
-layout_mode = 0
-offset_left = 1103.0
-offset_top = 571.0
-offset_right = 1332.0
-offset_bottom = 800.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -145.0
+offset_top = -118.0
+offset_right = 84.0
+offset_bottom = 111.0
+grow_horizontal = 0
+grow_vertical = 0
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_6gqrh")
 flip_h = true
 
 [node name="TextureRect3" type="TextureRect" parent="Visuals"]
-layout_mode = 0
-offset_left = 375.0
-offset_top = 455.0
-offset_right = 604.0
-offset_bottom = 684.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 297.0
+offset_top = -227.0
+offset_right = 526.0
+offset_bottom = 2.0
+grow_vertical = 0
+rotation = 0.053613
 texture = SubResource("AtlasTexture_dhp4s")
 
 [node name="TextureRect2" type="TextureRect" parent="Visuals"]
-layout_mode = 0
-offset_left = 212.0
-offset_top = 453.0
-offset_right = 441.0
-offset_bottom = 682.0
-rotation = 0.113822
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 154.0
+offset_top = -235.0
+offset_right = 383.0
+offset_bottom = -6.0
+grow_vertical = 0
+rotation = 0.167435
 texture = SubResource("AtlasTexture_513v5")
 
 [node name="TextureRect" type="TextureRect" parent="Visuals"]
-layout_mode = 0
-offset_left = 63.0
-offset_top = 463.0
-offset_right = 292.0
-offset_bottom = 692.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -232.0
+offset_right = 205.0
+offset_bottom = -3.0
+grow_vertical = 0
+rotation = 0.053613
 texture = SubResource("AtlasTexture_xm3tq")
 
 [node name="Main" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -121,24 +144,26 @@ metadata/_edit_use_anchors_ = true
 [node name="TextureRect2" type="TextureRect" parent="Main"]
 modulate = Color(0.117647, 0.117647, 0.117647, 0.741176)
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 292.0
-offset_top = 25.0
-offset_right = -604.0
-offset_bottom = 153.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.0
+offset_top = 17.0
+offset_right = 2.0
+offset_bottom = 145.0
 grow_horizontal = 2
 scale = Vector2(2, 2)
 texture = ExtResource("2_77jpt")
 
 [node name="TextureRect" type="TextureRect" parent="Main"]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 297.0
-offset_top = 14.0
-offset_right = -599.0
-offset_bottom = 142.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 9.0
+offset_right = 6.0
+offset_bottom = 137.0
 grow_horizontal = 2
 scale = Vector2(2, 2)
 texture = ExtResource("2_77jpt")

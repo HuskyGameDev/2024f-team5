@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b3gjh2glox6sj" path="res://Sprites/Weapons/geIcon.png" id="2_k0l5t"]
 [ext_resource type="AudioStream" uid="uid://dwdgmwcm43l0b" path="res://SFX/HGD Sound Library/Gun_Fire_GUN_Hunt.wav" id="2_vb22l"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="3_olo8t"]
-[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="4_wynm6"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Scenes/Objects/gun_smoke.tscn" id="4_wynm6"]
 [ext_resource type="Texture2D" uid="uid://dyvxgllp7cwej" path="res://Sprites/Weapons/goldeneagle.png" id="5_1kwmr"]
 
 [resource]

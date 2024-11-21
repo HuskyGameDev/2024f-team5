@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://12goi6amxmwm" path="res://Sprites/Weapons/GlockIcon.png" id="2_fwhjq"]
 [ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="3_4iyty"]
 [ext_resource type="Script" path="res://Resources/Gun_Resource.gd" id="3_hhpsr"]
-[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Demo/scenes/gun_smoke.tscn" id="4_bugjl"]
+[ext_resource type="PackedScene" uid="uid://da1ybg1f4sjyf" path="res://Scenes/Objects/gun_smoke.tscn" id="4_bugjl"]
 [ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="5_vta6t"]
 
 [resource]

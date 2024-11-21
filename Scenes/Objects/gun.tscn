@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="3_fqaim"]
 [ext_resource type="Texture2D" uid="uid://b112vd0jxqdgo" path="res://Sprites/UI/ADS_Line.png" id="4_0wfsj"]
 [ext_resource type="AudioStream" uid="uid://c77jl5v3qqf3x" path="res://SFX/HGD Sound Library/Damage Hit 1_IMP_Calvert.wav" id="6_fypto"]
-[ext_resource type="Texture2D" uid="uid://dtesq723ptdtt" path="res://crosshair1.png" id="6_re3sp"]
+[ext_resource type="Texture2D" uid="uid://rvbo0ndowa8e" path="res://crosshair1.png" id="6_re3sp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vpagu"]
 size = Vector2(46, 30)

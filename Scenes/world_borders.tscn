@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ramqgxs80twi"]
 
-[ext_resource type="Script" path="res://Demo/scripts/oob_trigger.gd" id="1_hg3br"]
+[ext_resource type="Script" path="res://Scripts/Gameplay/oob_trigger.gd" id="1_hg3br"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jiftw"]
 

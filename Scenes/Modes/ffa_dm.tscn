@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b4mm1d4vx214g"]
 
-[ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Demo/Fonts/HomeVideo-BLG6G.ttf" id="1_xm3sq"]
+[ext_resource type="FontFile" uid="uid://bigcuq3b6eifj" path="res://Fonts/HomeVideo-BLG6G.ttf" id="1_xm3sq"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/ffa_dm.gd" id="2_sq7h1"]
 
 [node name="ffa_dm" type="Control"]

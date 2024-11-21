@@ -1,0 +1,120 @@
+[gd_scene load_steps=17 format=3 uid="uid://bnowe750hxon4"]
+
+[ext_resource type="Script" path="res://Scripts/Gameplay/oob_death.gd" id="1_3emcp"]
+[ext_resource type="Texture2D" uid="uid://brtiftwoxf6ju" path="res://Sprites/Player/OOBDeath.png" id="1_jdc2c"]
+
+[sub_resource type="Curve" id="Curve_ok8fj"]
+_data = [Vector2(0, 1), 0.0, -0.0406202, 0, 0, Vector2(0.0282132, 0.749066), 0.0, 0.0, 0, 0, Vector2(0.0704225, 0.996313), 0.0, 0.0, 0, 0, Vector2(0.128527, 0.603362), 0.0, 0.0, 0, 0, Vector2(0.205008, 0.926262), 0.0, 0.0, 0, 0, Vector2(0.260188, 0.42528), -0.0662102, -0.0662102, 0, 0, Vector2(0.339593, 0.867272), 0.0, 0.0, 0, 0, Vector2(0.445141, 0.247198), 0.0, 0.0, 0, 0, Vector2(0.57277, 0.78616), 0.0, 0.0, 0, 0, Vector2(0.713615, 0.115145), 0.0, 0.0, 0, 0, Vector2(0.813772, 0.52439), 2.35593, 2.35593, 0, 0, Vector2(0.907668, 0.148327), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.354086, 0.0, 0, 0]
+point_count = 13
+
+[sub_resource type="CurveTexture" id="CurveTexture_vb77u"]
+curve = SubResource("Curve_ok8fj")
+
+[sub_resource type="Gradient" id="Gradient_aj2o8"]
+offsets = PackedFloat32Array(0.00416667, 1)
+colors = PackedColorArray(0, 0.8, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hp3ww"]
+gradient = SubResource("Gradient_aj2o8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ax0h2"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 26.757
+initial_velocity_min = 106.1
+initial_velocity_max = 307.35
+gravity = Vector3(0, 10, 0)
+scale_max = 8.0
+color = Color(0.529707, 0.896916, 0.697135, 1)
+color_initial_ramp = SubResource("GradientTexture1D_hp3ww")
+alpha_curve = SubResource("CurveTexture_vb77u")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khj0l"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(0, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0bum"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(16, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n02f"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(32, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xevlr"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(48, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg32g"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(64, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd4ml"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(80, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3l6m"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(96, 0, 16, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jfuj"]
+atlas = ExtResource("1_jdc2c")
+region = Rect2(112, 0, 16, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iv8j2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khj0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0bum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6n02f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xevlr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg32g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xevlr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg32g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd4ml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3l6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jfuj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="OobDeath" type="Node2D"]
+script = ExtResource("1_3emcp")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_ax0h2")
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.95
+randomness = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -127)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_iv8j2")
+autoplay = "default"
+frame = 9
+frame_progress = 1.0
