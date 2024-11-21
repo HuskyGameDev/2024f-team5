@@ -1,7 +1,11 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 [gd_scene load_steps=12 format=4 uid="uid://c82nlr0hcpcjk"]
 =======
 [gd_scene load_steps=12 format=4 uid="uid://bifs70flvlvle"]
+>>>>>>> Stashed changes
+=======
+[gd_scene load_steps=14 format=4 uid="uid://c82nlr0hcpcjk"]
 >>>>>>> Stashed changes
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_1wljc"]
@@ -12,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://1mss688it0ad" path="res://Sprites/Environment/Environment_Jungle.png" id="5_huuas"]
 [ext_resource type="PackedScene" uid="uid://c0ltnigbp72g2" path="res://Scenes/Objects/gun_pickup.tscn" id="6_5cemr"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="7_m7h7g"]
+[ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://Scenes/Objects/item_spawner.tscn" id="7_wkkt5"]
+[ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="8_awtt3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
@@ -171,17 +177,29 @@ west_border = NodePath("../World Borders/West Border")
 east_border = NodePath("../World Borders/East Border")
 south_border = NodePath("../World Borders/South Border")
 
-[node name="Gun Pickup" parent="." instance=ExtResource("6_5cemr")]
-position = Vector2(-253, -134)
-
-[node name="Gun Pickup2" parent="." instance=ExtResource("6_5cemr")]
-position = Vector2(262, 95)
-
-[node name="Gun Pickup3" parent="." instance=ExtResource("6_5cemr")]
-position = Vector2(233, -133)
-
-[node name="Gun Pickup4" parent="." instance=ExtResource("6_5cemr")]
+[node name="ItemSpawner" parent="." instance=ExtResource("7_wkkt5")]
 position = Vector2(-210, 89)
+random_item = false
+gun_resource = ExtResource("8_awtt3")
+spawn_obj = ExtResource("6_5cemr")
+
+[node name="ItemSpawner2" parent="." instance=ExtResource("7_wkkt5")]
+position = Vector2(262, 89)
+random_item = false
+gun_resource = ExtResource("8_awtt3")
+spawn_obj = ExtResource("6_5cemr")
+
+[node name="ItemSpawner3" parent="." instance=ExtResource("7_wkkt5")]
+position = Vector2(233, -133)
+random_item = false
+gun_resource = ExtResource("8_awtt3")
+spawn_obj = ExtResource("6_5cemr")
+
+[node name="ItemSpawner4" parent="." instance=ExtResource("7_wkkt5")]
+position = Vector2(-253, -133)
+random_item = false
+gun_resource = ExtResource("8_awtt3")
+spawn_obj = ExtResource("6_5cemr")
 
 [node name="World Borders" parent="." instance=ExtResource("7_m7h7g")]
 position = Vector2(0, 8)

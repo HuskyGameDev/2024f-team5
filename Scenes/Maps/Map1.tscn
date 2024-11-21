@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bs5q3kmw3l5e5"]
+[gd_scene load_steps=12 format=4 uid="uid://bs5q3kmw3l5e5"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_h3p74"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_nafb3"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://b4mm1d4vx214g" path="res://Scenes/Modes/ffa_dm.tscn" id="3_36gyh"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/dynamic_camera.gd" id="4_rmoy1"]
 [ext_resource type="PackedScene" uid="uid://c0ltnigbp72g2" path="res://Scenes/Objects/gun_pickup.tscn" id="5_ml44q"]
+[ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://Scenes/Objects/item_spawner.tscn" id="6_dhslr"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="6_xttj0"]
+[ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="7_qs8gb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
@@ -101,14 +103,23 @@ west_border = NodePath("../World Borders/West Border")
 east_border = NodePath("../World Borders/East Border")
 south_border = NodePath("../World Borders/South Border")
 
-[node name="Gun Pickup" parent="." instance=ExtResource("5_ml44q")]
+[node name="ItemSpawner" parent="." instance=ExtResource("6_dhslr")]
 position = Vector2(-93, -26)
+random_item = false
+gun_resource = ExtResource("7_qs8gb")
+spawn_obj = ExtResource("5_ml44q")
 
-[node name="Gun Pickup2" parent="." instance=ExtResource("5_ml44q")]
+[node name="ItemSpawner2" parent="." instance=ExtResource("6_dhslr")]
 position = Vector2(101, -26)
+random_item = false
+gun_resource = ExtResource("7_qs8gb")
+spawn_obj = ExtResource("5_ml44q")
 
-[node name="Gun Pickup3" parent="." instance=ExtResource("5_ml44q")]
+[node name="ItemSpawner3" parent="." instance=ExtResource("6_dhslr")]
 position = Vector2(0, -78)
+random_item = false
+gun_resource = ExtResource("7_qs8gb")
+spawn_obj = ExtResource("5_ml44q")
 
 [node name="World Borders" parent="." instance=ExtResource("6_xttj0")]
 position = Vector2(0, 8)

@@ -216,6 +216,8 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	dead = true
 	# Out of bounds death animation
 	if(oob):
+		MultiplayerManager.instance.getPlayerData(get_multiplayer_authority()).score -= 1
+		DeathMatchGamemode.instance.update_board()
 		sound.stream = sfx["oob_death"]
 		sound.play()
 		var od: Node2D = oob_death.instantiate()
