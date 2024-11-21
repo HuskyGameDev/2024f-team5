@@ -110,7 +110,6 @@ func _shoot(mousepos: Vector2) -> void:
 	if(WeaponType == WeaponReferences.WeaponType.MELEE):
 		bullet.melee = true
 	
-	
 	# If melee, "projectile" will be attached to barrel, otherwise outside
 	var melee: bool = false
 	if("melee" in bullet && bullet.melee):
