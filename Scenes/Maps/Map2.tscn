@@ -1,5 +1,3 @@
-[gd_scene load_steps=12 format=4 uid="uid://c82nlr0hcpcjk"]
-[gd_scene load_steps=12 format=4 uid="uid://bifs70flvlvle"]
 [gd_scene load_steps=14 format=4 uid="uid://c82nlr0hcpcjk"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_1wljc"]

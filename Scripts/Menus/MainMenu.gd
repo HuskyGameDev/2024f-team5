@@ -48,6 +48,7 @@ func backPressed() -> void:
 	$Main.show()
 	$Host.hide()
 	$Join.hide()
+	$HowToPlay.hide()
 	$Settings.hide()
 
 func notify(msg: String) -> void:
@@ -57,8 +58,6 @@ func notify(msg: String) -> void:
 func _on_close_pressed() -> void:
 	$Notification.hide()
 
-func _on_practice_pressed() -> void:
-	pass # Replace with function body.
-
-func _on_profile_pressed() -> void:
-	pass # Replace with function body.
+func _on_how_to_play_pressed() -> void:
+	$Main.hide()
+	$HowToPlay.show()

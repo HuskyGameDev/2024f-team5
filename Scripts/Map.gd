@@ -25,7 +25,7 @@ func _ready() -> void:
 	musicPlayer = AudioStreamPlayer.new()
 	musicPlayer.bus = "Music"
 	musicPlayer.finished.connect(playRandomSong)
-	musicPlayer.volume_db = -2
+	musicPlayer.volume_db = -15
 	add_child(musicPlayer)
 	playRandomSong()
 

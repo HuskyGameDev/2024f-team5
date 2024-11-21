@@ -71,6 +71,11 @@ layout_mode = 2
 text = "Join"
 metadata/_edit_use_anchors_ = true
 
+[node name="HowToPlay" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+text = "How To Play"
+metadata/_edit_use_anchors_ = true
+
 [node name="Settings" type="Button" parent="Main/VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -241,6 +246,83 @@ text = "Back"
 layout_mode = 2
 text = "Join Server"
 
+[node name="HowToPlay" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HowToPlay"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -157.0
+offset_top = 14.0
+offset_right = 157.0
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]How To Play[/center]"
+
+[node name="ColorRect" type="ColorRect" parent="HowToPlay"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 265.0
+offset_top = 76.0
+offset_right = -265.0
+offset_bottom = 81.0
+grow_horizontal = 2
+
+[node name="Details" type="RichTextLabel" parent="HowToPlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -226.0
+offset_right = 296.0
+offset_bottom = 299.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[u][b]Controls[/b][/u]
+A/D: Horizontal Movement
+W: Look Up
+C: Crouch (Decreases recoil)
+Space: Jump / Wall Jump
+Left Click: Fire weapon
+Escape: Pause Menu
+
+[u][b]Mechanics[/b][/u]
+Wall Jumping: While pressing into a wall, you will have a brief moment where you can perform a wall jump. This is indicated by an animation where your character squishes into the wall. 
+
+Gun Recoil: When firing a gun, you will be launced. This can be forward or backward, depending on the gun. This is highly useful in maneuvering around maps. "
+
+[node name="Back" type="Button" parent="HowToPlay"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.5
+offset_top = -59.0
+offset_right = 22.5
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back"
+
 [node name="Settings" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -407,11 +489,13 @@ bus = &"Music"
 
 [connection signal="pressed" from="Main/VBoxContainer/Host" to="." method="_on_host_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Join" to="." method="_on_join_menu_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/HowToPlay" to="." method="_on_how_to_play_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Host/GridContainer/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Host/GridContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join/GridContainer/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Join/GridContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="HowToPlay/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Settings/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Notification/Panel/Close" to="." method="_on_close_pressed"]
