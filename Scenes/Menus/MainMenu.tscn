@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8c2ascpmxw4i"]
+[gd_scene load_steps=10 format=3 uid="uid://b8c2ascpmxw4i"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/MainMenu.gd" id="1_tmlow"]
 [ext_resource type="Texture2D" uid="uid://d0vjjtbcxeahw" path="res://Sprites/UI/shortyshooterslogo.png" id="2_77jpt"]
+[ext_resource type="Texture2D" uid="uid://bf1lhm2wjl5c7" path="res://Demo/Sprites/Borrowed Assets/B1013-5.png" id="2_nsr7i"]
 [ext_resource type="AudioStream" uid="uid://cga5uc2f6jiup" path="res://SFX/Music/Slompin.wav" id="3_2lkjt"]
+[ext_resource type="Texture2D" uid="uid://byi30djr8uuwm" path="res://Sprites/Player/Skins/yellow_happy.png" id="3_reilc"]
+[ext_resource type="Texture2D" uid="uid://0rxbo2f4g1iq" path="res://Sprites/Player/Skins/blue_sad.png" id="4_3akun"]
+[ext_resource type="Texture2D" uid="uid://ibxa85st2i70" path="res://Sprites/Player/Skins/green_neutral.png" id="5_gbhil"]
+[ext_resource type="Texture2D" uid="uid://wc6bbq01x7ms" path="res://Sprites/Weapons/glock2.png" id="6_2067k"]
+[ext_resource type="Texture2D" uid="uid://bkql22o70cw1m" path="res://Sprites/Player/Skins/red_pissed.png" id="7_t51p2"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -12,6 +18,61 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tmlow")
+
+[node name="Visuals" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -27.0
+offset_right = 215.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_nsr7i")
+stretch_mode = 4
+
+[node name="Sprite2D3" type="Sprite2D" parent="Visuals"]
+position = Vector2(485, 572)
+rotation = -0.0132972
+scale = Vector2(14, 14)
+texture = ExtResource("3_reilc")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Visuals"]
+position = Vector2(322, 584)
+rotation = 0.187213
+scale = Vector2(14, 14)
+texture = ExtResource("4_3akun")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+position = Vector2(176, 580)
+rotation = -0.0713434
+scale = Vector2(14, 14)
+texture = ExtResource("5_gbhil")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite2D5" type="Sprite2D" parent="Visuals"]
+position = Vector2(1102.62, 542.443)
+rotation = 0.529324
+scale = Vector2(5.34829, 5.34829)
+texture = ExtResource("6_2067k")
+flip_h = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Visuals"]
+position = Vector2(1189, 632)
+rotation = -0.0132972
+scale = Vector2(5.67363, 5.67363)
+texture = ExtResource("7_t51p2")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="Main" type="Control" parent="."]
 visible = false
@@ -34,6 +95,19 @@ theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 text = "[center][b]Shorty Shooters[/b][/center]"
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect2" type="TextureRect" parent="Main"]
+modulate = Color(0.117647, 0.117647, 0.117647, 0.741176)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 292.0
+offset_top = 25.0
+offset_right = -604.0
+offset_bottom = 153.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+texture = ExtResource("2_77jpt")
 
 [node name="TextureRect" type="TextureRect" parent="Main"]
 layout_mode = 1
@@ -279,21 +353,35 @@ offset_right = -265.0
 offset_bottom = 81.0
 grow_horizontal = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HowToPlay"]
+[node name="Panel" type="Panel" parent="HowToPlay"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -357.0
-offset_top = -228.0
-offset_right = 357.0
-offset_bottom = 251.0
+offset_left = -360.0
+offset_top = -238.0
+offset_right = 358.0
+offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Details" type="RichTextLabel" parent="HowToPlay/ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HowToPlay/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -244.0
+offset_right = 358.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Details" type="RichTextLabel" parent="HowToPlay/Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
