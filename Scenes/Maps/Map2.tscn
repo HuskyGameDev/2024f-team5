@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://c82nlr0hcpcjk"]
+[gd_scene load_steps=17 format=4 uid="uid://c82nlr0hcpcjk"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_1wljc"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_flm1b"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="7_m7h7g"]
 [ext_resource type="PackedScene" uid="uid://50ppak4kua7q" path="res://Scenes/Objects/item_spawner.tscn" id="7_wkkt5"]
 [ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="8_awtt3"]
+[ext_resource type="Resource" uid="uid://f2lwxww284lx" path="res://Resources/Rifle.tres" id="10_pl5jo"]
+[ext_resource type="Resource" uid="uid://waoe00ag7fse" path="res://Resources/Nanner.tres" id="11_3wmxb"]
+[ext_resource type="Resource" uid="uid://udj1y0gfnsw8" path="res://Resources/El_Dante.tres" id="12_7list"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
 resource_name = "ENV1"
@@ -184,13 +187,25 @@ spawn_obj = ExtResource("6_5cemr")
 [node name="ItemSpawner3" parent="." instance=ExtResource("7_wkkt5")]
 position = Vector2(233, -133)
 random_item = false
-gun_resource = ExtResource("8_awtt3")
+gun_resource = ExtResource("10_pl5jo")
 spawn_obj = ExtResource("6_5cemr")
 
 [node name="ItemSpawner4" parent="." instance=ExtResource("7_wkkt5")]
 position = Vector2(-253, -133)
 random_item = false
-gun_resource = ExtResource("8_awtt3")
+gun_resource = ExtResource("11_3wmxb")
+spawn_obj = ExtResource("6_5cemr")
+
+[node name="ItemSpawner5" parent="." instance=ExtResource("7_wkkt5")]
+position = Vector2(-383, 0)
+random_item = false
+gun_resource = ExtResource("12_7list")
+spawn_obj = ExtResource("6_5cemr")
+
+[node name="ItemSpawner6" parent="." instance=ExtResource("7_wkkt5")]
+position = Vector2(374, 1)
+random_item = false
+gun_resource = ExtResource("12_7list")
 spawn_obj = ExtResource("6_5cemr")
 
 [node name="World Borders" parent="." instance=ExtResource("7_m7h7g")]
@@ -198,16 +213,16 @@ position = Vector2(0, 8)
 collision_mask = 8
 
 [node name="North Border" parent="World Borders" index="0"]
-position = Vector2(0, -255)
+position = Vector2(0, -321)
 
 [node name="West Border" parent="World Borders" index="1"]
-position = Vector2(-500, 0)
+position = Vector2(-443, 0)
 
 [node name="East Border" parent="World Borders" index="2"]
-position = Vector2(500, 0)
+position = Vector2(441, 6)
 
 [node name="South Border" parent="World Borders" index="3"]
-position = Vector2(0, 255)
+position = Vector2(0, 251)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/Objects/player.tscn")
