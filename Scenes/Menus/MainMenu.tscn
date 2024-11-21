@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8c2ascpmxw4i"]
+[gd_scene load_steps=4 format=3 uid="uid://b8c2ascpmxw4i"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/MainMenu.gd" id="1_tmlow"]
 [ext_resource type="Texture2D" uid="uid://d0vjjtbcxeahw" path="res://Sprites/UI/shortyshooterslogo.png" id="2_77jpt"]
+[ext_resource type="AudioStream" uid="uid://cga5uc2f6jiup" path="res://SFX/Music/Slompin.wav" id="3_2lkjt"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -37,9 +38,10 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 315.0
-offset_right = -581.0
-offset_bottom = 128.0
+offset_left = 297.0
+offset_top = 14.0
+offset_right = -599.0
+offset_bottom = 142.0
 grow_horizontal = 2
 scale = Vector2(2, 2)
 texture = ExtResource("2_77jpt")
@@ -397,6 +399,11 @@ offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Close"
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2lkjt")
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="Main/VBoxContainer/Host" to="." method="_on_host_menu_pressed"]
 [connection signal="pressed" from="Main/VBoxContainer/Join" to="." method="_on_join_menu_pressed"]

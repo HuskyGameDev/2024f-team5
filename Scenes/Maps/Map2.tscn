@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://dj0l1b3td7trb"]
+[gd_scene load_steps=12 format=4 uid="uid://c82nlr0hcpcjk"]
 
 [ext_resource type="Script" path="res://Scripts/Map.gd" id="1_1wljc"]
 [ext_resource type="PackedScene" uid="uid://035mj4iesbti" path="res://Scenes/UI/player_hud.tscn" id="2_flm1b"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dh8xoqndsykss" path="res://Sprites/Environment/Environment1.png" id="4_184qd"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/dynamic_camera.gd" id="5_dhc44"]
 [ext_resource type="Texture2D" uid="uid://1mss688it0ad" path="res://Sprites/Environment/Environment_Jungle.png" id="5_huuas"]
-[ext_resource type="PackedScene" path="res://Scenes/Objects/gun_pickup.tscn" id="6_5cemr"]
+[ext_resource type="PackedScene" uid="uid://c0ltnigbp72g2" path="res://Scenes/Objects/gun_pickup.tscn" id="6_5cemr"]
 [ext_resource type="PackedScene" uid="uid://ramqgxs80twi" path="res://Scenes/world_borders.tscn" id="7_m7h7g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lungt"]
@@ -155,6 +155,7 @@ position = Vector2(-210, 89)
 
 [node name="World Borders" parent="." instance=ExtResource("7_m7h7g")]
 position = Vector2(0, 8)
+collision_mask = 8
 
 [node name="North Border" parent="World Borders" index="0"]
 position = Vector2(0, -255)
