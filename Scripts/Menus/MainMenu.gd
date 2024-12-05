@@ -3,8 +3,10 @@ class_name MainMenu extends Control
 @onready var multiplayerManager: MultiplayerManager = $/root/Root/MultiplayerManager
 @onready var loadingScreen: PackedScene = preload("res://Scenes/Menus/LoadingScreen.tscn")
 @onready var usernameEntry: LineEdit = $Settings/ScrollContainer/VBoxContainer/UsernameEntry
+@onready var musicPlayer: AudioStreamPlayer = $Music
 
 func _ready() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, 0)
 	if (get_node_or_null("/root/FPSCounter") == null): $/root.call_deferred("add_child", load("res://Scenes/UI/FPSCounter.tscn").instantiate())
 	if (get_node_or_null("/root/PauseMenu") == null): $/root.call_deferred("add_child", load("res://Scenes/Menus/PauseMenu.tscn").instantiate())
 	usernameEntry.text = "Shorty" + str(randi_range(99,9999)).pad_zeros(4)
@@ -63,3 +65,6 @@ func _on_close_pressed() -> void:
 func _on_how_to_play_pressed() -> void:
 	$Main.hide()
 	$HowToPlay.show()
+
+func _on_music_finished() -> void:
+	musicPlayer.play()

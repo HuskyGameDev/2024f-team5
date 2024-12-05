@@ -60,6 +60,16 @@ func _on_window_mode_item_selected(index: int) -> void:
 		2:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
+func _on_fullscreen_toggled(fullscreen: bool) -> void:
+	if (fullscreen): DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else: 
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)
+		DisplayServer.window_set_size(Vector2i(1152, 648), 0)
+		#DisplayServer.get_window_list()[0].size = Vector2i(1152, 648)
+
+func _on_aa_level_picker_item_selected(index: int) -> void:
+	get_viewport().msaa_2d = index as Viewport.MSAA
+
 func _on_v_sync_item_selected(index: int) -> void:
 	# Looks like the dropdown and the enum matches up, so this should work
 	DisplayServer.window_set_vsync_mode(index)

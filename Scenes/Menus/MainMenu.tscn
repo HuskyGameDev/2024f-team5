@@ -275,6 +275,7 @@ text = "Password"
 
 [node name="PasswordEntry" type="LineEdit" parent="Host/GridContainer"]
 layout_mode = 2
+secret = true
 
 [node name="Back" type="Button" parent="Host/GridContainer"]
 layout_mode = 2
@@ -358,6 +359,7 @@ text = "Password"
 
 [node name="PasswordEntry" type="LineEdit" parent="Join/GridContainer"]
 layout_mode = 2
+secret = true
 
 [node name="Back" type="Button" parent="Join/GridContainer"]
 layout_mode = 2
@@ -629,8 +631,9 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Close"
 
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_2lkjt")
+volume_db = -15.0
 autoplay = true
 bus = &"Music"
 
@@ -646,3 +649,4 @@ bus = &"Music"
 [connection signal="pressed" from="HowToPlay/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Settings/Back" to="." method="backPressed"]
 [connection signal="pressed" from="Notification/Panel/Close" to="." method="_on_close_pressed"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]
