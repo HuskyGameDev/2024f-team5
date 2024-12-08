@@ -237,13 +237,25 @@ func die(oob: bool = false, theta: float = 0) -> void:
 	
 	collision.disabled = true
 	await get_tree().create_timer(3).timeout
+	# Respawn
 	# Changed to reset manually as to not crash multiplayer
 	collision.disabled = false
 	if (is_multiplayer_authority()): rpc("updateAnimation", "idle")
-	position = Vector2(0, 0)
+	position = Map.current_map.getRandomSpawn()
 	velocity = Vector2(0, 0)
 	dead = false
 	sprite.visible = true
+	
+	$Hurtbox.monitoring = false
+	modulate = Color(0.8, 0.8, 0.8, 0.8)
+	
+	await get_tree().create_timer(1.5).timeout
+	cancel_iframes()
+
+## Turns off invincibility
+func cancel_iframes() -> void:
+	modulate = Color(1, 1, 1, 1)
+	$Hurtbox.monitoring = true
 
 ## Called on item pickup. Equips node item.
 func equip(scene: PackedScene, gun_resource: GunResource) -> void:
@@ -430,6 +442,8 @@ func _ready() -> void:
 	rpc("playAnimation", "idle")
 	# Add to dynamic camera points
 	DynamicCamera.instance.pois.append(self)
+	# Set initial spawn point
+	position = Map.current_map.getRandomSpawn()
 
 func _on_mouse_entered() -> void:
 	if(_equipped_item != null):

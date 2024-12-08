@@ -2,17 +2,21 @@ class_name Map extends Node2D
 
 var playerScene: PackedScene = preload("res://Scenes/Objects/player.tscn")
 
+static var current_map: Map
+
 @export var soloTest: bool = true
 @export var data: PlayerData
 @export var multiplayerManager: MultiplayerManager
 @onready var hud: Hud = $CanvasLayer/PlayerHud
 @export var roundLength: int = 3
 @export var songs: Array[AudioStream]
+@export var spawn_points: Array[Vector2]
 
 var musicPlayer: AudioStreamPlayer
 
 func _ready() -> void:
 	name = "Map" #DO NOT CHANGE THIS LINE. IT IS IMPORTANT. 
+	current_map = self
 	if (soloTest):
 		var player: Player = playerScene.instantiate()
 		player.singleplayerTesting = true
@@ -41,3 +45,11 @@ func start() -> void:
 func playRandomSong() -> void:
 	musicPlayer.stream = songs.pick_random()
 	musicPlayer.play()
+
+func getRandomSpawn() -> Vector2:
+	var point: Vector2 = spawn_points.pick_random()
+	# Default to (0,0) if no points specified
+	if(point == null):
+		print("respawn points are not set on this map!")
+		return Vector2(0, 0)
+	return point

@@ -64,6 +64,8 @@ var flipped: bool = false
 var hud: Hud
 ## Used primarily for turret use. Might be a fun cheat in the future
 var infinite_ammo: bool = false
+## Used for melee weapons to prevent hitbox teleporting
+var last_projectile: Node2D
 
 # ====================== [ CLASS METHODS ] =====================================
 
@@ -76,16 +78,19 @@ func _flip() -> void:
 	#barrel.position = barrel_pos[1]
 	barrel.rotate(PI)
 	barrel.position.x = rev_barrel_posX
+	if(WeaponType == WeaponReferences.WeaponType.MELEE &&
+		last_projectile != null):
+		last_projectile.queue_free()
 
 @rpc("call_local")
-func _shoot(mousepos: Vector2, override_recoil: bool = false) -> void:
+func _shoot(mousepos: Vector2, non_player: bool = false) -> void:
 	if(!cooldown):
 		return
 	var par: Node = get_parent()
 	if(!infinite_ammo && ammo <= 0):
 		par.call_deferred("unequip")
 		return
-	if(!override_recoil):
+	if(!non_player):
 		var diff: Vector2 = mousepos - self.global_position
 		var angle: float = diff.angle() + PI
 		var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * weapon_recoil
@@ -94,6 +99,7 @@ func _shoot(mousepos: Vector2, override_recoil: bool = false) -> void:
 		player.grip -= grip_loss
 		player.projectileMovement = true #Thomas: tell the player movement script to temporarily disable the normal movement so we can fling the character
 		player.projectileMoveOffset = recoil.x #If we want to allow players to keep their movement augment the speed by this to allow the player to move in the same direction as the gun
+		player.cancel_iframes()
 	if(smoke != null):
 		barrel.add_child(smoke.instantiate())
 	sound.play()
@@ -105,6 +111,7 @@ func _shoot(mousepos: Vector2, override_recoil: bool = false) -> void:
 	var bullet: Projectile = projectile.instantiate()
 	bullet.one_in_chamber = gun_resource.one_in_chamber
 	bullet.shot_by_gun = self
+	last_projectile = bullet
 	
 	#Set the variables on the bullet to make sure they match the gun resource #TODO #WARNING only will work if bullet is a projectile script
 	if gun_resource.WeaponType == WeaponReferences.WeaponType.MELEE:
@@ -171,6 +178,9 @@ func _unflip() -> void:
 	flipped = false
 	barrel.rotate(PI)
 	barrel.position.x = init_barrel_posX
+	if(WeaponType == WeaponReferences.WeaponType.MELEE &&
+		last_projectile != null):
+		last_projectile.queue_free()
 
 # Not used in normal gameplay. Used by desert eagle and maybe powerup in future?
 func reload() -> void:

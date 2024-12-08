@@ -5,6 +5,10 @@ class_name  DynamicCamera
 
 static var instance: DynamicCamera
 
+## Used to determine how much the camera should change when looking up or down
+## Relative to zoom level
+const DIST_PER_ZOOM: float = 75
+
 # The factor at which distance affects camera speed
 @export var smoothing: float = 1
 @export var pois: Array[Node2D]
@@ -23,6 +27,9 @@ static var instance: DynamicCamera
 @export var east_border: Node2D
 @export var south_border: Node2D
 
+## Used to keep track of deviation from expected position derived from look controls
+var deltaPos: Vector2 = Vector2(0, 0)
+
 # Sets camera boundaries based off borders
 func _ready() -> void:
 	instance = self
@@ -39,11 +46,16 @@ func _ready() -> void:
 # Moves camera
 func _process(delta: float) -> void:
 	# POSITION
-	var goal: Vector2 = _avg_between_pois()
+	var goal: Vector2 = _avg_between_pois() + deltaPos
 	var dist: float = position.distance_to(goal)
 	position = position.move_toward(goal, dist * delta / smoothing)
 	# ZOOM
 	if(dynamic_zoom): _dynamic_zoom()
+	# LOOK Controls
+	if(Input.is_action_pressed("look_up")):
+		deltaPos = Vector2(0, -DIST_PER_ZOOM * (1 / zoom.x))
+	else:
+		deltaPos = Vector2.ZERO
 	
 
 func _dynamic_zoom() -> void:

@@ -204,6 +204,7 @@ sources/1 = SubResource("TileSetAtlasSource_j6rot")
 
 [node name="Houghton2" type="Node2D"]
 script = ExtResource("1_eq5ux")
+spawn_points = Array[Vector2]([Vector2(0, 0), Vector2(0, -78), Vector2(133, -138), Vector2(116, 49), Vector2(33, 5), Vector2(-33, 5)])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
