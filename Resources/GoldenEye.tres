@@ -31,4 +31,5 @@ weaponRecoil = 800.0
 weaponWeight = 20.0
 gripLoss = 80.0
 fireSounds = Array[AudioStream]([ExtResource("2_vb22l")])
+one_in_chamber = true
 exitPadding = 11.0

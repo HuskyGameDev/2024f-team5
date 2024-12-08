@@ -4,6 +4,9 @@
 extends Node2D
 class_name Gun
 
+## Magnitude of knockback = SHIELD_KB * bullet velocity
+const SHIELD_KB: float = .5
+
 # For normal gameplay
 @export var gun_resource: GunResource 
 @export var resourcePath: String
@@ -36,6 +39,7 @@ var WeaponType: WeaponReferences.WeaponType
 ## Where smoke effects and bullets spawn
 @onready var anim_timer : Timer = $AnimationTimer
 @onready var barrel: Node2D = $Sprite2D/Barrel
+@onready var flash: AnimationPlayer = $Sprite2D/FlashAnimation
 @onready var line: Line2D = $Sprite2D/Barrel/Line2D
 @onready var shield: Area2D = $Shield
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
@@ -58,13 +62,15 @@ var cooldown: bool = true
 ## Gun is pointing left if true
 var flipped: bool = false
 var hud: Hud
+## Used primarily for turret use. Might be a fun cheat in the future
+var infinite_ammo: bool = false
 
 # ====================== [ CLASS METHODS ] =====================================
 
 @rpc("call_local")
 func _flip() -> void:
 	spi.offset.x = rev_offset
-	shield.position.x = rev_offset
+	shield.position.x = rev_offset + shield.get_child(0).position.x
 	spi.flip_h = true
 	flipped = true
 	#barrel.position = barrel_pos[1]
@@ -72,21 +78,22 @@ func _flip() -> void:
 	barrel.position.x = rev_barrel_posX
 
 @rpc("call_local")
-func _shoot(mousepos: Vector2) -> void:
+func _shoot(mousepos: Vector2, override_recoil: bool = false) -> void:
 	if(!cooldown):
 		return
 	var par: Node = get_parent()
-	if(ammo <= 0):
+	if(!infinite_ammo && ammo <= 0):
 		par.call_deferred("unequip")
 		return
-	var diff: Vector2 = mousepos - self.global_position
-	var angle: float = diff.angle() + PI
-	var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * weapon_recoil
-	player.disableMoveTimer = .1 #Triggers temporarily disabling the player being able to move left/right, I think it needs to happen to give variables in player_movment.gd time to update and allow proper air movement
-	player.grip -= grip_loss
-	player.projectileMovement = true #Thomas: tell the player movement script to temporarily disable the normal movement so we can fling the character
-	player.projectileMoveOffset = recoil.x #If we want to allow players to keep their movement augment the speed by this to allow the player to move in the same direction as the gun
-	player.velocity += recoil
+	if(!override_recoil):
+		var diff: Vector2 = mousepos - self.global_position
+		var angle: float = diff.angle() + PI
+		var recoil: Vector2 = Vector2(cos(angle), sin(angle)) * weapon_recoil
+		player.velocity += recoil
+		player.disableMoveTimer = .1 #Triggers temporarily disabling the player being able to move left/right, I think it needs to happen to give variables in player_movment.gd time to update and allow proper air movement
+		player.grip -= grip_loss
+		player.projectileMovement = true #Thomas: tell the player movement script to temporarily disable the normal movement so we can fling the character
+		player.projectileMoveOffset = recoil.x #If we want to allow players to keep their movement augment the speed by this to allow the player to move in the same direction as the gun
 	if(smoke != null):
 		barrel.add_child(smoke.instantiate())
 	sound.play()
@@ -95,7 +102,9 @@ func _shoot(mousepos: Vector2) -> void:
 	if (is_multiplayer_authority()): hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 	
 	# Shoot the actual bullet
-	var bullet: Node = projectile.instantiate()
+	var bullet: Projectile = projectile.instantiate()
+	bullet.one_in_chamber = gun_resource.one_in_chamber
+	bullet.shot_by_gun = self
 	
 	#Set the variables on the bullet to make sure they match the gun resource #TODO #WARNING only will work if bullet is a projectile script
 	if gun_resource.WeaponType == WeaponReferences.WeaponType.MELEE:
@@ -147,7 +156,7 @@ func animate() -> void:
 			anim_timer.start()
 		GunResource.AnimationMode.PULSE_EMPTY:
 			spi.texture = gun_resource.alt_sprites[0]
-			if(ammo > 0):
+			if(infinite_ammo || ammo > 0):
 				anim_timer.start()
 		GunResource.AnimationMode.NEXT:
 			var i: int = max_ammo - ammo
@@ -162,6 +171,11 @@ func _unflip() -> void:
 	flipped = false
 	barrel.rotate(PI)
 	barrel.position.x = init_barrel_posX
+
+# Not used in normal gameplay. Used by desert eagle and maybe powerup in future?
+func reload() -> void:
+	ammo = max_ammo
+	if (is_multiplayer_authority()): hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 
 
 # ============================= [ SIGNALS ] ====================================
@@ -208,14 +222,26 @@ func _process(_delta: float) -> void:
 
 func _on_shield_body_entered(body: Node2D) -> void:
 	if (!is_multiplayer_authority()): return
-	if "shot_by" in body && body.shot_by == get_multiplayer_authority():
+	flash.play("flash")
+	# Map hazards such as spikes
+	if body is not Projectile:
+		player.grip -= 20
+		hurt_sound.play()
 		return
-	# Unused variable, so I commented it out
-	#var angle: float = global_position.angle_to_point(body.position)
-	player.grip -= 20
-	hurt_sound.play()
+	# Projectiles
+	if(body.shot_by == get_multiplayer_authority()):
+		return
+	if(player != null):
+		player.grip -= body.damage
+		player.velocity += SHIELD_KB * body.linear_velocity
+		return
+	# Losing grip negates the shield effect
+	if(player.grip > 0):
+		body._on_body_entered(self)
+	else:
+		player.unequip()
 	
-#This will load a new weapon for the player
+## This will load a new weapon for the player
 # Jay: Providing no argument will load the assigned gun resource.
 func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	if (!is_multiplayer_authority()):
@@ -257,7 +283,9 @@ func _enter_tree() -> void:
 	#name = "Gun%s" % str(randi_range(0, 9999))
 
 func _ready() -> void:
-	player = get_parent()
+	spi.material = null # Prevent flashing animation on start
+	if(get_parent() is Player):
+		player = get_parent()
 	load_weapon()
 
 func _on_animation_timer_timeout() -> void:

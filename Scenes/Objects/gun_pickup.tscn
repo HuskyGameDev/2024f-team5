@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0ltnigbp72g2"]
+[gd_scene load_steps=8 format=3 uid="uid://c0ltnigbp72g2"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/item_pickup.gd" id="1_jewok"]
 [ext_resource type="PackedScene" uid="uid://c6ca0t1feo4q2" path="res://Scenes/Objects/gun.tscn" id="2_wcjb3"]
 [ext_resource type="Texture2D" uid="uid://cndlolvxbrb8h" path="res://Sprites/Environment/MonitorSpawnerSheet.png" id="3_3qkjg"]
 [ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="3_d3s0c"]
 [ext_resource type="Texture2D" uid="uid://12goi6amxmwm" path="res://Sprites/Weapons/GlockIcon.png" id="4_b7mb2"]
-[ext_resource type="PackedScene" uid="uid://k3phno0vks8h" path="res://Scenes/Objects/crt_effect.tscn" id="4_tjq0t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai3ny"]
 
@@ -19,7 +18,6 @@ collision_mask = 8
 script = ExtResource("1_jewok")
 gun = ExtResource("2_wcjb3")
 gun_resource = ExtResource("3_d3s0c")
-effect = ExtResource("4_tjq0t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ai3ny")

@@ -39,7 +39,6 @@ shape = SubResource("RectangleShape2D_854hw")
 wait_time = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(-3.57628e-07, 0)
 scale = Vector2(0.0703125, 18)
 texture = SubResource("GradientTexture1D_14y3r")

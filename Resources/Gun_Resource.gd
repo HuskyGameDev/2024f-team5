@@ -42,6 +42,10 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 @export var fireSounds : Array[AudioStream] #this way if we have multiple sound effects we can have varied shooting sounds
 @export var discardSound : AudioStream #when you drop the weapon or run out of ammo
 
+@export_category("Special")
+## Used by golden eagle. Sets ammo to max upon kill.
+@export var one_in_chamber: bool = false
+
 @export_category("Technical Stuff")
 @export var exitPadding : float
 

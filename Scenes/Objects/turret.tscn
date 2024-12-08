@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvc4ygviv73op"]
+
+[ext_resource type="Texture2D" uid="uid://dyecx2x2dc3om" path="res://Sprites/Misc/turret.png" id="1_0j145"]
+[ext_resource type="Script" path="res://Scripts/Gameplay/turret.gd" id="1_2fcsq"]
+[ext_resource type="Resource" uid="uid://cfbsd3cvl7twk" path="res://Resources/Glock.tres" id="2_ws0pk"]
+[ext_resource type="PackedScene" uid="uid://c6ca0t1feo4q2" path="res://Scenes/Objects/gun.tscn" id="3_31hfh"]
+
+[node name="Turret" type="Node2D"]
+script = ExtResource("1_2fcsq")
+gun_resource = ExtResource("2_ws0pk")
+gun_scene = ExtResource("3_31hfh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0j145")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

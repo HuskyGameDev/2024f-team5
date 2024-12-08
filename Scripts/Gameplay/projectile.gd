@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name Projectile
 
 # Amount that the projectile effects the grip of the player
 @export var damage: float = 30
@@ -13,9 +14,12 @@ extends RigidBody2D
 @export var trail_period: float = 1
 ## Prevents bullets from going on forever.
 @export var timeout: float = 3
+## Used by golden eagle. Sets ammo to max upon kill.
+var one_in_chamber: bool = false
 @onready var timer: Timer = $Timer
 var init_pos: Vector2
 var shot_by: int
+var shot_by_gun: Gun
 
 func _on_body_entered(body: Node) -> void:
 	if (delete_on_collide):
