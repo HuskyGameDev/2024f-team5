@@ -140,6 +140,9 @@ var projectileMoveOffset : float = 0
 var normalMovement : bool = false
 var disableMoveTimer : float = 0 #check this against .1, setting it over in the gun script
 
+# Used for banana, could be used for certain weapon types later.
+var stunned: bool = false
+
 # SCORING
 var score: int = 0
 var player_id: int = 1
@@ -391,6 +394,12 @@ func uncrouch() -> void:
 	if(is_on_floor() && velocity.x == 0):
 		rpc("updateAnimation", "idle")
 
+func stun(time: float) -> void:
+	stunned = true
+	anim.play("crouch")
+	await get_tree().create_timer(time).timeout
+	stunned = false
+
 # =========================== [ SIGNALS ] ======================================
 
 func _physics_process(delta: float) -> void:
@@ -409,7 +418,8 @@ func _physics_process(delta: float) -> void:
 	if disableMoveTimer > 0:
 		disableMoveTimer -= delta
 	
-	_move(direction, delta)
+	if(!stunned):
+		_move(direction, delta)
 	_grip_process(delta)
 
 	var hit_ground: bool = is_on_floor()
@@ -422,7 +432,7 @@ func _physics_process(delta: float) -> void:
 	_collide(hit_ground != is_on_floor(), hit_wall != is_on_wall(),
 	  pre_collision_vel)
 	
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") && !stunned:
 		_jump()
 	if Input.is_action_just_pressed("drop_item"):
 		unequip()

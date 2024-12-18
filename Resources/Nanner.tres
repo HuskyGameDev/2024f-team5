@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GunResource" load_steps=11 format=3 uid="uid://waoe00ag7fse"]
+[gd_resource type="Resource" script_class="GunResource" load_steps=12 format=3 uid="uid://waoe00ag7fse"]
 
 [ext_resource type="Texture2D" uid="uid://c1wfxaa60dvw0" path="res://Sprites/Weapons/BananaGun1.png" id="1_02kwg"]
 [ext_resource type="Texture2D" uid="uid://f6ygoaypu1qi" path="res://Sprites/Weapons/BananaGun2.png" id="2_no1wn"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dqkwqiglwf7nt" path="res://Sprites/Weapons/BananaGun5.png" id="5_5nmot"]
 [ext_resource type="Texture2D" uid="uid://b0d2ynsv7tepu" path="res://Sprites/Weapons/BananaGun6.png" id="6_7tia0"]
 [ext_resource type="PackedScene" uid="uid://ci5nsqbqxhwgw" path="res://Scenes/Objects/banana_chunk.tscn" id="7_m1fid"]
+[ext_resource type="PackedScene" uid="uid://c2kxx3tvi0bdk" path="res://Scenes/Objects/banana_peel.tscn" id="8_74x3e"]
 [ext_resource type="AudioStream" uid="uid://mylj0iwxpj8t" path="res://SFX/Temp/temp_shoot.wav" id="8_n714b"]
 [ext_resource type="Texture2D" uid="uid://dw4cl60wsbof0" path="res://Sprites/Weapons/banana_icon.png" id="9_ifhnr"]
 
@@ -34,4 +35,6 @@ weaponRecoil = 50.0
 weaponWeight = 3.0
 gripLoss = 20.0
 fireSounds = Array[AudioStream]([ExtResource("8_n714b")])
+one_in_chamber = false
+dropped_item = ExtResource("8_74x3e")
 exitPadding = 11.0
