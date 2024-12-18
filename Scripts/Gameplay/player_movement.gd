@@ -396,9 +396,11 @@ func uncrouch() -> void:
 
 func stun(time: float) -> void:
 	stunned = true
+	sprite.modulate = Color(.8, .8, .8)
 	anim.play("crouch")
 	await get_tree().create_timer(time).timeout
 	stunned = false
+	sprite.modulate = Color.WHITE
 
 # =========================== [ SIGNALS ] ======================================
 
