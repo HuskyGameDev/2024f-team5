@@ -95,9 +95,10 @@ show_names={
 
 [layer_names]
 
-2d_physics/layer_1="Default"
+2d_physics/layer_1="Default (Environment)"
 2d_physics/layer_2="Hazards"
 2d_physics/layer_3="Hurtboxes"
+2d_physics/layer_4="Players"
 
 [physics]
 

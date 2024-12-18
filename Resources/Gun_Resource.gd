@@ -45,6 +45,8 @@ enum AnimationMode {NONE, PULSE, NEXT, PULSE_EMPTY}
 @export_category("Special")
 ## Used by golden eagle. Sets ammo to max upon kill.
 @export var one_in_chamber: bool = false
+## Will overwrite normal dropped_item object if not null. Used by banana
+@export var dropped_item: PackedScene
 
 @export_category("Technical Stuff")
 @export var exitPadding : float

@@ -47,9 +47,9 @@ func playRandomSong() -> void:
 	musicPlayer.play()
 
 func getRandomSpawn() -> Vector2:
-	var point: Vector2 = spawn_points.pick_random()
-	# Default to (0,0) if no points specified
-	if(point == null):
+	if(spawn_points.is_empty()):
 		print("respawn points are not set on this map!")
+		# Default to (0,0) if no points specified
 		return Vector2(0, 0)
-	return point
+	return spawn_points.pick_random()
+	

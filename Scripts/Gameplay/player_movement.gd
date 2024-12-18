@@ -36,6 +36,8 @@ const MAX_WALLJUMPS: int = 3
 const WEIGHT_TO_SPEED_FACTOR: float = 1
 ## The speed at which grip is recovered as % per second
 const GRIP_RECOVERY: float = 50
+## Multiplies the momentum of the dropped gun
+const DROP_MOMENTUM_FACTOR: float = 5
 
 # Static variables
 ## Array of cursors that respond to gun movement
@@ -214,6 +216,8 @@ func crouch() -> void:
 func die(oob: bool = false, theta: float = 0) -> void:
 	if (dead): return
 	dead = true
+	# Unequip first to prevent weapon going to (0,0)
+	unequip()
 	# Out of bounds death animation
 	if(oob):
 		MultiplayerManager.instance.getPlayerData(get_multiplayer_authority()).score -= 1
@@ -232,7 +236,6 @@ func die(oob: bool = false, theta: float = 0) -> void:
 		sound.play()
 		death_parts.emitting = true
 		if (is_multiplayer_authority()): rpc("updateAnimation", "die")
-	unequip()
 	DeathMatchGamemode.instance.update_board()
 	
 	collision.disabled = true
@@ -258,7 +261,8 @@ func cancel_iframes() -> void:
 	$Hurtbox.monitoring = true
 
 ## Called on item pickup. Equips node item.
-func equip(scene: PackedScene, gun_resource: GunResource) -> void:
+func equip(scene: PackedScene, gun_resource: GunResource, 
+ 	  ammo: int = gun_resource.maxAmmo) -> void:
 	unequip()
 	if (!is_multiplayer_authority()): return
 	var item: Node = scene.instantiate()
@@ -266,27 +270,38 @@ func equip(scene: PackedScene, gun_resource: GunResource) -> void:
 	item.gun_resource = gun_resource
 	_equipped_item = item
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_ARROW, Vector2(16, 16))
+	if item is Gun:
+		equipped_item_weight = item.weight
+		item.ammo = ammo
 	# Show ammo counter
 	hud.ammo_counter.visible = true
 	hud.grip_bar.visible = true
 	item.hud = self.hud
-	#Thomas: WARNING I'm not sure what will happen if the item equipped isn't a gun but hopefully this will prevent any major issues
-	# This should work better. Weird solution imo but its what the forums say. -Jay
-	if "weight" in item:
-		equipped_item_weight = item.weight
+	
 	add_child(item)
 
 # Unequips item
 func unequip() -> void:
 	if (!is_multiplayer_authority()): return
+	# Spawn dropped item if there's still ammo.
+	if (_equipped_item is Gun && _equipped_item.ammo > 0):
+		# If lost due to grip, the dropped item will launch where player is
+		# being knocked back.
+		var momentum: Vector2 = Vector2.ZERO
+		momentum = velocity * DROP_MOMENTUM_FACTOR
+		if(grip < 0):
+			momentum = momentum * -grip
+		_equipped_item.drop(momentum)
 	if (is_instance_valid(_equipped_item)): 
 		_equipped_item.free()
+	_equipped_item = null
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW, Vector2(16, 16))
 	# Hide ammo counter
 	hud.ammo_counter.visible = false
 	hud.grip_bar.visible = false
 	#Thomas: when uneqipping an item set the weight back to nothing
 	equipped_item_weight = 0
+	
 
 func _grip_process(delta: float) -> void:
 	if grip <= 0:

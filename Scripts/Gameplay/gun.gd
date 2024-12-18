@@ -10,6 +10,7 @@ const SHIELD_KB: float = .5
 # For normal gameplay
 @export var gun_resource: GunResource 
 @export var resourcePath: String
+@export var dropped_item: PackedScene
 
 # Exported class variables
 ## Fire rate (inverse of cooldown) in rounds per second
@@ -56,7 +57,7 @@ var WeaponType: WeaponReferences.WeaponType
 var player: Player
 ## When true, the "laser sight" ADS line is visible
 var ads: bool = false
-var ammo: int = 0 #was set as ammo: int = max_ammo originally but now max_ammo doesn't get loaded until the ready function is called
+var ammo: int = 0
 ## True if cooldown is complete
 var cooldown: bool = true
 ## Gun is pointing left if true
@@ -182,6 +183,17 @@ func _unflip() -> void:
 		last_projectile != null):
 		last_projectile.queue_free()
 
+## Drops or throws gun at velocity determined by parent player and weight.
+func drop(momentum: Vector2) -> void:
+	var dropped: RigidBody2D = dropped_item.instantiate()
+	if(dropped is DroppedItem):
+		dropped.gun = preload("res://Scenes/Objects/gun.tscn")
+		dropped.gun_resource =gun_resource
+		dropped.ammo = ammo
+	dropped.linear_velocity = momentum / weight
+	dropped.global_position = global_position
+	get_tree().get_root().add_child(dropped)
+
 # Not used in normal gameplay. Used by desert eagle and maybe powerup in future?
 func reload() -> void:
 	ammo = max_ammo
@@ -261,8 +273,6 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	## Fire rate (inverse of cooldown) in rounds per second
 	firerate = newWeaponResource.fireRate
 	## Count of rounds in a magazine
-	# Fun fact: 15 is the number of rounds in a standard glock 19 magazine
-	ammo = newWeaponResource.maxAmmo
 	max_ammo = newWeaponResource.maxAmmo
 	smoke = newWeaponResource.smoke
 	weapon_recoil = newWeaponResource.weaponRecoil
@@ -285,6 +295,8 @@ func load_weapon(newWeaponResource : GunResource = gun_resource) -> void:
 	barrel.position = newWeaponResource.barrel_pos
 	init_barrel_posX = barrel.position.x
 	rev_barrel_posX = -init_barrel_posX + rev_offset
+	if(gun_resource.dropped_item != null):
+		dropped_item = gun_resource.dropped_item
 	#update ammo count on the HUD
 	if (is_multiplayer_authority()): hud.ammo_counter.text = "%d/%d" % [ammo, max_ammo]
 

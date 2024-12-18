@@ -21,7 +21,7 @@ var init_pos: Vector2
 var shot_by: int
 var shot_by_gun: Gun
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(_body: Node) -> void:
 	if (delete_on_collide):
 		queue_free()
 

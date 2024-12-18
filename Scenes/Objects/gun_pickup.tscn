@@ -22,7 +22,7 @@ gun_resource = ExtResource("3_d3s0c")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ai3ny")
 
-[node name="Monitor" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_or0p5")
 
 [node name="Icon" type="Sprite2D" parent="."]
